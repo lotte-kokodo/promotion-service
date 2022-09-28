@@ -16,9 +16,9 @@ public class RateCouponDto {
     String startDate;
     String endDate;
     List<Long> productList;
-
+    long sellerId;
     @Builder
-    public RateCouponDto(long id, String name, int rate, int minPrice, String startDate, String endDate, List<Long> productList) {
+    public RateCouponDto(long id, String name, int rate, int minPrice, String startDate, String endDate, List<Long> productList, long sellerId) {
         this.id = id;
         this.name = name;
         this.rate = rate;
@@ -26,6 +26,7 @@ public class RateCouponDto {
         this.startDate = startDate;
         this.endDate = endDate;
         this.productList = productList;
+        this.sellerId=sellerId;
     }
 
 }
