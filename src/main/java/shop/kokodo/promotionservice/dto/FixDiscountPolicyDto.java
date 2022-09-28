@@ -2,6 +2,8 @@ package shop.kokodo.promotionservice.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -10,11 +12,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FixDiscountPolicyDto {
+    Long fixDiscountPolicyId;
     String name;
-    Date regDate;
-    Date startDate;
-    Date endDate;
-    int rate;
+    LocalDateTime regDate;
+    LocalDateTime startDate;
+    LocalDateTime endDate;
+    int price;
     int minPrice;
     int productId;
 }

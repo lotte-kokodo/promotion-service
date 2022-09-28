@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FixDiscountPolicyRepository extends JpaRepository<FixDiscountPolicyDto, Long> {
-    FixDiscountPolicyDto save(FixDiscountPolicy fixCoupon);
-    Optional<FixDiscountPolicyDto> findById(Long id);
-    Optional<FixDiscountPolicyDto> findByName(String name);
-    Optional<FixDiscountPolicyDto> findByProductId(Long productId);
-    List<FixDiscountPolicyDto> findAll();
+public interface FixDiscountPolicyRepository extends JpaRepository<FixDiscountPolicy, Long> {
+    FixDiscountPolicy save(FixDiscountPolicy fixCoupon);
+    Optional<FixDiscountPolicy> findById(Long id);
+    Optional<FixDiscountPolicy> findByName(String name);
+    Optional<FixDiscountPolicy> findByProductId(Long productId);
+    List<FixDiscountPolicy> findAll();
 }

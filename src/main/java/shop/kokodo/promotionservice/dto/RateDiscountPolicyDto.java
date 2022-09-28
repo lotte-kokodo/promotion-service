@@ -1,7 +1,10 @@
 package shop.kokodo.promotionservice.dto;
 
 import lombok.*;
+import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -10,12 +13,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RateDiscountPolicyDto {
+    Long rateDiscountPolicyId;
     String name;
-    Date regDate;
-    Date startDate;
-    Date endDate;
+    LocalDateTime regDate;
+    LocalDateTime startDate;
+    LocalDateTime endDate;
     int rate;
     int minPrice;
-    int productId;
-
+    Long productId;
 }

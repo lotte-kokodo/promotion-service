@@ -2,12 +2,13 @@ package shop.kokodo.promotionservice.service;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
+import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 
 import java.util.List;
 
 public interface RateDiscountPolicyService {
-    public List<RateDiscountPolicyDto> getAll();
-    public RateDiscountPolicyDto getRateDiscountPolicy(Long productId);
+    public List<RateDiscountPolicy> getAll();
+    public RateDiscountPolicy getRateDiscountPolicy(Long productId);
 
-    public RateDiscountPolicyDto createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicy);
+    public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto);
 }
