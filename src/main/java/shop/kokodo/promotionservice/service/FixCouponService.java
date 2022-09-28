@@ -1,8 +1,12 @@
 package shop.kokodo.promotionservice.service;
 
+import shop.kokodo.promotionservice.dto.FixCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 
-public interface FixCouponService {
+import java.util.List;
 
-    public void save(FixCoupon fixCoupon);
+public interface FixCouponService {
+    public void save(FixCouponDto fixCouponDto);
+    public List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId);
+
 }

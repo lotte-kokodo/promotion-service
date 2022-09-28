@@ -19,7 +19,7 @@ public class RateCoupon extends BaseEntity{
 
     private String name;
 
-    private LocalDateTime regDate;
+    private LocalDateTime regdate;
 
     private int rate;
 
@@ -29,21 +29,21 @@ public class RateCoupon extends BaseEntity{
 
     private LocalDateTime endDate;
 
-    private long sellerId;
+    private long productId;
 
     @Builder
-    public RateCoupon(long id, String name, LocalDateTime regDate, int rate, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long sellerId) {
+    public RateCoupon(long id, String name, LocalDateTime regdate, int rate, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId) {
         this.id = id;
         this.name = name;
-        this.regDate = regDate;
+        this.regdate = regdate;
         this.rate = rate;
         this.minPrice = minPrice;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.sellerId = sellerId;
+        this.productId = productId;
     }
 
     public void setRegDate(LocalDateTime regDate) {
-        this.regDate = regDate;
+        this.regdate = regDate;
     }
 }

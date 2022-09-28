@@ -33,10 +33,10 @@ public class FixCoupon extends BaseEntity {
 
     private LocalDateTime endDate;
 
-    private long sellerId;
+    private long productId;
 
     @Builder
-    public FixCoupon(long id, String name, LocalDateTime regdate, int price, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long sellerId) {
+    public FixCoupon(long id, String name, LocalDateTime regdate, int price, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId) {
         this.id = id;
         this.name = name;
         this.regdate = regdate;
@@ -44,6 +44,6 @@ public class FixCoupon extends BaseEntity {
         this.minPrice = minPrice;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.sellerId = sellerId;
+        this.productId = productId;
     }
 }
