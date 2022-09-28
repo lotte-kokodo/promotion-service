@@ -1,31 +1,32 @@
 package shop.kokodo.promotionservice.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
-@Getter
 @Setter
-@ToString
+@Getter
 @NoArgsConstructor
-public class RateCouponDto {
-
+public class FixCouponDto {
     long id;
     String name;
-    int rate;
+    int price;
     int minPrice;
     String startDate;
     String endDate;
     List<Long> productList;
 
     @Builder
-    public RateCouponDto(long id, String name, int rate, int minPrice, String startDate, String endDate, List<Long> productList) {
+    public FixCouponDto(long id, String name, int price, int minPrice, String startDate, String endDate, List<Long> productList) {
         this.id = id;
         this.name = name;
-        this.rate = rate;
+        this.price = price;
         this.minPrice = minPrice;
         this.startDate = startDate;
         this.endDate = endDate;
         this.productList = productList;
     }
-
 }

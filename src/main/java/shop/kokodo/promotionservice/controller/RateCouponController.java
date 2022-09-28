@@ -1,29 +1,33 @@
 package shop.kokodo.promotionservice.controller;
 
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.modelmapper.ModelMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
+import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateCoupon;
 import shop.kokodo.promotionservice.service.RateCouponService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rateCoupon")
+@RequiredArgsConstructor
 public class RateCouponController {
-
-    @Autowired
-    RateCouponService rateCouponService;
+    private final RateCouponService rateCouponService;
 
     @PostMapping("/save")
-    public void save(@RequestBody RateCouponDto rateCouponDto){
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    public Response save(@RequestBody RateCouponDto rateCouponDto){
 
-        RateCoupon rateCoupon=mapper.map(rateCouponDto, RateCoupon.class);
+        rateCouponService.save(rateCouponDto);
 
+        return Response.success();
     }
 
+    @GetMapping("/{productId}")
+    public Response findUserNotUsedRateCouponByproductId(@RequestParam("userId") long userId, @PathVariable("productId")long productId){
+        List<RateCoupon> rateCouponList = rateCouponService.findUserNotUsedRateCouponByproductId(userId, productId);
 
+        return Response.success(rateCouponList);
+    }
 
 }
