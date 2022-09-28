@@ -41,6 +41,7 @@ public class RateCouponServiceImpl implements RateCouponService{
                 .startDate(LocalDateTime.parse(rateCouponDto.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .endDate(LocalDateTime.parse(rateCouponDto.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .productId(productId)
+                .sellerId(rateCouponDto.getSellerId())
                 .build();
     }
 }

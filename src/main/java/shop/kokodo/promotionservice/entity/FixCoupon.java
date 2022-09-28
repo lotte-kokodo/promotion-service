@@ -1,26 +1,20 @@
 package shop.kokodo.promotionservice.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@ToString
 public class FixCoupon extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="fix_coupon_id")
     private long id;
-
     private String name;
 
     private LocalDateTime regdate;
@@ -35,8 +29,10 @@ public class FixCoupon extends BaseEntity {
 
     private long productId;
 
+    private long sellerId;
+
     @Builder
-    public FixCoupon(long id, String name, LocalDateTime regdate, int price, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId) {
+    public FixCoupon(long id, String name, LocalDateTime regdate, int price, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId, long sellerId) {
         this.id = id;
         this.name = name;
         this.regdate = regdate;
@@ -45,5 +41,6 @@ public class FixCoupon extends BaseEntity {
         this.startDate = startDate;
         this.endDate = endDate;
         this.productId = productId;
+        this.sellerId=sellerId;
     }
 }
