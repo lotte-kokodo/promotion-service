@@ -2,6 +2,7 @@ package shop.kokodo.promotionservice.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,6 +23,7 @@ public class UserCoupon extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name="fixCouponId")
+
     private FixCoupon fixCoupon;
 
     private long userId;
@@ -37,4 +39,5 @@ public class UserCoupon extends BaseEntity{
         this.userId = userId;
         this.usageStatus = usageStatus;
     }
+
 }

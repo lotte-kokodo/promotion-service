@@ -42,4 +42,5 @@ public class RateCoupon extends BaseEntity{
     public void setRegDate(LocalDateTime regDate) {
         this.regdate = regDate;
     }
+
 }

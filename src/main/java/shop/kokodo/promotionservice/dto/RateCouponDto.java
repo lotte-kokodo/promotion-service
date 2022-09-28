@@ -1,7 +1,6 @@
 package shop.kokodo.promotionservice.dto;
 
 import lombok.*;
-
 import java.util.List;
 
 @Getter
@@ -29,4 +28,5 @@ public class RateCouponDto {
         this.productList = productList;
         this.sellerId=sellerId;
     }
+
 }

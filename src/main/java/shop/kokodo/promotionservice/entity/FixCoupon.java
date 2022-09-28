@@ -43,4 +43,5 @@ public class FixCoupon extends BaseEntity {
         this.productId = productId;
         this.sellerId=sellerId;
     }
+
 }
