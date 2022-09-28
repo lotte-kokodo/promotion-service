@@ -18,6 +18,7 @@ public class FixCoupon extends BaseEntity {
 
     @Id
     @GeneratedValue
+
     @Column(name="fix_coupon_id")
     private long id;
 
@@ -46,4 +47,5 @@ public class FixCoupon extends BaseEntity {
         this.endDate = endDate;
         this.productId = productId;
     }
+
 }

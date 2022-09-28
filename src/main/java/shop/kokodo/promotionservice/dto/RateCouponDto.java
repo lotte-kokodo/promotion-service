@@ -1,7 +1,6 @@
 package shop.kokodo.promotionservice.dto;
 
 import lombok.*;
-
 import java.util.List;
 
 @Getter
@@ -16,7 +15,6 @@ public class RateCouponDto {
     int minPrice;
     String startDate;
     String endDate;
-
     List<Long> productList;
 
     @Builder
@@ -29,4 +27,5 @@ public class RateCouponDto {
         this.endDate = endDate;
         this.productList = productList;
     }
+
 }
