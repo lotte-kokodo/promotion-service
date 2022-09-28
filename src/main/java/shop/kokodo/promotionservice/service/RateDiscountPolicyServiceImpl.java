@@ -31,11 +31,6 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     }
 
     @Transactional
-    public RateDiscountPolicy getRateDiscountPolicy(Long productId) {
-        return rateDiscountPolicyRepository.findByProductId(productId).orElse(new RateDiscountPolicy());
-    }
-
-    @Transactional
     public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
@@ -43,4 +38,8 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         return rateDiscountPolicyRepository.save(rateDiscountPolicy);
     }
 
+    @Transactional
+    public RateDiscountPolicy getRateDiscountPolicy(Long productId) {
+        return rateDiscountPolicyRepository.findByProductId(productId).orElse(new RateDiscountPolicy());
+    }
 }

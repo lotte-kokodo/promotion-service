@@ -38,10 +38,7 @@ public class RateDiscountPolicyController {
 
     @GetMapping(value="/rate-discount/{productId}")
     public RateDiscountPolicy getRateDiscountPolicy(@PathVariable("productId")Long productId) {
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        RateDiscountPolicy rateDiscountPolicy = rateDiscountPolicyService.getRateDiscountPolicy(productId);
-        return rateDiscountPolicy;
+        return rateDiscountPolicyService.getRateDiscountPolicy(productId);
     }
 }
 
