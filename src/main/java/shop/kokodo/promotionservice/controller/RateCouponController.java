@@ -23,11 +23,4 @@ public class RateCouponController {
         return Response.success();
     }
 
-    @GetMapping("/{productId}")
-    public Response findUserNotUsedRateCouponByproductId(@RequestParam("userId") long userId, @PathVariable("productId")long productId){
-        List<RateCoupon> rateCouponList = rateCouponService.findUserNotUsedRateCouponByproductId(userId, productId);
-
-        return Response.success(rateCouponList);
-    }
-
 }

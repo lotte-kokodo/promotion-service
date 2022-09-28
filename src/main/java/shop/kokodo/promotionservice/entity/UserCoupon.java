@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class UserCoupon extends BaseEntity{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userCouponId;
 
     @ManyToOne

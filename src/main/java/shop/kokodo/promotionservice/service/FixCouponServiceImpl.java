@@ -36,6 +36,7 @@ public class FixCouponServiceImpl implements FixCouponService{
                 .startDate(LocalDateTime.parse(fixCouponDto.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .endDate(LocalDateTime.parse(fixCouponDto.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .productId(productId)
+                .sellerId(fixCouponDto.getSellerId())
                 .build();
     }
 

@@ -19,8 +19,10 @@ public class FixCouponDto {
     String endDate;
     List<Long> productList;
 
+    long sellerId;
+
     @Builder
-    public FixCouponDto(long id, String name, int price, int minPrice, String startDate, String endDate, List<Long> productList) {
+    public FixCouponDto(long id, String name, int price, int minPrice, String startDate, String endDate, List<Long> productList, long sellerId) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -28,5 +30,6 @@ public class FixCouponDto {
         this.startDate = startDate;
         this.endDate = endDate;
         this.productList = productList;
+        this.sellerId=sellerId;
     }
 }

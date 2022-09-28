@@ -26,13 +26,6 @@ public class FixCouponController {
         return Response.success();
     }
 
-    @GetMapping("/{productId}")
-    public Response findUserNotUsedFixCouponByproductId( @RequestParam("userId") long userId, @PathVariable("productId") long productId){
-
-        List<FixCoupon> fixCouponList =fixCouponService.findUserNotUsedFixCouponByproductId(userId, productId);
-
-        return Response.success(fixCouponList);
-    }
 
 
 }

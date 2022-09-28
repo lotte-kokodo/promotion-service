@@ -16,23 +16,17 @@ public class RateCoupon extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="rate_coupon_id")
     private long id;
-
     private String name;
-
     private LocalDateTime regdate;
-
     private int rate;
-
     private int minPrice;
-
     private LocalDateTime startDate;
-
     private LocalDateTime endDate;
-
     private long productId;
+    private long sellerId;
 
     @Builder
-    public RateCoupon(long id, String name, LocalDateTime regdate, int rate, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId) {
+    public RateCoupon(long id, String name, LocalDateTime regdate, int rate, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId, long sellerId) {
         this.id = id;
         this.name = name;
         this.regdate = regdate;
@@ -41,6 +35,8 @@ public class RateCoupon extends BaseEntity{
         this.startDate = startDate;
         this.endDate = endDate;
         this.productId = productId;
+        this.sellerId = sellerId;
+
     }
 
     public void setRegDate(LocalDateTime regDate) {
