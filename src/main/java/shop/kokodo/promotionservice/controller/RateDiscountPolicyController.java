@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,11 @@ import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.service.RateDiscountPolicyService;
 
+import java.util.List;
+
 @RestController
+@Slf4j
+//@RequestMapping("/ratediscount")
 public class RateDiscountPolicyController {
     private RateDiscountPolicyService rateDiscountPolicyService;
 
@@ -20,21 +25,22 @@ public class RateDiscountPolicyController {
         this.rateDiscountPolicyService = rateDiscountPolicyService;
     }
 
-    @PostMapping("/save")
-    public FixDiscountPolicy save(@RequestBody FixDiscountPolicyDto fixDiscountPolicyDto){
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-
-        FixDiscountPolicy fixDiscountPolicy = mapper.map(fixDiscountPolicyDto, FixDiscountPolicy.class);
-        return fixDiscountPolicy;
+    @PostMapping("/rate-discount/save")
+    public RateDiscountPolicy save(@RequestBody RateDiscountPolicyDto rateDiscountPolicyDto){
+        return rateDiscountPolicyService.createRateDiscountPolicy(rateDiscountPolicyDto);
     }
 
-    @GetMapping(value="/ratediscount/{productId}")
+    @GetMapping(value="/rate-discount")
+    public List<RateDiscountPolicy> getRateDiscountPolicyList() {
+        List<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyService.getAll();
+        return rateDiscountPolicy;
+    }
+
+    @GetMapping(value="/rate-discount/{productId}")
     public RateDiscountPolicy getRateDiscountPolicy(@PathVariable("productId")Long productId) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        RateDiscountPolicyDto rateDiscountPolicyDto = rateDiscountPolicyService.getRateDiscountPolicy(productId);
-        RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
+        RateDiscountPolicy rateDiscountPolicy = rateDiscountPolicyService.getRateDiscountPolicy(productId);
         return rateDiscountPolicy;
     }
 }

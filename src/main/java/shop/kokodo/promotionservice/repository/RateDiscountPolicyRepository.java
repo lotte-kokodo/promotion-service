@@ -8,11 +8,10 @@ import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscountPolicyDto, Long> {
+public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscountPolicy, Long> {
     RateDiscountPolicyDto save(RateDiscountPolicyDto fixCoupon);
-    Optional<RateDiscountPolicyDto> findById(Long id);
-    Optional<RateDiscountPolicyDto> findByName(String name);
-    Optional<RateDiscountPolicyDto> findByProductId(Long productId);
-    List<RateDiscountPolicyDto> findAll();
+    Optional<RateDiscountPolicy> findById(Long id);
+    Optional<RateDiscountPolicy> findByName(String name);
+    Optional<RateDiscountPolicy> findByProductId(Long productId);
+    List<RateDiscountPolicy> findAll();
 }
