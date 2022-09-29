@@ -11,4 +11,6 @@ public interface RateDiscountPolicyService {
     public RateDiscountPolicy getRateDiscountPolicy(Long productId);
 
     public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto);
+
+    public List<RateDiscountPolicy> getRateDiscountPolicyByDate();
 }

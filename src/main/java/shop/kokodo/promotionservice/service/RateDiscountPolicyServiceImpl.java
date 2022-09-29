@@ -13,6 +13,7 @@ import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.repository.RateDiscountPolicyRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,6 +37,11 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
         return rateDiscountPolicyRepository.save(rateDiscountPolicy);
+    }
+
+    @Override
+    public List<RateDiscountPolicy> getRateDiscountPolicyByDate() {
+        return rateDiscountPolicyRepository.findDateRangeRateDiscountPolicy(LocalDateTime.now());
     }
 
     @Transactional
