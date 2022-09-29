@@ -2,12 +2,8 @@ package shop.kokodo.promotionservice.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -22,19 +18,25 @@ public class FixDiscountPolicy extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long fixDiscountPolicyId;
 
+    @Column( nullable = false )
     private String name;
 
+    @Column( nullable = false )
     private LocalDateTime regDate;
 
+    @Column( nullable = false )
     private LocalDateTime startDate;
 
+    @Column( nullable = false )
     private LocalDateTime endDate;
 
+    @Column( nullable = false )
     private int price;
 
+    @Column( nullable = false )
     private int minPrice;
 
+    @Column( nullable = false )
     private long productId;
-
 
 }

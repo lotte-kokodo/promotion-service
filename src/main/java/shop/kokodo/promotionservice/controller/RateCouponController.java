@@ -23,4 +23,19 @@ public class RateCouponController {
         return Response.success();
     }
 
+<<<<<<< HEAD
+    @GetMapping("/{productId}")
+    public Response findUserNotUsedRateCouponByproductId(@RequestParam("userId") long userId, @PathVariable("productId")long productId){
+        List<RateCoupon> rateCouponList = rateCouponService.findUserNotUsedRateCouponByproductId(userId, productId);
+
+        return Response.success(rateCouponList);
+=======
+    @GetMapping("/seller")
+    public Response findBySellerId(@RequestParam long sellerId){
+        List<RateCoupon> coupons = rateCouponService.findBySellerId(sellerId);
+
+        return Response.success(coupons);
+>>>>>>> dev
+    }
+
 }

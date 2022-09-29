@@ -18,4 +18,6 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
             "and r.productId = :productId " +
             "and r.startDate <= :now and :now < r.endDate")
     public List<RateCoupon> findUserNotUsedRateCouponByproductId(long userId, long productId, LocalDateTime now);
+
+    public List<RateCoupon> findBySellerId(long sellerId);
 }
