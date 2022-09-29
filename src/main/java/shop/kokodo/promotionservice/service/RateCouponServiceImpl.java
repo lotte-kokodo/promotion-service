@@ -32,6 +32,11 @@ public class RateCouponServiceImpl implements RateCouponService{
         return rateCouponRepository.findUserNotUsedRateCouponByproductId(userId,productId, LocalDateTime.now());
     }
 
+    @Override
+    public List<RateCoupon> findBySellerId(long sellerId) {
+        return rateCouponRepository.findBySellerId(sellerId);
+    }
+
     private RateCoupon convertToRateCoupon(RateCouponDto rateCouponDto, long productId){
         return RateCoupon.builder()
                 .name(rateCouponDto.getName())

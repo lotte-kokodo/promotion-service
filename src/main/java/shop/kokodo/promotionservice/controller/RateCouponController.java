@@ -23,4 +23,11 @@ public class RateCouponController {
         return Response.success();
     }
 
+    @GetMapping("/seller")
+    public Response findBySellerId(@RequestParam long sellerId){
+        List<RateCoupon> coupons = rateCouponService.findBySellerId(sellerId);
+
+        return Response.success(coupons);
+    }
+
 }

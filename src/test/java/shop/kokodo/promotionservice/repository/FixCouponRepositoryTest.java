@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.repository;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,6 +38,7 @@ public class FixCouponRepositoryTest {
    final Long userId=1L;
    final Long productId=1L;
    final LocalDateTime now=LocalDateTime.of(2022,9,25,0,0);
+   final Long selectSellerId = 2L;
    @BeforeEach
    public void setUp(){
       fixCoupon=FixCoupon.builder()
@@ -69,7 +71,7 @@ public class FixCouponRepositoryTest {
               .startDate(LocalDateTime.of(2022,9,20,0,0))
               .endDate(LocalDateTime.of(2022,10,1,0,0))
               .productId(2)
-              .sellerId(1)
+              .sellerId(selectSellerId)
               .build();
 
       userCoupon = UserCoupon.builder()
@@ -92,8 +94,8 @@ public class FixCouponRepositoryTest {
    }
 
    @Test
-   @DisplayName("고정 할인 쿠폰 save")
-   public void fix_coupon_save_success(){
+   @DisplayName("고정 할인 쿠폰 생성 성공")
+   public void fixCouponSaveSuccess(){
       FixCoupon saveCoupon=fixCouponRepository.save(fixCoupon);
       checkFixCoupon(fixCoupon,saveCoupon);
    }
@@ -111,8 +113,8 @@ public class FixCouponRepositoryTest {
    }
 
    @Test
-   @DisplayName("상품ID로 유저의 사용하지 않은 고정할인 쿠폰 조회")
-   public void findUserNotUsedFixCouponByproductId(){
+   @DisplayName("상품ID로 유저의 사용하지 않은 고정할인 쿠폰 조회 성공")
+   public void findUserNotUsedFixCouponByproductIdSuccess(){
       fixCouponRepository.save(fixCoupon);
       fixCouponRepository.save(fixCoupon2);
       fixCouponRepository.save(fixCoupon3);
@@ -123,6 +125,19 @@ public class FixCouponRepositoryTest {
       List<FixCoupon> list=fixCouponRepository.findUserNotUsedFixCouponByproductId(userId, productId,now);
 
       Assertions.assertEquals(list.size(),2);
+   }
+
+   @Test
+   @DisplayName("Seller ID로 쿠폰 조회 성공")
+   public void findBySellerIdSuccess(){
+      fixCouponRepository.save(fixCoupon);
+      fixCouponRepository.save(fixCoupon2);
+      fixCouponRepository.save(fixCoupon3);
+
+      List<FixCoupon> coupons = fixCouponRepository.findBySellerId(selectSellerId);
+
+      Assertions.assertEquals(coupons.size(),1);
+      Assertions.assertEquals(coupons.get(0).getName(),"fixCoupon3");
    }
 
 }

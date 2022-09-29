@@ -27,6 +27,17 @@ public class FixCouponServiceImpl implements FixCouponService{
 
     }
 
+    public List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId){
+        return fixCouponRepository.findUserNotUsedFixCouponByproductId(userId,productId,LocalDateTime.now());
+    }
+
+    @Override
+    public List<FixCoupon> findBySellerId(long sellerId) {
+        
+        // TODO: sellerId  SELLER MS에서 확인해서 예외처리
+        return fixCouponRepository.findBySellerId(sellerId);
+    }
+
     private FixCoupon convertToFixCoupon(FixCouponDto fixCouponDto,long productId){
         return FixCoupon.builder()
                 .name(fixCouponDto.getName())
@@ -40,7 +51,5 @@ public class FixCouponServiceImpl implements FixCouponService{
                 .build();
     }
 
-    public List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId){
-        return fixCouponRepository.findUserNotUsedFixCouponByproductId(userId,productId,LocalDateTime.now());
-    }
+
 }
