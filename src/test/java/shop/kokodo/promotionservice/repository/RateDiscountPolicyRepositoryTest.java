@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @SpringBootTest
 class RateDiscountPolicyRepositoryTest {
     @Autowired
@@ -21,8 +22,6 @@ class RateDiscountPolicyRepositoryTest {
     RateDiscountPolicy rateDiscountPolicy2;
     RateDiscountPolicy rateDiscountPolicy3;
 
-    final Long rateDiscountPolicyId=1L;
-    final Long productId=1L;
     final LocalDateTime now=LocalDateTime.of(2022,9,25,0,0);
 
     @BeforeEach

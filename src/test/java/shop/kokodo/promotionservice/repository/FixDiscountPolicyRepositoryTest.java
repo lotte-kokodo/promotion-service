@@ -4,7 +4,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
-import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -22,8 +21,6 @@ class FixDiscountPolicyRepositoryTest {
     FixDiscountPolicy fixDiscountPolicy2;
     FixDiscountPolicy fixDiscountPolicy3;
 
-    final Long fixDiscountPolicyId=1L;
-    final Long productId=1L;
     final LocalDateTime now=LocalDateTime.of(2022,9,25,0,0);
 
     @BeforeEach
@@ -56,7 +53,6 @@ class FixDiscountPolicyRepositoryTest {
                 .productId(0)
                 .build();
     }
-
     @AfterEach
     void afterAll() {
         if(fixDiscountPolicyRepository.findAll().size() != 0 ) {

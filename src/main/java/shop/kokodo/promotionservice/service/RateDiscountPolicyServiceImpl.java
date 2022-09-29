@@ -1,13 +1,9 @@
 package shop.kokodo.promotionservice.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.repository.RateDiscountPolicyRepository;
@@ -17,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@Slf4j
 public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService {
     private RateDiscountPolicyRepository rateDiscountPolicyRepository;
 
