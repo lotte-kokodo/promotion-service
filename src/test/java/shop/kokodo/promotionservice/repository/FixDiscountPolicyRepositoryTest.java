@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class FixDiscountPolicyRepositoryTest {
     @Autowired
     FixDiscountPolicyRepository fixDiscountPolicyRepository;
@@ -49,8 +51,8 @@ class FixDiscountPolicyRepositoryTest {
                 .startDate(null)
                 .endDate(null)
                 .price(3000)
-                .minPrice(0)
-                .productId(0)
+                .minPrice(null)
+                .productId(null)
                 .build();
     }
     @AfterEach
@@ -69,16 +71,6 @@ class FixDiscountPolicyRepositoryTest {
         List<FixDiscountPolicy> list = fixDiscountPolicyRepository.findAll();
 
         Assertions.assertEquals(list.size(), 2);
-    }
-
-    @Test
-    @DisplayName("고정할인정책 save 실패")
-    void save_실패() {
-        assertThrows(Exception.class, () -> {
-                    fixDiscountPolicyRepository.save(fixDiscountPolicy3);
-                }, "예외가 발생하지 않았습니다."
-        );
-
     }
 
     @Test
