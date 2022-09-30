@@ -31,8 +31,13 @@ public class FixCoupon extends BaseEntity {
 
     private long sellerId;
 
+    private boolean freeDelivery;
+
+    @Transient
+    private final int couponFlag=2;
+
     @Builder
-    public FixCoupon(long id, String name, LocalDateTime regdate, int price, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId, long sellerId) {
+    public FixCoupon(long id, String name, LocalDateTime regdate, int price, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId, long sellerId, boolean freeDelivery) {
         this.id = id;
         this.name = name;
         this.regdate = regdate;
@@ -42,6 +47,7 @@ public class FixCoupon extends BaseEntity {
         this.endDate = endDate;
         this.productId = productId;
         this.sellerId=sellerId;
+        this.freeDelivery=freeDelivery;
     }
 
 }
