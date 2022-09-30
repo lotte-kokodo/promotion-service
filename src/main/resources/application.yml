@@ -2,7 +2,6 @@
 server:
   port: 9011
 
-
 spring:
   application:
     name: promotion-service

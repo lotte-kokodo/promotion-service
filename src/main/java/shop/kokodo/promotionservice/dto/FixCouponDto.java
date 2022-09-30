@@ -18,7 +18,6 @@ public class FixCouponDto {
     String startDate;
     String endDate;
     List<Long> productList;
-
     long sellerId;
 
     @Builder

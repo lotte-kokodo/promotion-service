@@ -18,7 +18,7 @@ public class FixCouponController {
 
     private final FixCouponService fixCouponService;
 
-    @GetMapping("/save")
+    @PostMapping("/save")
     public Response save(@RequestBody FixCouponDto fixCouponDto){
 
         fixCouponService.save(fixCouponDto);

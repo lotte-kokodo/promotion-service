@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 /**
  * null 값을 가지는 필드는, Json 응답에 포함되지 않도록 설정
@@ -26,7 +27,7 @@ public class Response {
      * 요청이 성공하고 응답 데이터가 필요 없을 경우 사용
      */
     public static Response success(){
-        return new Response(true, 0, null);
+        return new Response(true, HttpStatus.OK.value(), null);
     }
 
     /**

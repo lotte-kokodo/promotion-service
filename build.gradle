@@ -2,24 +2,25 @@ plugins {
 	id 'org.springframework.boot' version '2.7.4'
 	id 'io.spring.dependency-management' version '1.0.14.RELEASE'
 	id 'java'
+	id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'shop.kokodo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+ext {
+	set('springCloudVersion', "2021.0.4")
+	snippetsDir = file('build/generated-snippets')
+}
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
 }
-
 repositories {
 	mavenCentral()
-}
-
-ext {
-	set('springCloudVersion', "2021.0.4")
 }
 
 dependencies {
@@ -31,19 +32,32 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	implementation 'com.h2database:h2:1.3.176'
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.1.1'
-	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
 	implementation 'mysql:mysql-connector-java:8.0.28'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.amqp:spring-rabbit-test'
 	testImplementation 'org.springframework.batch:spring-batch-test'
-	testImplementation group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.4.RELEASE'
-	testCompileOnly 'org.projectlombok:lombok' // 테스트 의존성 추가
-	testAnnotationProcessor 'org.projectlombok:lombok' // 테스트 의존성 추가
-	testCompileOnly 'com.h2database:h2:1.3.176'
-//	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
-//	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+asciidoctor {
+	dependsOn test
+	inputs.dir snippetsDir
+}
+asciidoctor.doFirst {
+	delete file('src/main/resources/static/docs')
+}
+
+task copyDocument(type: Copy) {
+	dependsOn asciidoctor
+	from file("build/generated-snippets")
+	into file("src/main/resources/static/docs")
 }
 
 dependencyManagement {
@@ -51,10 +65,19 @@ dependencyManagement {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
 }
-
-tasks.named('test') {
-	useJUnitPlatform()
-
+build {
+	dependsOn copyDocument
 }
+bootJar {
+	dependsOn asciidoctor
+	copy {
+		from "${asciidoctor.outputDir}"
+		into 'BOOT-INF/classes/static/docs'
+	}
+}
+
+
+
+
 
 

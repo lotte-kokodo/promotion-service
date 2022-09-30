@@ -15,7 +15,8 @@ public class UserCoupon extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userCouponId;
+    @Column(name = "user_coupon_id")
+    private long id;
 
     @ManyToOne
     @JoinColumn(name="rate_coupon_id")
@@ -32,8 +33,8 @@ public class UserCoupon extends BaseEntity{
     private int usageStatus;
 
     @Builder
-    public UserCoupon(long userCouponId, RateCoupon rateCoupon, FixCoupon fixCoupon, long userId, int usageStatus) {
-        this.userCouponId = userCouponId;
+    public UserCoupon(long id, RateCoupon rateCoupon, FixCoupon fixCoupon, long userId, int usageStatus) {
+        this.id = id;
         this.rateCoupon = rateCoupon;
         this.fixCoupon = fixCoupon;
         this.userId = userId;
