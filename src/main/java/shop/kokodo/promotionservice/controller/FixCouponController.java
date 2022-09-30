@@ -18,7 +18,7 @@ public class FixCouponController {
 
     private final FixCouponService fixCouponService;
 
-    @GetMapping("/save")
+    @PostMapping("/save")
     public Response save(@RequestBody FixCouponDto fixCouponDto){
 
         fixCouponService.save(fixCouponDto);
@@ -26,14 +26,6 @@ public class FixCouponController {
         return Response.success();
     }
 
-<<<<<<< HEAD
-    @GetMapping("/{productId}")
-    public Response findUserNotUsedFixCouponByproductId( @RequestParam("userId") long userId, @PathVariable("productId") long productId){
-
-
-        return Response.success(fixCouponList);
-    }
-=======
     @GetMapping("/seller")
     public Response findBySellerId(@RequestParam long sellerId){
 
@@ -42,8 +34,5 @@ public class FixCouponController {
         return Response.success(coupons);
 
     }
-
->>>>>>> dev
-
 
 }

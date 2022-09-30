@@ -20,31 +20,24 @@ public class RateDiscountPolicy extends BaseEntity{
     private Long rateDiscountPolicyId;
 
     @Column( nullable = false )
-//@NotNull
     private String name;
 
     @Column( nullable = false )
-//@NotNull
     private LocalDateTime regDate;
 
     @Column( nullable = false )
-//@NotNull
     private LocalDateTime startDate;
 
     @Column( nullable = false )
-//@NotNull
     private LocalDateTime endDate;
 
     @Column( nullable = false )
-//@NotNull
     private Integer rate;
 
     @Column( nullable = false )
-//@NotNull
     private Integer minPrice;
 
     @Column( nullable = false )
-//@NotNull
     private Long productId;
 
 }

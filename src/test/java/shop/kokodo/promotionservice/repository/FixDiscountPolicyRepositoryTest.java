@@ -72,7 +72,7 @@ class FixDiscountPolicyRepositoryTest {
 
         Assertions.assertEquals(list.size(), 2);
     }
-
+    
     @Test
     @DisplayName("고정할인정책 findById 성공")
     void findById_성공() {

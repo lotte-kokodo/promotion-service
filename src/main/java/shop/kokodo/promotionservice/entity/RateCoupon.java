@@ -25,6 +25,9 @@ public class RateCoupon extends BaseEntity{
     private long productId;
     private long sellerId;
 
+    @Transient
+    private final int couponFlag=1;
+
     @Builder
     public RateCoupon(long id, String name, LocalDateTime regdate, int rate, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId, long sellerId) {
         this.id = id;
