@@ -20,6 +20,11 @@ import shop.kokodo.promotionservice.repository.FixCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 import shop.kokodo.promotionservice.repository.UserCouponRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -141,5 +146,28 @@ public class UserCouponServiceTest {
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> userCouponService.save(failUserCouponDto));
     }
+
+    // TODO: 에러!!!
+    @Test
+    @DisplayName("member id로 유효한 쿠폰 조회 성공")
+    public void findByMemberId(){
+        final LocalDateTime now =LocalDateTime.of(2022,9,30,0,0);
+        List<UserCoupon> fixCouponList = new ArrayList<>();
+        fixCouponList.add(new UserCoupon());
+
+        List<UserCoupon> rateCouponList = new ArrayList<>();
+        rateCouponList.add(new UserCoupon());
+        rateCouponList.add(new UserCoupon());
+
+        doReturn(fixCouponList).when(userCouponRepository).findFixCouponByMemberId(1, now);
+        doReturn(rateCouponList).when(userCouponRepository).findRateCouponByMemberId(1, now);
+
+        List<UserCoupon> selList = userCouponService.findValidCouponByMemberIdGroupByCouponName(1L);
+
+        Assertions.assertEquals(fixCouponList.size()+rateCouponList.size(), selList.size());
+
+    }
+
+
 
 }

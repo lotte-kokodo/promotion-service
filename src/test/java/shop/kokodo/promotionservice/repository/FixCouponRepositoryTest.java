@@ -47,7 +47,7 @@ public class FixCouponRepositoryTest {
               .price(1000)
               .minPrice(10000)
               .startDate(LocalDateTime.of(2022,9,20,0,0))
-              .endDate(LocalDateTime.of(2022,10,1,0,0))
+              .endDate(LocalDateTime.of(2023,10,1,0,0))
               .productId(1)
               .sellerId(1)
               .build();
@@ -58,7 +58,7 @@ public class FixCouponRepositoryTest {
               .price(1000)
               .minPrice(10000)
               .startDate(LocalDateTime.of(2022,9,20,0,0))
-              .endDate(LocalDateTime.of(2022,10,1,0,0))
+              .endDate(LocalDateTime.of(2023,10,1,0,0))
               .productId(1)
               .sellerId(1)
               .build();
@@ -69,7 +69,7 @@ public class FixCouponRepositoryTest {
               .price(1000)
               .minPrice(10000)
               .startDate(LocalDateTime.of(2022,9,20,0,0))
-              .endDate(LocalDateTime.of(2022,10,1,0,0))
+              .endDate(LocalDateTime.of(2023,10,1,0,0))
               .productId(2)
               .sellerId(selectSellerId)
               .build();
@@ -139,5 +139,7 @@ public class FixCouponRepositoryTest {
       Assertions.assertEquals(coupons.size(),1);
       Assertions.assertEquals(coupons.get(0).getName(),"fixCoupon3");
    }
+
+
 
 }
