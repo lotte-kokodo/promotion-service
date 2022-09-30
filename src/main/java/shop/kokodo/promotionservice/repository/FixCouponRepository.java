@@ -20,4 +20,6 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
 
     public List<FixCoupon> findBySellerId(long sellerId);
 
+
+
 }

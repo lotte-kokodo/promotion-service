@@ -2,7 +2,9 @@ package shop.kokodo.promotionservice.controller;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+import shop.kokodo.promotionservice.dto.UpdateUserCouponDto;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixCoupon;
@@ -24,7 +26,7 @@ public class UserCouponController {
     private final UserCouponService userCouponService;
 
     @GetMapping("/{productId}/fix-coupon")
-    public Response findUserNotUsedFixCouponByproductId(@RequestParam("userId") long userId, @PathVariable("productId") long productId){
+    public Response findUserNotUsedFixCouponByproductId(@RequestHeader("memberId") long userId, @PathVariable("productId") long productId){
 
         List<FixCoupon> fixCouponList =fixCouponService.findUserNotUsedFixCouponByproductId(userId, productId);
 
@@ -32,15 +34,33 @@ public class UserCouponController {
     }
 
     @GetMapping("/{productId}/rate-coupon")
-    public Response findUserNotUsedRateCouponByproductId(@RequestParam("userId") long userId, @PathVariable("productId")long productId){
+    public Response findUserNotUsedRateCouponByproductId(@RequestHeader("memberId") long userId, @PathVariable("productId")long productId){
         List<RateCoupon> rateCouponList = rateCouponService.findUserNotUsedRateCouponByproductId(userId, productId);
 
         return Response.success(rateCouponList);
     }
 
-    @PostMapping("/save")
-    public Response save(@RequestBody UserCouponDto userCouponDto){
+    @PostMapping
+    public Response save(@RequestBody UserCouponDto userCouponDto, @RequestHeader("memberId")long memberId){
+        userCouponDto.setUserId(memberId);
         UserCoupon userCoupon= userCouponService.save(userCouponDto);
+
+        return Response.success(userCoupon);
+    }
+    @GetMapping
+    public Response findByMemberId(@RequestHeader(value="memberId") long memberId){
+
+        List<UserCoupon> list = userCouponService.findValidCouponByMemberIdGroupByCouponName(memberId);
+
+        return Response.success(list);
+
+    }
+
+    @PutMapping("/usage-status")
+    public Response updateUsageStatus(@RequestHeader(value = "member-id")long memberId,
+                                      @RequestBody UpdateUserCouponDto updateUserCouponDto){
+
+        UserCoupon userCoupon = userCouponService.updateUsageStatus(updateUserCouponDto,memberId);
 
         return Response.success(userCoupon);
     }
