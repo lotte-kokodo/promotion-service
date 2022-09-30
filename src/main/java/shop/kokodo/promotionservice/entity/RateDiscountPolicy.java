@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.entity;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,7 +17,7 @@ public class RateDiscountPolicy extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long rateDiscountPolicyId;
+    private Long rateDiscountPolicyId;
 
     @Column( nullable = false )
     private String name;
@@ -31,13 +32,12 @@ public class RateDiscountPolicy extends BaseEntity{
     private LocalDateTime endDate;
 
     @Column( nullable = false )
-    private int rate;
+    private Integer rate;
 
     @Column( nullable = false )
-    private int minPrice;
+    private Integer minPrice;
 
     @Column( nullable = false )
-    private long productId;
-
+    private Long productId;
 
 }
