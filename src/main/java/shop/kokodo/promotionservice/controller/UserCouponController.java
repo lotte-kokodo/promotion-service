@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.controller;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
@@ -14,7 +15,7 @@ import shop.kokodo.promotionservice.service.UserCouponService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/userCoupon")
+@RequestMapping("/user-coupon")
 @RequiredArgsConstructor
 public class UserCouponController {
 
@@ -22,7 +23,7 @@ public class UserCouponController {
     private final RateCouponService rateCouponService;
     private final UserCouponService userCouponService;
 
-    @GetMapping("/{productId}/fixCoupon")
+    @GetMapping("/{productId}/fix-coupon")
     public Response findUserNotUsedFixCouponByproductId(@RequestParam("userId") long userId, @PathVariable("productId") long productId){
 
         List<FixCoupon> fixCouponList =fixCouponService.findUserNotUsedFixCouponByproductId(userId, productId);
@@ -30,7 +31,7 @@ public class UserCouponController {
         return Response.success(fixCouponList);
     }
 
-    @GetMapping("/{productId}/rateCoupon")
+    @GetMapping("/{productId}/rate-coupon")
     public Response findUserNotUsedRateCouponByproductId(@RequestParam("userId") long userId, @PathVariable("productId")long productId){
         List<RateCoupon> rateCouponList = rateCouponService.findUserNotUsedRateCouponByproductId(userId, productId);
 
@@ -43,4 +44,6 @@ public class UserCouponController {
 
         return Response.success(userCoupon);
     }
+
+
 }

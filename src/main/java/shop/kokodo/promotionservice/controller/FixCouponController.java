@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/fixCoupon")
+@RequestMapping("/fix-coupon")
 public class FixCouponController {
 
     private final FixCouponService fixCouponService;

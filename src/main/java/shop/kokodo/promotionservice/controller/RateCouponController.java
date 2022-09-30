@@ -10,7 +10,7 @@ import shop.kokodo.promotionservice.service.RateCouponService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rateCoupon")
+@RequestMapping("/rate-coupon")
 @RequiredArgsConstructor
 public class RateCouponController {
     private final RateCouponService rateCouponService;
