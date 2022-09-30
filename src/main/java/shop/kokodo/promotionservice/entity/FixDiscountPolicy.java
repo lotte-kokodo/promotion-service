@@ -16,7 +16,7 @@ public class FixDiscountPolicy extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long fixDiscountPolicyId;
+    private Long fixDiscountPolicyId;
 
     @Column( nullable = false )
     private String name;
@@ -31,12 +31,12 @@ public class FixDiscountPolicy extends BaseEntity{
     private LocalDateTime endDate;
 
     @Column( nullable = false )
-    private int price;
+    private Integer price;
 
     @Column( nullable = false )
-    private int minPrice;
+    private Integer minPrice;
 
     @Column( nullable = false )
-    private long productId;
+    private Long productId;
 
 }
