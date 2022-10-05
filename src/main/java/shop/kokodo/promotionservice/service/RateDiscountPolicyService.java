@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RateDiscountPolicyService {
     public List<RateDiscountPolicy> getAll();
-    public RateDiscountPolicy getRateDiscountPolicy(Long productId);
+    public RateDiscountPolicy findByProductId(Long productId);
 
     public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto);
 

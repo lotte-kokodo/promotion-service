@@ -38,7 +38,7 @@ public class RateDiscountPolicyController {
 
     @GetMapping(value="/rate-discount/{productId}")
     public RateDiscountPolicy getRateDiscountPolicy(@PathVariable("productId")Long productId) {
-        return rateDiscountPolicyService.getRateDiscountPolicy(productId);
+        return rateDiscountPolicyService.findByProductId(productId);
     }
 
     @GetMapping(value="/rate-discount/date")
