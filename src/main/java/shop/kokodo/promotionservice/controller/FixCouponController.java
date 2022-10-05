@@ -25,7 +25,6 @@ public class FixCouponController {
 
         return Response.success();
     }
-
     @GetMapping("/seller")
     public Response findBySellerId(@RequestParam long sellerId){
 
@@ -34,5 +33,4 @@ public class FixCouponController {
         return Response.success(coupons);
 
     }
-
 }
