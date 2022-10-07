@@ -1,16 +1,13 @@
 package shop.kokodo.promotionservice.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
 @NoArgsConstructor
+@ToString
 public class UserCoupon extends BaseEntity{
 
     @Id
@@ -39,6 +36,10 @@ public class UserCoupon extends BaseEntity{
         this.fixCoupon = fixCoupon;
         this.userId = userId;
         this.usageStatus = usageStatus;
+    }
+
+    public void useCoupon(){
+        this.usageStatus=1;
     }
 
 }

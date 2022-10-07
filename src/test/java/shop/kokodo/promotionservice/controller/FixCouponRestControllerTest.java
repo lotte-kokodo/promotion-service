@@ -73,7 +73,7 @@ public class FixCouponRestControllerTest {
     public void save() throws Exception {
 
         this.mockMvc.perform(
-                post("/fixCoupon/save")
+                post("/fix-coupon")
                 .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(fixCouponDto))
                 )

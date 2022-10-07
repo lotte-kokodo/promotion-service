@@ -53,6 +53,8 @@ public class UserCouponRestControllerTest {
     FixCoupon fixCoupon;
     RateCoupon rateCoupon;
 
+    final long memberId=1L;
+
     @BeforeEach
     public void setUp(){
         fixCoupon= FixCoupon.builder()
@@ -81,12 +83,12 @@ public class UserCouponRestControllerTest {
         rateCoupon=rateCouponRepository.save(rateCoupon);
 
         userRateCouponDto = UserCouponDto.builder()
-                .userId(1L)
+                .userId(memberId)
                 .rateCouponId(rateCoupon.getId())
                 .build();
 
         userFixCouponDto = UserCouponDto.builder()
-                .userId(1L)
+                .userId(memberId)
                 .fixCouponId(fixCoupon.getId())
                 .build();
 
@@ -97,9 +99,10 @@ public class UserCouponRestControllerTest {
     public void saveFixCoupon() throws Exception {
 
         this.mockMvc.perform(
-                        post("/userCoupon/save")
+                        post("/user-coupon")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(userFixCouponDto))
+                                .header("memberId", memberId)
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -145,9 +148,10 @@ public class UserCouponRestControllerTest {
     public void saveRateCoupon() throws Exception {
 
         this.mockMvc.perform(
-                        post("/userCoupon/save")
+                        post("/user-coupon")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(userRateCouponDto))
+                                .header("memberId", memberId)
                 )
                 .andDo(print())
                 .andExpect(status().isOk())

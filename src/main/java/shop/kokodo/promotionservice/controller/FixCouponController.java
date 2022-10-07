@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/fixCoupon")
+@RequestMapping("/fix-coupon")
 public class FixCouponController {
 
     private final FixCouponService fixCouponService;
 
-    @PostMapping("/save")
+    @PostMapping
     public Response save(@RequestBody FixCouponDto fixCouponDto){
 
         fixCouponService.save(fixCouponDto);

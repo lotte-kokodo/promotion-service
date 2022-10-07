@@ -38,6 +38,8 @@ public class FixCouponServiceImpl implements FixCouponService{
         return fixCouponRepository.findBySellerId(sellerId);
     }
 
+
+
     private FixCoupon convertToFixCoupon(FixCouponDto fixCouponDto,long productId){
         return FixCoupon.builder()
                 .name(fixCouponDto.getName())
