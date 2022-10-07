@@ -12,4 +12,6 @@ public interface RateCouponService {
 
     public List<RateCoupon> findUserNotUsedRateCouponByproductId(long userId, long productId);
     public List<RateCoupon> findBySellerId(long sellerId);
+
+    public List<RateCoupon> findByProductId(long productId);
 }
