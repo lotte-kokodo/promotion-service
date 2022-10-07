@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
+@Transactional
 class RateDiscountPolicyRepositoryTest {
     @Autowired
     RateDiscountPolicyRepository rateDiscountPolicyRepository;
@@ -49,9 +51,9 @@ class RateDiscountPolicyRepositoryTest {
                 .regDate(null)
                 .startDate(null)
                 .endDate(null)
-                .rate(0)
-                .minPrice(0)
-                .productId(0)
+                .rate(null)
+                .minPrice(null)
+                .productId(null)
                 .build();
     }
 
@@ -71,16 +73,6 @@ class RateDiscountPolicyRepositoryTest {
         List<RateDiscountPolicy> list = rateDiscountPolicyRepository.findAll();
 
         Assertions.assertEquals(list.size(), 2);
-    }
-
-    @Test
-    @DisplayName("할인정책 save 실패")
-    void save_실패() {
-        assertThrows(Exception.class, () -> {
-                rateDiscountPolicyRepository.save(rateDiscountPolicy3);
-            }, "예외가 발생하지 않았습니다."
-        );
-
     }
 
     @Test
