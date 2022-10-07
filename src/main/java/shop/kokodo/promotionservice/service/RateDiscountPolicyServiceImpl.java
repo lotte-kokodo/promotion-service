@@ -5,12 +5,16 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.repository.RateDiscountPolicyRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService {
@@ -37,6 +41,29 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     @Override
     public List<RateDiscountPolicy> getRateDiscountPolicyByDate() {
         return rateDiscountPolicyRepository.findDateRangeRateDiscountPolicy(LocalDateTime.now());
+    }
+
+    @Override
+    public Response findAllByProductIdList(List<Long> productIdList) {
+        ModelMapper mapper = new ModelMapper();
+        System.out.println("productIdList" + productIdList.toString() + " " + productIdList.size());
+
+        List<RateDiscountPolicy> result = rateDiscountPolicyRepository.findAllByProductId(productIdList);
+        System.out.println("result" + result.toString() + " " + result.size());
+
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        List<RateDiscountPolicyDto> list = result.stream()
+                .map(source -> mapper.map(source, RateDiscountPolicyDto.class))
+                .collect(Collectors.toList());
+
+        Map<Long, RateDiscountPolicyDto> map = new HashMap<>();
+
+        for(int i=0;i<list.size();i++) {
+            map.put(productIdList.get(i), list.get(i));
+        }
+        System.out.println("map " + map.toString());
+
+        return Response.success(map);
     }
 
     @Transactional
