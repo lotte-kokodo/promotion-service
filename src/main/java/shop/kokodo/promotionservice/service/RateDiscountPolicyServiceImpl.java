@@ -46,10 +46,8 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     @Override
     public Response findAllByProductIdList(List<Long> productIdList) {
         ModelMapper mapper = new ModelMapper();
-        System.out.println("productIdList" + productIdList.toString() + " " + productIdList.size());
 
         List<RateDiscountPolicy> result = rateDiscountPolicyRepository.findAllByProductId(productIdList);
-        System.out.println("result" + result.toString() + " " + result.size());
 
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         List<RateDiscountPolicyDto> list = result.stream()
@@ -61,7 +59,6 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         for(int i=0;i<list.size();i++) {
             map.put(productIdList.get(i), list.get(i));
         }
-        System.out.println("map " + map.toString());
 
         return Response.success(map);
     }
