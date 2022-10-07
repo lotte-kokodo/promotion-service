@@ -5,6 +5,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.service.FixDiscountPolicyService;
@@ -33,5 +34,10 @@ public class FixDiscountPolicyController {
     @GetMapping(value="/fix-discount/{productId}")
     public FixDiscountPolicy getFixDiscountPolicy(@PathVariable("productId")Long productId) {
         return fixDiscountPolicyService.getFixDiscountPolicy(productId);
+    }
+
+    @GetMapping(value="/fix-discount/list")
+    public Response getFixDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
+        return fixDiscountPolicyService.findAllByProductIdList(productIdList);
     }
 }
