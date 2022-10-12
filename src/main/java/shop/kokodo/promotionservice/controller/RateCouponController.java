@@ -7,6 +7,7 @@ import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateCoupon;
 import shop.kokodo.promotionservice.service.RateCouponService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController

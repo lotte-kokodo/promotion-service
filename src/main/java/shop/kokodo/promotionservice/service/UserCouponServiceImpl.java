@@ -109,6 +109,31 @@ public class UserCouponServiceImpl implements UserCouponService{
         return userCouponRepository.save(updateUserCoupon);
     }
 
+    @Override
+    public List<RateCoupon> findRateCouponByMemberIdAndProductId(long productId, long memberId) {
+
+        List<UserCoupon> list = userCouponRepository.findRateCouponByMemberIdAndProductId(memberId,productId, LocalDateTime.now());
+
+        List<RateCoupon> rateCoupons = new ArrayList<>();
+
+        for (UserCoupon userCoupon : list) {
+            rateCoupons.add(userCoupon.getRateCoupon());
+        }
+        return rateCoupons;
+    }
+
+    @Override
+    public List<FixCoupon> findFixCouponByMemberIdAndProductId(long productId, long memberId) {
+        List<UserCoupon> list = userCouponRepository.findFixCouponByMemberIdAndProductId(memberId,productId, LocalDateTime.now());
+
+        List<FixCoupon> rateCoupons = new ArrayList<>();
+
+        for (UserCoupon userCoupon : list) {
+            rateCoupons.add(userCoupon.getFixCoupon());
+        }
+        return rateCoupons;
+    }
+
     private UserCoupon convertToUserFixCoupon(UserCouponDto userCouponDto, FixCoupon fixCoupon){
         return UserCoupon.builder()
                 .userId(userCouponDto.getUserId())

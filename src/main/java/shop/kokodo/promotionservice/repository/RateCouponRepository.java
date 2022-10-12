@@ -23,6 +23,7 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
 
     @Query(value = "select r from RateCoupon r " +
             "where r.productId = :productId and " +
-            " startDate <= :now and :now <=endDate ")
+            " startDate <= :now and :now <=endDate order by r.rate desc")
     public List<RateCoupon> findByProductId(long productId, LocalDateTime now);
+
 }

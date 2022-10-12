@@ -34,8 +34,25 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
             "group by r.name" )
     public List<UserCoupon> findRateCouponByMemberId(long memberId, LocalDateTime now);
 
+    @Query(value = "select u " +
+            "from UserCoupon u join fetch u.rateCoupon r " +
+            "where r.startDate <= :now and :now < r.endDate " +
+            " and u.usageStatus = 0 " +
+            " and r.productId = :productId " +
+            " and u.userId= :memberId ")
+    public List<UserCoupon> findRateCouponByMemberIdAndProductId(long memberId, long productId, LocalDateTime now);
+
     public Optional<UserCoupon> findByUserIdAndRateCoupon(long userId, RateCoupon rateCoupon);
 
     public Optional<UserCoupon> findByUserIdAndFixCoupon(long userId, FixCoupon fixCoupon);
+
+    @Query(value = "select u " +
+            "from UserCoupon u join fetch u.fixCoupon f " +
+            "where f.startDate <= :now and :now < f.endDate " +
+            " and u.usageStatus = 0 " +
+            " and f.productId = :productId " +
+            " and u.userId= :memberId ")
+    public List<UserCoupon> findFixCouponByMemberIdAndProductId(long memberId, long productId, LocalDateTime now);
+
 }
 

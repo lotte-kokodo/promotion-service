@@ -3,6 +3,7 @@ package shop.kokodo.promotionservice.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
+import shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
@@ -10,7 +11,9 @@ import shop.kokodo.promotionservice.repository.RateCouponRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
