@@ -26,23 +26,28 @@ public class RateDiscountPolicyController {
         this.rateDiscountPolicyService = rateDiscountPolicyService;
     }
 
-    @PostMapping("/rateDiscount/save")
+    @PostMapping("/rate-discount/save")
     public RateDiscountPolicy save(@RequestBody RateDiscountPolicyDto rateDiscountPolicyDto){
         return rateDiscountPolicyService.createRateDiscountPolicy(rateDiscountPolicyDto);
     }
 
-    @GetMapping(value="/rateDiscount")
+    @GetMapping(value="/rate-discount")
     public List<RateDiscountPolicy> getRateDiscountPolicyList() {
         List<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyService.getAll();
         return rateDiscountPolicy;
     }
 
-    @GetMapping(value="/rateDiscount/{productId}")
-    public Response getRateDiscountPolicy(@PathVariable("productId")Long productId) {
-        return Response.success(rateDiscountPolicyService.getRateDiscountPolicy(productId));
+    @GetMapping(value="/rate-discount/{productId}")
+    public RateDiscountPolicy getRateDiscountPolicy(@PathVariable("productId")Long productId) {
+        return rateDiscountPolicyService.findByProductId(productId);
     }
 
-    @GetMapping(value="/rateDiscount/date")
+    @GetMapping(value="/rate-discount/list")
+    public Response getRateDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
+        return rateDiscountPolicyService.findAllByProductIdList(productIdList);
+    }
+
+    @GetMapping(value="/rate-discount/date")
     public List<RateDiscountPolicy> getRateDiscountPolicyByDate() {
         return rateDiscountPolicyService.getRateDiscountPolicyByDate();
     }

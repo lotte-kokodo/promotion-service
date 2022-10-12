@@ -5,11 +5,17 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
+import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.repository.FixDiscountPolicyRepository;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
@@ -39,5 +45,25 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     @Transactional
     public FixDiscountPolicy getFixDiscountPolicy(Long productId) {
         return fixDiscountPolicyRepository.findByProductId(productId).orElse(new FixDiscountPolicy());
+    }
+
+    @Override
+    public Response findAllByProductIdList(List<Long> productIdList) {
+        ModelMapper mapper = new ModelMapper();
+
+        List<RateDiscountPolicy> result = fixDiscountPolicyRepository.findAllByProductId(productIdList);
+
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        List<FixDiscountPolicyDto> list = result.stream()
+                .map(source -> mapper.map(source, FixDiscountPolicyDto.class))
+                .collect(Collectors.toList());
+
+        Map<Long, FixDiscountPolicyDto> map = new HashMap<>();
+
+        for(int i=0;i<list.size();i++) {
+            map.put(productIdList.get(i), list.get(i));
+        }
+
+        return Response.success(map);
     }
 }
