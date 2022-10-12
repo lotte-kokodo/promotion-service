@@ -2,8 +2,11 @@ package shop.kokodo.promotionservice.controller;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.pool.TypePool;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
+import shop.kokodo.promotionservice.dto.ProductIdAndFixCouponDto;
+import shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto;
 import shop.kokodo.promotionservice.dto.UpdateUserCouponDto;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.dto.response.Response;
@@ -14,10 +17,11 @@ import shop.kokodo.promotionservice.service.FixCouponService;
 import shop.kokodo.promotionservice.service.RateCouponService;
 import shop.kokodo.promotionservice.service.UserCouponService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-coupon")
+@RequestMapping("/userCoupon")
 @RequiredArgsConstructor
 public class UserCouponController {
 
@@ -25,7 +29,7 @@ public class UserCouponController {
     private final RateCouponService rateCouponService;
     private final UserCouponService userCouponService;
 
-    @GetMapping("/{productId}/fix-coupon")
+    @GetMapping("/{productId}/fixCoupon")
     public Response findUserNotUsedFixCouponByproductId(@RequestHeader("memberId") long userId, @PathVariable("productId") long productId){
 
         List<FixCoupon> fixCouponList =fixCouponService.findUserNotUsedFixCouponByproductId(userId, productId);
@@ -33,7 +37,7 @@ public class UserCouponController {
         return Response.success(fixCouponList);
     }
 
-    @GetMapping("/{productId}/rate-coupon")
+    @GetMapping("/{productId}/rateCoupon")
     public Response findUserNotUsedRateCouponByproductId(@RequestHeader("memberId") long userId, @PathVariable("productId")long productId){
         List<RateCoupon> rateCouponList = rateCouponService.findUserNotUsedRateCouponByproductId(userId, productId);
 
@@ -56,14 +60,63 @@ public class UserCouponController {
 
     }
 
-    @PutMapping("/usage-status")
-    public Response updateUsageStatus(@RequestHeader(value = "member-id")long memberId,
+    @PutMapping("/usageStatus")
+    public Response updateUsageStatus(@RequestHeader(value = "memberId")long memberId,
                                       @RequestBody UpdateUserCouponDto updateUserCouponDto){
 
         UserCoupon userCoupon = userCouponService.updateUsageStatus(updateUserCouponDto,memberId);
 
         return Response.success(userCoupon);
     }
+
+    @PostMapping("/list")
+    public Response saveRateCouponList(@RequestParam List<Long> rateIdList, @RequestHeader long memberId){
+
+        for (Long rate : rateIdList) {
+            UserCouponDto userCouponDto = UserCouponDto.builder()
+                    .userId(memberId)
+                    .usageStatus(0)
+                    .rateCouponId(rate)
+                    .build();
+            try {
+                userCouponService.save(userCouponDto);
+            }
+            catch (IllegalArgumentException e){
+                if(e.getMessage().equals("이미 다운받은 쿠폰")) continue;
+                else throw e;
+            }
+        }
+
+        return Response.success();
+
+    }
+
+    @GetMapping("/rateCoupon/list")
+    public Response rateCouponList(@RequestParam List<Long> productIdList, @RequestHeader long memberId){
+        List<ProductIdAndRateCouponDto> list = new ArrayList<>();
+
+        for (Long productId : productIdList) {
+            List<RateCoupon> rateCoupons = userCouponService.findRateCouponByMemberIdAndProductId(productId,memberId);
+            list.add(ProductIdAndRateCouponDto.builder().productId(productId).rateCouponList(rateCoupons).build());
+        }
+        return Response.success(list);
+    }
+
+
+    @GetMapping("/fixCoupon/list")
+    public Response fixCouponList(@RequestParam List<Long> productIdList, @RequestHeader long memberId){
+        List<ProductIdAndFixCouponDto> list = new ArrayList<>();
+
+        for (Long productId : productIdList) {
+            List<FixCoupon> fixCoupons = userCouponService.findFixCouponByMemberIdAndProductId(productId,memberId);
+            list.add(ProductIdAndFixCouponDto.builder().productId(productId).fixCouponList(fixCoupons).build());
+        }
+        return Response.success(list);
+    }
+
+
+
+
 
 
 }

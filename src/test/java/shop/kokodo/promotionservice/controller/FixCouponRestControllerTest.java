@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,8 +28,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -94,6 +94,45 @@ public class FixCouponRestControllerTest {
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드")
+                                )
+                        )
+                );
+    }
+
+    @Test
+    @DisplayName("seller id로 고정 할인 쿠폰 조회")
+    public void findBySellerId() throws Exception {
+
+        this.mockMvc.perform(
+                        get("/fix-coupon/seller")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .param("sellerId", String.valueOf(sellerId))
+
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("fix-coupon-rest-controller/find-by-seller-id",
+                                requestParameters(
+                                        parameterWithName("sellerId").description("셀러 ID")
+                                ),
+                                responseFields(
+                                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
+                                        fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
+                                        fieldWithPath("result.data[]").type(JsonFieldType.ARRAY).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].createdDate").type(JsonFieldType.NULL).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].lastModifiedDate").type(JsonFieldType.NULL).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].id").type(JsonFieldType.NUMBER).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].name").type(JsonFieldType.STRING).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].regdate").type(JsonFieldType.STRING).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].price").type(JsonFieldType.NUMBER).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].minPrice").type(JsonFieldType.NUMBER).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].startDate").type(JsonFieldType.STRING).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].endDate").type(JsonFieldType.STRING).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].productId").type(JsonFieldType.NUMBER).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].sellerId").type(JsonFieldType.NUMBER).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].freeDelivery").type(JsonFieldType.BOOLEAN).description("seller 쿠폰"),
+                                        fieldWithPath("result.data[].couponFlag").type(JsonFieldType.NUMBER).description("seller 쿠폰")
                                 )
                         )
                 );

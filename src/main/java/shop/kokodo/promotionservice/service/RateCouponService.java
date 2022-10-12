@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.service;
 
+import shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
 import shop.kokodo.promotionservice.entity.RateCoupon;
 
@@ -12,4 +13,7 @@ public interface RateCouponService {
 
     public List<RateCoupon> findUserNotUsedRateCouponByproductId(long userId, long productId);
     public List<RateCoupon> findBySellerId(long sellerId);
+
+    public List<RateCoupon> findByProductId(long productId);
+
 }
