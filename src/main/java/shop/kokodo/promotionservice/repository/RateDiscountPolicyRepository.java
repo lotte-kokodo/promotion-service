@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscountPolicy, Long> {
-    RateDiscountPolicyDto save(RateDiscountPolicyDto fixCoupon);
+    RateDiscountPolicy save(RateDiscountPolicy rateDiscountPolicy);
     Optional<RateDiscountPolicy> findById(Long id);
     Optional<RateDiscountPolicy> findByName(String name);
     Optional<RateDiscountPolicy> findByProductId(Long productId);
@@ -18,5 +18,9 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
 
     @Query(value = "select r from RateDiscountPolicy r " +
             "where  r.createdDate <= :localDateTime and :localDateTime < r.endDate")
-    public List<RateDiscountPolicy> findDateRangeRateDiscountPolicy(LocalDateTime localDateTime);
+    List<RateDiscountPolicy> findDateRangeRateDiscountPolicy(LocalDateTime localDateTime);
+
+    @Query(value = "SELECT r FROM RateDiscountPolicy r " +
+            "WHERE r.productId IN (:productIdList)")
+    List<RateDiscountPolicy> findAllByProductId(List<Long> productIdList);
 }
