@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,6 +66,15 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
     @Transactional
     public Response findByProductId(Long productId) {
-        return Response.success(rateDiscountPolicyRepository.findByProductId(productId).get());
+        Optional<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyRepository.findByProductId(productId);
+        RateDiscountPolicy result;
+        try {
+            result = rateDiscountPolicy.orElseThrow();
+        }catch(Exception e) {
+            result = new RateDiscountPolicy();
+            result.setRate(0);
+        }
+
+        return Response.success(result);
     }
 }
