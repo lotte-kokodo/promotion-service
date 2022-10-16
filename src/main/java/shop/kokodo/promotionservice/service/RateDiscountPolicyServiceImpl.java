@@ -64,7 +64,7 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     }
 
     @Transactional
-    public RateDiscountPolicy findByProductId(Long productId) {
-        return rateDiscountPolicyRepository.findByProductId(productId).get();
+    public Response findByProductId(Long productId) {
+        return Response.success(rateDiscountPolicyRepository.findByProductId(productId).get());
     }
 }
