@@ -48,7 +48,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
-    public Response findAllByProductIdList(List<Long> productIdList) {
+    public Map<Long, FixDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList) {
         ModelMapper mapper = new ModelMapper();
 
         List<RateDiscountPolicy> result = fixDiscountPolicyRepository.findAllByProductId(productIdList);
@@ -64,6 +64,6 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
             map.put(productIdList.get(i), list.get(i));
         }
 
-        return Response.success(map);
+        return map;
     }
 }

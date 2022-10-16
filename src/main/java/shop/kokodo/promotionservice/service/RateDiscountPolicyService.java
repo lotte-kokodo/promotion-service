@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.service;
 
+import java.util.Map;
 import org.springframework.web.bind.annotation.RequestBody;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
@@ -15,5 +16,5 @@ public interface RateDiscountPolicyService {
 
     public List<RateDiscountPolicy> getRateDiscountPolicyByDate();
 
-    public Response findAllByProductIdList(List<Long> productIdList);
+    public Map<Long, RateDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList);
 }

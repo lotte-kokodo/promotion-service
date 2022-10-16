@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.controller;
 
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -38,12 +39,12 @@ public class RateDiscountPolicyController {
     }
 
     @GetMapping(value="/rate-discount/{productId}")
-    public RateDiscountPolicy getRateDiscountPolicy(@PathVariable("productId")Long productId) {
-        return rateDiscountPolicyService.findByProductId(productId);
+    public Response getRateDiscountPolicy(@PathVariable("productId")Long productId) {
+        return Response.success(rateDiscountPolicyService.findByProductId(productId));
     }
 
     @GetMapping(value="/rate-discount/list")
-    public Response getRateDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
+    public Map<Long, RateDiscountPolicyDto> getRateDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
         return rateDiscountPolicyService.findAllByProductIdList(productIdList);
     }
 
