@@ -39,6 +39,6 @@ public class FixDiscountPolicy extends BaseEntity{
     @Column( nullable = false )
     private Long productId;
 
-    @Column( nullable = false)
+    @Column( nullable = false )
     private Long sellerId;
 }
