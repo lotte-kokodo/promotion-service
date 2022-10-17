@@ -21,6 +21,10 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
     @Query(value = "select f from FixCoupon f group by name")
     public List<FixCoupon> findBySellerId(long sellerId);
 
+    @Query(value = "select f.productId from FixCoupon f "+
+            "where f.name = :name ")
+    public List<Long> findProductIdByName(String name);
+
 
 
 }
