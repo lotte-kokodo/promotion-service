@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,5 +66,19 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
         }
 
         return Response.success(map);
+    }
+
+    @Override
+    public Response getFixDiscountPolicyStatus(Long productId, Long sellerId) {
+        Boolean result = true;
+        try {
+            FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findByProductIdAndSellerId(productId, sellerId).orElseThrow();
+        }catch(Exception e) {
+            result = false;
+        }
+
+        Map<Long, Boolean> response = new HashMap<Long, Boolean>();
+        response.put(sellerId, result);
+        return Response.success(response);
     }
 }

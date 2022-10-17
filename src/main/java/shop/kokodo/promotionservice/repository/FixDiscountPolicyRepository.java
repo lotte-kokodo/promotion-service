@@ -7,6 +7,7 @@ import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -20,4 +21,6 @@ public interface FixDiscountPolicyRepository extends JpaRepository<FixDiscountPo
     @Query(value = "SELECT f FROM FixDiscountPolicy f " +
             "WHERE f.productId IN (:productIdList)")
     List<RateDiscountPolicy> findAllByProductId(List<Long> productIdList);
+
+    Optional<FixDiscountPolicy> findByProductIdAndSellerId(Long productId, Long sellerId);
 }
