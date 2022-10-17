@@ -13,4 +13,6 @@ public interface FixDiscountPolicyService {
     public FixDiscountPolicy getFixDiscountPolicy(Long productId);
 
     public Map<Long, FixDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList);
+
+    public Response getFixDiscountPolicyStatus(Long productId, Long sellerId);
 }
