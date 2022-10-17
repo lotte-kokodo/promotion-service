@@ -1,8 +1,9 @@
-
 server:
   port: 0
 
 spring:
+  profiles:
+    active: test
   application:
     name: promotion-service
 #  h2:
@@ -43,4 +44,5 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:9001/eureka
+
 

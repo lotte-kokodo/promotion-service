@@ -40,4 +40,10 @@ public class FixDiscountPolicyController {
     public Response getFixDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
         return fixDiscountPolicyService.findAllByProductIdList(productIdList);
     }
+
+    @GetMapping(value="/fix-discount/status")
+    public Response getFixDiscountPolicyStatus(@RequestParam("productId") Long productId,
+                                               @RequestParam("sellerId") Long sellerId) {
+        return fixDiscountPolicyService.getFixDiscountPolicyStatus(productId, sellerId);
+    }
 }
