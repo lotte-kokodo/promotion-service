@@ -1,25 +1,30 @@
 package shop.kokodo.promotionservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import shop.kokodo.promotionservice.dto.FixCouponDto;
-import shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto;
+import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
-import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.feign.ProductServiceClient;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@Transactional
 public class RateCouponServiceImpl implements RateCouponService{
-
+    private final ProductServiceClient productServiceClient;
     private final RateCouponRepository rateCouponRepository;
+
+
+    public RateCouponServiceImpl(ProductServiceClient productServiceClient, RateCouponRepository rateCouponRepository) {
+        this.productServiceClient = productServiceClient;
+        this.rateCouponRepository = rateCouponRepository;
+    }
 
     @Override
     public void save(RateCouponDto rateCouponDto) {
@@ -37,12 +42,20 @@ public class RateCouponServiceImpl implements RateCouponService{
 
     @Override
     public List<RateCoupon> findBySellerId(long sellerId) {
-        return rateCouponRepository.findBySellerId(sellerId);
+        return rateCouponRepository.findDistinctRateCouponBySellerId(sellerId);
     }
 
     @Override
     public List<RateCoupon> findByProductId(long productId) {
         return rateCouponRepository.findByProductId(productId, LocalDateTime.now());
+    }
+
+    @Override
+    public List<ProductDto> findProductByRateCouponName(String name) {
+
+        List<Long> productIdList = rateCouponRepository.findProductIdByName(name);
+
+        return productServiceClient.findProductByName(productIdList);
     }
 
     private RateCoupon convertToRateCoupon(RateCouponDto rateCouponDto, long productId){
