@@ -25,6 +25,7 @@ public class RateCouponRepositoryTest {
     RateCoupon rateCoupon;
     RateCoupon rateCoupon2;
     RateCoupon rateCoupon3;
+    RateCoupon rateCoupon4;
 
     UserCoupon userCoupon;
     UserCoupon userCoupon2;
@@ -68,6 +69,17 @@ public class RateCouponRepositoryTest {
                 .endDate(LocalDateTime.of(2022,10,1,0,0))
                 .productId(2)
                 .sellerId(selectSellerId)
+                .build();
+
+        rateCoupon4= RateCoupon.builder()
+                .name("rateCoupon")
+                .regdate(LocalDateTime.now())
+                .rate(5)
+                .minPrice(10000)
+                .startDate(LocalDateTime.of(2022,9,20,0,0))
+                .endDate(LocalDateTime.of(2022,10,1,0,0))
+                .productId(3)
+                .sellerId(1)
                 .build();
 
         userCoupon = UserCoupon.builder()
@@ -134,6 +146,18 @@ public class RateCouponRepositoryTest {
 
         Assertions.assertEquals(coupons.size(),1);
         Assertions.assertEquals(coupons.get(0).getName(),"rateCoupon3");
+    }
+
+    @Test
+    @DisplayName("비율 할인 쿠폰 이름에 해당하는 product Id 리스트 받기")
+    public void findProductIdByName(){
+        rateCouponRepository.save(rateCoupon);
+        rateCouponRepository.save(rateCoupon4);
+        rateCouponRepository.save(rateCoupon3);
+
+        List<Long> selectedProductId = rateCouponRepository.findProductIdByName("rateCoupon");
+
+        Assertions.assertEquals(2, selectedProductId.size());
     }
 
 }
