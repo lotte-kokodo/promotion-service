@@ -29,7 +29,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     @Transactional
     public FixDiscountPolicy save(FixDiscountPolicyDto fixDiscountPolicyDto) {
         ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         FixDiscountPolicy fixDiscountPolicy = mapper.map(fixDiscountPolicyDto, FixDiscountPolicy.class);
         return fixDiscountPolicyRepository.save(fixDiscountPolicy);
     }
@@ -82,5 +82,10 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
                 });
 
         return Response.success(response);
+    }
+
+    @Override
+    public Response findBySellerId(Long sellerId) {
+        return Response.success(fixDiscountPolicyRepository.findAllBySellerId(sellerId));
     }
 }

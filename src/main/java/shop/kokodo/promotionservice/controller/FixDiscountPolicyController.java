@@ -1,14 +1,11 @@
 package shop.kokodo.promotionservice.controller;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.ProductSeller;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
-import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.service.FixDiscountPolicyService;
 
 import java.util.List;
@@ -45,5 +42,10 @@ public class FixDiscountPolicyController {
     @GetMapping(value="/fix-discount/status")
     public Response getFixDiscountPolicyStatus(@RequestBody List<ProductSeller> productSellerList) {
         return fixDiscountPolicyService.getFixDiscountPolicyStatus(productSellerList);
+    }
+
+    @GetMapping(value="/fix-discount/seller/{sellerId}")
+    public Response getFixDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
+        return fixDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
     }
 }
