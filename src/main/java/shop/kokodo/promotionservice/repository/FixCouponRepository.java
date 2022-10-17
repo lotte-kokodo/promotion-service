@@ -18,6 +18,7 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
             "and f.startDate <= :now and :now < f.endDate")
     public List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId, LocalDateTime now);
 
+    @Query(value = "select f from FixCoupon f group by name")
     public List<FixCoupon> findBySellerId(long sellerId);
 
 
