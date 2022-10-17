@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/fix-coupon")
+@RequestMapping("/fixCoupon")
 public class FixCouponController {
 
     private final FixCouponService fixCouponService;
@@ -31,6 +31,6 @@ public class FixCouponController {
         List<FixCoupon> coupons = fixCouponService.findBySellerId(sellerId);
 
         return Response.success(coupons);
-
     }
+
 }

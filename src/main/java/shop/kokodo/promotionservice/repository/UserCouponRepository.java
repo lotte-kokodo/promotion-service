@@ -1,6 +1,5 @@
 package shop.kokodo.promotionservice.repository;
 
-import org.h2.engine.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +7,6 @@ import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -54,5 +52,12 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
             " and u.userId= :memberId ")
     public List<UserCoupon> findFixCouponByMemberIdAndProductId(long memberId, long productId, LocalDateTime now);
 
+    @Query(value = "select u " +
+            "from UserCoupon u join fetch u.rateCoupon r " +
+            "where r.startDate <= :now and :now < r.endDate " +
+            " and u.usageStatus = 0 " +
+            " and r.productId in :productIdList " +
+            " and u.userId= :memberId ")
+    public List<UserCoupon> findByInProductIdAndMemberId(List<Long> productIdList, long memberId, LocalDateTime now);
 }
 

@@ -13,6 +13,7 @@ import shop.kokodo.promotionservice.entity.UserCoupon;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +29,15 @@ public class UserCouponRepositoryTest {
     FixCoupon fixCoupon3;
 
     RateCoupon rateCoupon;
+    RateCoupon rateCoupon2;
+    RateCoupon rateCoupon3;
 
     UserCoupon userCoupon;
     UserCoupon userCoupon2;
     UserCoupon userCoupon3;
     UserCoupon userCoupon4;
-
+    UserCoupon userCoupon5;
+    UserCoupon userCoupon6;
     final Long userId=1L;
     final Long productId=1L;
     final LocalDateTime now=LocalDateTime.of(2022,9,25,0,0);
@@ -74,13 +78,35 @@ public class UserCouponRepositoryTest {
                 .build();
 
         rateCoupon=RateCoupon.builder()
-                .name("RateCoupon")
+                .name("RateCoupon1")
                 .regdate(LocalDateTime.now())
                 .rate(10)
                 .minPrice(10000)
                 .startDate(LocalDateTime.of(2022,9,20,0,0))
                 .endDate(LocalDateTime.of(2023,10,1,0,0))
                 .productId(2)
+                .sellerId(selectSellerId)
+                .build();
+
+        rateCoupon2=RateCoupon.builder()
+                .name("RateCoupon2")
+                .regdate(LocalDateTime.now())
+                .rate(10)
+                .minPrice(10000)
+                .startDate(LocalDateTime.of(2022,9,20,0,0))
+                .endDate(LocalDateTime.of(2023,10,1,0,0))
+                .productId(2)
+                .sellerId(selectSellerId)
+                .build();
+
+        rateCoupon3=RateCoupon.builder()
+                .name("RateCoupon3")
+                .regdate(LocalDateTime.now())
+                .rate(10)
+                .minPrice(10000)
+                .startDate(LocalDateTime.of(2022,9,20,0,0))
+                .endDate(LocalDateTime.of(2023,10,1,0,0))
+                .productId(3)
                 .sellerId(selectSellerId)
                 .build();
 
@@ -105,7 +131,19 @@ public class UserCouponRepositoryTest {
 
         userCoupon4=UserCoupon.builder()
                 .rateCoupon(rateCoupon)
-                .userId(1)
+                .userId(userId)
+                .usageStatus(0)
+                .build();
+
+        userCoupon5=UserCoupon.builder()
+                .rateCoupon(rateCoupon2)
+                .userId(userId)
+                .usageStatus(0)
+                .build();
+
+        userCoupon6=UserCoupon.builder()
+                .rateCoupon(rateCoupon3)
+                .userId(userId)
                 .usageStatus(0)
                 .build();
     }
@@ -121,7 +159,6 @@ public class UserCouponRepositoryTest {
         userCouponRepository.save(userCoupon3);
 
         List<UserCoupon> coupons = userCouponRepository.findFixCouponByMemberId(userId,now);
-
 
         Assertions.assertEquals(coupons.size(),3);
     }
@@ -141,10 +178,6 @@ public class UserCouponRepositoryTest {
 
 
         List<UserCoupon> coupons = userCouponRepository.findRateCouponByMemberId(userId,now);
-
-        for (UserCoupon coupon : coupons) {
-            System.out.println(coupon.toString());
-        }
 
         Assertions.assertEquals(coupons.size(),1);
     }
@@ -170,4 +203,19 @@ public class UserCouponRepositoryTest {
 
         Assertions.assertEquals(true,couponOp.isPresent());
     }
+
+    @Test
+    @DisplayName("memberId와 productList로 RateCoupon(UserCoupon) 조회")
+    public void findByInProductIdAndMemberId(){
+        List<Long> productIdList = new ArrayList<>();
+        productIdList.add(rateCouponRepository.save(rateCoupon).getId());
+        productIdList.add(rateCouponRepository.save(rateCoupon2).getId());
+        userCouponRepository.save(userCoupon4);
+        userCouponRepository.save(userCoupon5);
+
+        List<UserCoupon> list = userCouponRepository.findByInProductIdAndMemberId(productIdList,userId,now);
+
+        Assertions.assertEquals(list.size(),productIdList.size());
+    }
+
 }
