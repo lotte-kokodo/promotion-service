@@ -5,6 +5,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.ProductSeller;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
@@ -12,10 +13,7 @@ import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.repository.FixDiscountPolicyRepository;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,7 +59,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
 
         Map<Long, FixDiscountPolicyDto> map = new HashMap<>();
 
-        for(int i=0;i<list.size();i++) {
+        for (int i = 0; i < list.size(); i++) {
             map.put(productIdList.get(i), list.get(i));
         }
 
@@ -69,16 +67,20 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
-    public Response getFixDiscountPolicyStatus(Long productId, Long sellerId) {
-        Boolean result = true;
-        try {
-            FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findByProductIdAndSellerId(productId, sellerId).orElseThrow();
-        }catch(Exception e) {
-            result = false;
-        }
-
+    public Response getFixDiscountPolicyStatus(List<ProductSeller> productSellerList) {
         Map<Long, Boolean> response = new HashMap<Long, Boolean>();
-        response.put(sellerId, result);
+        productSellerList.stream()
+                .forEach(productSeller -> {
+                    response.put(productSeller.getSellerId(), false);
+                });
+        productSellerList.stream()
+                .forEach(productSeller -> {
+                    FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findAllByProductIdAndSellerIdIn(productSeller.getProductId(), productSeller.getSellerId());
+                    if ((fixDiscountPolicy != null) && !response.get(productSeller.getSellerId())) {
+                        response.put(productSeller.getSellerId(), true);
+                    }
+                });
+
         return Response.success(response);
     }
 }
