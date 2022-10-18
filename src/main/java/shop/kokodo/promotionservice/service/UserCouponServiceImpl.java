@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import shop.kokodo.promotionservice.dto.ProductIdAndFixCouponDto;
+import shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto;
 import shop.kokodo.promotionservice.dto.UpdateUserCouponDto;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
@@ -14,9 +16,9 @@ import shop.kokodo.promotionservice.repository.RateCouponRepository;
 import shop.kokodo.promotionservice.repository.UserCouponRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
+import static shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto.createProductIdAndRateCouponDto;
 
 @Service
 @RequiredArgsConstructor
@@ -38,21 +40,18 @@ public class UserCouponServiceImpl implements UserCouponService{
         UserCoupon userCoupon = null;
 
         if(userCouponDto.getFixCouponId()!=null && userCouponDto.getRateCouponId()==null){ // fixCoupon 받는 경우
-            Optional<FixCoupon> fixCouponOp = fixCouponRepository.findById(userCouponDto.getFixCouponId());
-            if(fixCouponOp.isEmpty()) throw new IllegalArgumentException("존재하지 않는 쿠폰");
+            FixCoupon fixCoupon = fixCouponRepository.findById(userCouponDto.getFixCouponId())
+                    .orElseThrow( ()->new IllegalArgumentException("존재하지 않는 쿠폰"));
 
-            FixCoupon fixCoupon = fixCouponOp.get(); 
             if(userCouponRepository.findByUserIdAndFixCoupon(userCouponDto.getUserId(), fixCoupon).isPresent())
                 throw new IllegalArgumentException("이미 다운받은 쿠폰");
-                
 
-            userCoupon = convertToUserFixCoupon(userCouponDto, fixCouponOp.get());
+            userCoupon = convertToUserFixCoupon(userCouponDto, fixCoupon);
         }
         else if(userCouponDto.getRateCouponId()!=null && userCouponDto.getFixCouponId()==null){ // rateCoupon 받는 경우
-            Optional<RateCoupon> rateCouponOp= rateCouponRepository.findById(userCouponDto.getRateCouponId());
-            if(rateCouponOp.isEmpty()) throw new IllegalArgumentException("존재하지 않는 쿠폰");
+            RateCoupon rateCoupon= rateCouponRepository.findById(userCouponDto.getRateCouponId())
+                    .orElseThrow(()->new IllegalArgumentException("존재하지 않는 쿠폰"));
 
-            RateCoupon rateCoupon = rateCouponOp.get();
             // 이미 다운 받은 쿠폰인 경우
             if(userCouponRepository.findByUserIdAndRateCoupon(userCouponDto.getUserId(),rateCoupon).isPresent())
                 throw new IllegalArgumentException("이미 다운받은 쿠폰");
@@ -70,8 +69,8 @@ public class UserCouponServiceImpl implements UserCouponService{
     public List<UserCoupon> findValidCouponByMemberIdGroupByCouponName(long memberId) {
         LocalDateTime now = LocalDateTime.now();
         List<UserCoupon> userCouponList=userCouponRepository.findFixCouponByMemberId(memberId, now);
-        userCouponList.addAll(userCouponRepository.findRateCouponByMemberId(memberId,now));
-
+        List<UserCoupon> userCouponList2 = userCouponRepository.findRateCouponByMemberId(memberId, now);
+        userCouponList.addAll(userCouponList2);
         return userCouponList;
     }
 
@@ -80,27 +79,23 @@ public class UserCouponServiceImpl implements UserCouponService{
 
         UserCoupon updateUserCoupon=null;
         if(updateUserCouponDto.getCouponFlag()==1){ // fixCoupon 사용하는 경우
-            Optional<FixCoupon> fixCoupon = fixCouponRepository.findById(updateUserCouponDto.getFixCouponId());
+            FixCoupon fixCoupon = fixCouponRepository.findById(updateUserCouponDto.getFixCouponId())
+                    .orElseThrow(()->new IllegalArgumentException("존재하지 않는 쿠폰"));
 
-            if(fixCoupon.isEmpty()) throw new IllegalArgumentException("존재하지 않는 쿠폰");
+            UserCoupon userCouponOp = userCouponRepository.findByUserIdAndFixCoupon(userId, fixCoupon)
+                    .orElseThrow(() -> new IllegalArgumentException("다운받지 않은 쿠폰은 사용이 불가능합니다."));
 
-            Optional<UserCoupon> userCouponOp = userCouponRepository.findByUserIdAndFixCoupon(userId, fixCoupon.get());
-
-            if(userCouponOp.isEmpty()) throw new IllegalArgumentException("다운받지 않은 쿠폰은 사용이 불가능합니다.");
-
-            updateUserCoupon = userCouponOp.get();
+            updateUserCoupon = userCouponOp;
         }
         else if(updateUserCouponDto.getCouponFlag()==2) {
 
-            Optional<RateCoupon> rateCoupon = rateCouponRepository.findById(updateUserCouponDto.getRateCouponId());
+           RateCoupon rateCoupon = rateCouponRepository.findById(updateUserCouponDto.getRateCouponId())
+                   .orElseThrow(()->new IllegalArgumentException("존재하지 않는 쿠폰"));
 
-            if(rateCoupon.isEmpty()) throw new IllegalArgumentException("존재하지 않는 쿠폰");
+           UserCoupon userCouponOp = userCouponRepository.findByUserIdAndRateCoupon(userId, rateCoupon)
+                   .orElseThrow(()-> new IllegalArgumentException("다운받지 않은 쿠폰은 사용이 불가능합니다."));
 
-            Optional<UserCoupon> userCouponOp = userCouponRepository.findByUserIdAndRateCoupon(userId, rateCoupon.get());
-
-            if(userCouponOp.isEmpty()) throw new IllegalArgumentException("다운받지 않은 쿠폰은 사용이 불가능합니다.");
-
-            updateUserCoupon = userCouponOp.get();
+            updateUserCoupon = userCouponOp;
         }
         else{
             throw new IllegalArgumentException("잘못된 쿠폰 플래그");
@@ -110,28 +105,64 @@ public class UserCouponServiceImpl implements UserCouponService{
     }
 
     @Override
-    public List<RateCoupon> findRateCouponByMemberIdAndProductId(long productId, long memberId) {
+    public List<ProductIdAndRateCouponDto> findRateCouponByMemberIdAndProductId(List<Long> productIdList, long memberId) {
 
-        List<UserCoupon> list = userCouponRepository.findRateCouponByMemberIdAndProductId(memberId,productId, LocalDateTime.now());
+        List<UserCoupon> list = userCouponRepository.findByInProductIdAndMemberId(productIdList,memberId, LocalDateTime.now());
 
-        List<RateCoupon> rateCoupons = new ArrayList<>();
+        List<ProductIdAndRateCouponDto> rateCoupons = new ArrayList<>();
+        Map<Long, ArrayList<RateCoupon>> productIdAndRateCouponListMap = new HashMap<>();
 
         for (UserCoupon userCoupon : list) {
-            rateCoupons.add(userCoupon.getRateCoupon());
+            long productId = userCoupon.getRateCoupon().getProductId();
+            if(productIdAndRateCouponListMap.containsKey(productId)) {
+                ArrayList<RateCoupon> rateCouponList = productIdAndRateCouponListMap.get(productId);
+                rateCouponList.add(userCoupon.getRateCoupon());
+                productIdAndRateCouponListMap.put(productId,rateCouponList);
+            }
+            else {
+                ArrayList<RateCoupon> rateCouponList = new ArrayList<>();
+                rateCouponList.add(userCoupon.getRateCoupon());
+
+                productIdAndRateCouponListMap.put(productId,rateCouponList);
+            }
         }
+
+        for (Long productId : productIdAndRateCouponListMap.keySet()) {
+            rateCoupons.add(createProductIdAndRateCouponDto(productId,productIdAndRateCouponListMap.get(productId)));
+        }
+
         return rateCoupons;
     }
 
     @Override
-    public List<FixCoupon> findFixCouponByMemberIdAndProductId(long productId, long memberId) {
-        List<UserCoupon> list = userCouponRepository.findFixCouponByMemberIdAndProductId(memberId,productId, LocalDateTime.now());
+    public List<ProductIdAndFixCouponDto> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId) {
+       List<FixCoupon> fixCouponList = fixCouponRepository.findValidFixCoupon( memberId, productIds, LocalDateTime.now());
 
-        List<FixCoupon> rateCoupons = new ArrayList<>();
+        List<ProductIdAndFixCouponDto> productIdAndFixCouponDtoList = new ArrayList<>();
+        Map<Long,List<FixCoupon>> productIdAndFixCouponMap =new HashMap<>();
 
-        for (UserCoupon userCoupon : list) {
-            rateCoupons.add(userCoupon.getFixCoupon());
+        for (FixCoupon fixCoupon : fixCouponList) {
+            long productId = fixCoupon.getProductId();
+            if(productIdAndFixCouponMap.containsKey(fixCoupon.getProductId())){
+                List<FixCoupon> tmpFixCouponList = productIdAndFixCouponMap.get(productId);
+                tmpFixCouponList.add(fixCoupon);
+                productIdAndFixCouponMap.put(productId,tmpFixCouponList);
+            }
+            else{
+                List<FixCoupon> tmpFixCouponList = new ArrayList<>();
+                tmpFixCouponList.add(fixCoupon);
+                productIdAndFixCouponMap.put(productId,tmpFixCouponList);
+            }
         }
-        return rateCoupons;
+
+        for (Long productId : productIdAndFixCouponMap.keySet()) {
+            productIdAndFixCouponDtoList.add(ProductIdAndFixCouponDto
+                    .builder()
+                            .productId(productId)
+                            .fixCouponList(productIdAndFixCouponMap.get(productId))
+                    .build());
+        }
+        return productIdAndFixCouponDtoList;
     }
 
     private UserCoupon convertToUserFixCoupon(UserCouponDto userCouponDto, FixCoupon fixCoupon){

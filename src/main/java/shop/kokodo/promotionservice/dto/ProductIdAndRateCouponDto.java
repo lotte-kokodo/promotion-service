@@ -22,4 +22,12 @@ public class ProductIdAndRateCouponDto {
         this.productId = productId;
         this.rateCouponList = rateCouponList;
     }
+
+    public static ProductIdAndRateCouponDto createProductIdAndRateCouponDto(long productId, List<RateCoupon> rateCouponList){
+        return ProductIdAndRateCouponDto.builder()
+                .productId(productId)
+                .rateCouponList(rateCouponList)
+                .build();
+    }
+
 }

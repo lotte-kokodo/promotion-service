@@ -71,7 +71,8 @@ public class UserCouponController {
 
     @PostMapping("/list")
     public Response saveRateCouponList(@RequestParam List<Long> rateIdList, @RequestHeader long memberId){
-
+        System.out.println("UserCouponController.saveRateCouponList");
+        System.out.println(rateIdList.size());
         for (Long rate : rateIdList) {
             UserCouponDto userCouponDto = UserCouponDto.builder()
                     .userId(memberId)
@@ -86,37 +87,19 @@ public class UserCouponController {
                 else throw e;
             }
         }
-
         return Response.success();
-
     }
 
     @GetMapping("/rateCoupon/list")
     public Response rateCouponList(@RequestParam List<Long> productIdList, @RequestHeader long memberId){
-        List<ProductIdAndRateCouponDto> list = new ArrayList<>();
+        List<ProductIdAndRateCouponDto> list = userCouponService.findRateCouponByMemberIdAndProductId(productIdList,memberId);
 
-        for (Long productId : productIdList) {
-            List<RateCoupon> rateCoupons = userCouponService.findRateCouponByMemberIdAndProductId(productId,memberId);
-            list.add(ProductIdAndRateCouponDto.builder().productId(productId).rateCouponList(rateCoupons).build());
-        }
         return Response.success(list);
     }
-
 
     @GetMapping("/fixCoupon/list")
     public Response fixCouponList(@RequestParam List<Long> productIdList, @RequestHeader long memberId){
-        List<ProductIdAndFixCouponDto> list = new ArrayList<>();
-
-        for (Long productId : productIdList) {
-            List<FixCoupon> fixCoupons = userCouponService.findFixCouponByMemberIdAndProductId(productId,memberId);
-            list.add(ProductIdAndFixCouponDto.builder().productId(productId).fixCouponList(fixCoupons).build());
-        }
-        return Response.success(list);
+        return Response.success(userCouponService.findFixCouponByMemberIdAndProductId(productIdList,memberId));
     }
-
-
-
-
-
 
 }

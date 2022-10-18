@@ -1,5 +1,7 @@
 package shop.kokodo.promotionservice.service;
 
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
-    public Response findAllByProductIdList(List<Long> productIdList) {
+    public Map<Long, FixDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList) {
         ModelMapper mapper = new ModelMapper();
 
         List<RateDiscountPolicy> result = fixDiscountPolicyRepository.findAllByProductId(productIdList);
@@ -63,23 +65,32 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
             map.put(productIdList.get(i), list.get(i));
         }
 
-        return Response.success(map);
+        return map;
     }
 
     @Override
-    public Response getFixDiscountPolicyStatus(List<ProductSeller> productSellerList) {
+    public Response getFixDiscountPolicyStatus(List<Long> productIdList, List<Long> sellerIdList) {
         Map<Long, Boolean> response = new HashMap<Long, Boolean>();
-        productSellerList.stream()
-                .forEach(productSeller -> {
-                    response.put(productSeller.getSellerId(), false);
-                });
-        productSellerList.stream()
-                .forEach(productSeller -> {
-                    FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findAllByProductIdAndSellerIdIn(productSeller.getProductId(), productSeller.getSellerId());
-                    if ((fixDiscountPolicy != null) && !response.get(productSeller.getSellerId())) {
-                        response.put(productSeller.getSellerId(), true);
-                    }
-                });
+
+        if (productIdList.size() != sellerIdList.size()) {
+            throw new IllegalArgumentException("상품-셀러 아이디 리스트 크기 불일치");
+        }
+
+        List<ProductSeller> productSellerList = IntStream.range(0, productIdList.size()).boxed()
+            .map(idx -> new ProductSeller(productIdList.get(idx), sellerIdList.get(idx)) )
+            .collect(Collectors.toList());
+
+        productSellerList
+            .forEach(productSeller -> {
+                response.put(productSeller.getSellerId(), false);
+            });
+        productSellerList
+            .forEach(productSeller -> {
+                FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findAllByProductIdAndSellerIdIn(productSeller.getProductId(), productSeller.getSellerId());
+                if ((fixDiscountPolicy != null) && !response.get(productSeller.getSellerId())) {
+                    response.put(productSeller.getSellerId(), true);
+                }
+            });
 
         return Response.success(response);
     }
@@ -88,4 +99,5 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     public Response findBySellerId(Long sellerId) {
         return Response.success(fixDiscountPolicyRepository.findAllBySellerId(sellerId));
     }
+
 }
