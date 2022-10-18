@@ -8,9 +8,11 @@ import shop.kokodo.promotionservice.dto.FixCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixCoupon;
+import shop.kokodo.promotionservice.entity.RateCoupon;
 import shop.kokodo.promotionservice.service.FixCouponService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,6 +40,11 @@ public class FixCouponController {
     public Response findProductByName(@PathVariable String name){
         List<ProductDto> products = fixCouponService.findProductByName(name);
         return Response.success(products);
+    }
+
+    @GetMapping("/coupon/list")
+    public List<Long> findFixCouponByCouponIdList(@RequestParam List<Long> couponIdList){
+        return fixCouponService.findByCouponIdList(couponIdList);
     }
 
 }

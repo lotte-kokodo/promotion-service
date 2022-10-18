@@ -19,6 +19,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 @Transactional
@@ -113,13 +114,14 @@ public class UserCouponServiceTest {
         userCouponRepository.save(userCoupon5);
         userCouponRepository.save(userCoupon6);
 
-        List<ProductIdAndRateCouponDto> productIdAndRateCouponDtos
+
+        Map<Long, List<RateCoupon>> productIdAndRateCouponDtos
             =userCouponService.findRateCouponByMemberIdAndProductId(productIdList,userId);
 
         System.out.println(productIdAndRateCouponDtos.size());
 
-        for (ProductIdAndRateCouponDto productIdAndRateCouponDto : productIdAndRateCouponDtos) {
-            System.out.println(productIdAndRateCouponDto.getProductId()+" "+productIdAndRateCouponDto.getRateCouponList());
-        }
+//        for (ProductIdAndRateCouponDto productIdAndRateCouponDto : productIdAndRateCouponDtos) {
+//            System.out.println(productIdAndRateCouponDto.getProductId()+" "+productIdAndRateCouponDto.getRateCouponList());
+//        }
     }
 }

@@ -7,6 +7,7 @@ import shop.kokodo.promotionservice.entity.RateCoupon;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface RateCouponService {
 
@@ -18,5 +19,7 @@ public interface RateCouponService {
     public List<RateCoupon> findByProductId(long productId);
 
     public List<ProductDto> findProductByRateCouponName(String name);
+
+    Map<Long, List<RateCoupon>> findByCouponIdList(List<Long> couponIdList);
 
 }
