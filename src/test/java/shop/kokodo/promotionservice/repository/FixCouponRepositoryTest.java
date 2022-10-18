@@ -140,6 +140,20 @@ public class FixCouponRepositoryTest {
       Assertions.assertEquals(coupons.get(0).getName(),"fixCoupon3");
    }
 
+   //
+   @Test
+   @DisplayName("유저의 사용 가능한 무료배송 쿠폰 조회")
+   public void findValidFixCoupon(){
+
+      List<Long> productIdList = new ArrayList<>();
+
+      List<FixCoupon> fixCoupons = fixCouponRepository.findValidFixCoupon(1L,productIdList,LocalDateTime.now());
+
+      for (FixCoupon coupon : fixCoupons) {
+         System.out.println(coupon.toString());
+      }
+   }
+
 
 
 }

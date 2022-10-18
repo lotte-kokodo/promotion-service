@@ -25,6 +25,13 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
             "where f.name = :name ")
     public List<Long> findProductIdByName(String name);
 
+    @Query(value= " select f " +
+            "from FixCoupon f " +
+            "where f.freeDelivery = 1 and f.startDate<=:now and :now <=f.endDate " +
+            "and f.productId not in( select d.productId from FixDiscountPolicy d where d.startDate <= :now and :now <=d.endDate and d.productId in :productIdList ) " +
+            "and f.id in (select u.fixCoupon.id from UserCoupon u where u.userId=1 and u.usageStatus=0 and u.fixCoupon is not null and u.userId=:memberId ) ")
+    List<FixCoupon> findValidFixCoupon(Long memberId, List<Long> productIdList, LocalDateTime now);
+
 
 
 }
