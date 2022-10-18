@@ -11,7 +11,9 @@ insert into fix_coupon ( name, regdate, price, min_price, start_date, end_date, 
 insert into fix_coupon ( name, regdate, price, min_price, start_date, end_date, product_id,seller_id,free_delivery) values ( "무료배송", "1964-06-10 16:21:24", 3000, 10000, "2022-06-09 16:21:24", "2023-09-28 16:21:24",6,1,true);
 insert into fix_coupon ( name, regdate, price, min_price, start_date, end_date, product_id,seller_id,free_delivery) values ( "무료배송", "1964-06-10 16:21:24", 3000, 10000, "2022-06-09 16:21:24", "2023-09-28 16:21:24",7,1,true);
 
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,1,null);insert into rate_discount_policy(rate_discount_policy_id,end_date, min_price, name, product_id, rate, reg_date, start_date) values(1,"2023-10-10 00:00:00", 10000,"rateDiscpintPolicy",1,19,"2022-06-10 16:21:24","2022-06-10 16:21:24");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,1,null);
+
+insert into rate_discount_policy(rate_discount_policy_id,end_date, min_price, name, product_id, rate, reg_date, start_date, seller_id) values(1,"2023-10-10 00:00:00", 10000,"rateDiscpintPolicy",1,19,"2022-06-10 16:21:24","2022-06-10 16:21:24",1);
 
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,2,null);
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,3,null);
@@ -24,4 +26,3 @@ insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) val
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,2);
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,3);
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,4);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,5);
