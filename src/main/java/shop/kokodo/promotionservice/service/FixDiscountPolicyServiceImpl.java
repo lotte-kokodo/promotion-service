@@ -1,10 +1,13 @@
 package shop.kokodo.promotionservice.service;
 
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.ProductSeller;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
@@ -12,10 +15,7 @@ import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.repository.FixDiscountPolicyRepository;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,7 +49,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
-    public Response findAllByProductIdList(List<Long> productIdList) {
+    public Map<Long, FixDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList) {
         ModelMapper mapper = new ModelMapper();
 
         List<RateDiscountPolicy> result = fixDiscountPolicyRepository.findAllByProductId(productIdList);
@@ -61,24 +61,38 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
 
         Map<Long, FixDiscountPolicyDto> map = new HashMap<>();
 
-        for(int i=0;i<list.size();i++) {
+        for (int i = 0; i < list.size(); i++) {
             map.put(productIdList.get(i), list.get(i));
         }
 
-        return Response.success(map);
+        return map;
     }
 
     @Override
-    public Response getFixDiscountPolicyStatus(Long productId, Long sellerId) {
-        Boolean result = true;
-        try {
-            FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findByProductIdAndSellerId(productId, sellerId).orElseThrow();
-        }catch(Exception e) {
-            result = false;
+    public Response getFixDiscountPolicyStatus(List<Long> productIdList, List<Long> sellerIdList) {
+        Map<Long, Boolean> response = new HashMap<Long, Boolean>();
+
+        if (productIdList.size() != sellerIdList.size()) {
+            throw new IllegalArgumentException("상품-셀러 아이디 리스트 크기 불일치");
         }
 
-        Map<Long, Boolean> response = new HashMap<Long, Boolean>();
-        response.put(sellerId, result);
+        List<ProductSeller> productSellerList = IntStream.range(0, productIdList.size()).boxed()
+            .map(idx -> new ProductSeller(productIdList.get(idx), sellerIdList.get(idx)) )
+            .collect(Collectors.toList());
+
+        productSellerList
+            .forEach(productSeller -> {
+                response.put(productSeller.getSellerId(), false);
+            });
+        productSellerList
+            .forEach(productSeller -> {
+                FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findAllByProductIdAndSellerIdIn(productSeller.getProductId(), productSeller.getSellerId());
+                if ((fixDiscountPolicy != null) && !response.get(productSeller.getSellerId())) {
+                    response.put(productSeller.getSellerId(), true);
+                }
+            });
+
         return Response.success(response);
     }
+
 }

@@ -1,6 +1,8 @@
 package shop.kokodo.promotionservice.service;
 
+import java.util.Map;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.ProductSeller;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 
@@ -11,7 +13,7 @@ public interface FixDiscountPolicyService {
     public List<FixDiscountPolicy> getAll();
     public FixDiscountPolicy getFixDiscountPolicy(Long productId);
 
-    public Response findAllByProductIdList(List<Long> productIdList);
+    public Map<Long, FixDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList);
 
-    public Response getFixDiscountPolicyStatus(Long productId, Long sellerId);
+    public Response getFixDiscountPolicyStatus(List<Long> productIdList, List<Long> sellerIdList);
 }
