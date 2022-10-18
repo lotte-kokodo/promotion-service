@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
+import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.service.FixCouponService;
@@ -31,6 +32,12 @@ public class FixCouponController {
         List<FixCoupon> coupons = fixCouponService.findBySellerId(sellerId);
 
         return Response.success(coupons);
+    }
+
+    @GetMapping("/{name}/product")
+    public Response findProductByName(@PathVariable String name){
+        List<ProductDto> products = fixCouponService.findProductByName(name);
+        return Response.success(products);
     }
 
 }

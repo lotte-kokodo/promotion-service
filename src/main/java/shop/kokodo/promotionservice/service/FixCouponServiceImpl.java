@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
+import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
+import shop.kokodo.promotionservice.feign.ProductServiceClient;
 import shop.kokodo.promotionservice.repository.FixCouponRepository;
 
 import java.time.LocalDateTime;
@@ -16,6 +18,7 @@ import java.util.List;
 public class FixCouponServiceImpl implements FixCouponService{
 
     private final FixCouponRepository fixCouponRepository;
+    private final ProductServiceClient productServiceClient;
     @Override
     public void save(FixCouponDto fixCouponDto) {
 
@@ -38,6 +41,12 @@ public class FixCouponServiceImpl implements FixCouponService{
         return fixCouponRepository.findBySellerId(sellerId);
     }
 
+    @Override
+    public List<ProductDto> findProductByName(String name) {
+        List<Long> productIdList = fixCouponRepository.findProductIdByName(name);
+
+        return productServiceClient.findProductByName(productIdList);
+    }
 
 
     private FixCoupon convertToFixCoupon(FixCouponDto fixCouponDto,long productId){

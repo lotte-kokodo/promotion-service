@@ -97,21 +97,9 @@ public class UserCouponController {
         return Response.success(list);
     }
 
-
     @GetMapping("/fixCoupon/list")
     public Response fixCouponList(@RequestParam List<Long> productIdList, @RequestHeader long memberId){
-        List<ProductIdAndFixCouponDto> list = new ArrayList<>();
-
-        for (Long productId : productIdList) {
-            List<FixCoupon> fixCoupons = userCouponService.findFixCouponByMemberIdAndProductId(productId,memberId);
-            list.add(ProductIdAndFixCouponDto.builder().productId(productId).fixCouponList(fixCoupons).build());
-        }
-        return Response.success(list);
+        return Response.success(userCouponService.findFixCouponByMemberIdAndProductId(productIdList,memberId));
     }
-
-
-
-
-
 
 }

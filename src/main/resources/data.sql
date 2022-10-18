@@ -11,7 +11,9 @@ insert into fix_coupon ( name, regdate, price, min_price, start_date, end_date, 
 insert into fix_coupon ( name, regdate, price, min_price, start_date, end_date, product_id,seller_id,free_delivery) values ( "무료배송", "1964-06-10 16:21:24", 3000, 10000, "2022-06-09 16:21:24", "2023-09-28 16:21:24",6,1,true);
 insert into fix_coupon ( name, regdate, price, min_price, start_date, end_date, product_id,seller_id,free_delivery) values ( "무료배송", "1964-06-10 16:21:24", 3000, 10000, "2022-06-09 16:21:24", "2023-09-28 16:21:24",7,1,true);
 
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,1,null);insert into rate_discount_policy(rate_discount_policy_id,end_date, min_price, name, product_id, rate, reg_date, start_date) values(1,"2023-10-10 00:00:00", 10000,"rateDiscpintPolicy",1,19,"2022-06-10 16:21:24","2022-06-10 16:21:24");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,1,null);
+
+insert into rate_discount_policy(rate_discount_policy_id,end_date, min_price, name, product_id, rate, reg_date, start_date, seller_id) values(4,"2023-10-10 00:00:00", 10000,"rateDiscpintPolicy",1,19,"2022-06-10 16:21:24","2022-06-10 16:21:24",1);
 
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,2,null);
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,3,null);
@@ -24,4 +26,11 @@ insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) val
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,2);
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,3);
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,4);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,5);
+
+INSERT INTO fix_discount_policy(fix_discount_policy_id, created_date, last_modified_date, end_date, min_price, name, price, product_id, reg_date, start_date, seller_id) VALUES(1, NOW(), NOW(), '2022-10-30 00:00:00', 1000, '고정할인정책1', 3000, 1, '2022-10-17 00:00:00', '2022-10-17 00:00:00', 1);
+INSERT INTO fix_discount_policy(fix_discount_policy_id, created_date, last_modified_date, end_date, min_price, name, price, product_id, reg_date, start_date, seller_id)VALUES(2, NOW(), NOW(), '2022-10-30 00:00:00', 3000, '고정할인정책2', 3000, 2, '2022-10-17 00:00:00', '2022-10-17 00:00:00', 1);
+INSERT INTO fix_discount_policy(fix_discount_policy_id, created_date, last_modified_date, end_date, min_price, name, price, product_id, reg_date, start_date, seller_id) VALUES(3, NOW(), NOW(), '2022-10-30 00:00:00', 5000, '고정할인정책3', 3000, 3, '2022-10-17 00:00:00', '2022-10-17 00:00:00', 1);
+INSERT INTO fix_discount_policy(fix_discount_policy_id, created_date, last_modified_date, end_date, min_price, name, price, product_id, reg_date, start_date, seller_id) VALUES(4, NOW(), NOW(), '2022-10-30 00:00:00', 4000, '고정할인정책4', 3000, 4, '2022-10-17 00:00:00', '2022-10-17 00:00:00', 2);
+INSERT INTO rate_discount_policy(rate_discount_policy_id, created_date, last_modified_date, end_date, min_price, name, product_id, rate, reg_date, start_date, seller_id) VALUES(1, NOW(), NOW(), '2022-10-17 00:00:00', 1000, '비율할인정책1', 1, 10, '2022-10-17 00:00:00', '2022-10-17 00:00:00', 1);
+INSERT INTO rate_discount_policy(rate_discount_policy_id, created_date, last_modified_date, end_date, min_price, name, product_id, rate, reg_date, start_date, seller_id) VALUES(2, NOW(), NOW(), '2022-10-17 00:00:00', 2000, '비율할인정책2', 2, 5, '2022-10-17 00:00:00', '2022-10-17 00:00:00', 1);
+INSERT INTO rate_discount_policy(rate_discount_policy_id, created_date, last_modified_date, end_date, min_price, name, product_id, rate, reg_date, start_date, seller_id) VALUES(3, NOW(), NOW(), '2022-10-17 00:00:00', 3000, '비율할인정책1', 3, 3, '2022-10-17 00:00:00', '2022-10-17 00:00:00', 1);

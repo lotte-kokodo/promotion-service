@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import shop.kokodo.promotionservice.dto.ProductIdAndFixCouponDto;
 import shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto;
 import shop.kokodo.promotionservice.dto.UpdateUserCouponDto;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
@@ -134,15 +135,34 @@ public class UserCouponServiceImpl implements UserCouponService{
     }
 
     @Override
-    public List<FixCoupon> findFixCouponByMemberIdAndProductId(long productId, long memberId) {
-        List<UserCoupon> list = userCouponRepository.findFixCouponByMemberIdAndProductId(memberId,productId, LocalDateTime.now());
+    public List<ProductIdAndFixCouponDto> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId) {
+       List<FixCoupon> fixCouponList = fixCouponRepository.findValidFixCoupon( memberId, productIds, LocalDateTime.now());
 
-        List<FixCoupon> rateCoupons = new ArrayList<>();
+        List<ProductIdAndFixCouponDto> productIdAndFixCouponDtoList = new ArrayList<>();
+        Map<Long,List<FixCoupon>> productIdAndFixCouponMap =new HashMap<>();
 
-        for (UserCoupon userCoupon : list) {
-            rateCoupons.add(userCoupon.getFixCoupon());
+        for (FixCoupon fixCoupon : fixCouponList) {
+            long productId = fixCoupon.getProductId();
+            if(productIdAndFixCouponMap.containsKey(fixCoupon.getProductId())){
+                List<FixCoupon> tmpFixCouponList = productIdAndFixCouponMap.get(productId);
+                tmpFixCouponList.add(fixCoupon);
+                productIdAndFixCouponMap.put(productId,tmpFixCouponList);
+            }
+            else{
+                List<FixCoupon> tmpFixCouponList = new ArrayList<>();
+                tmpFixCouponList.add(fixCoupon);
+                productIdAndFixCouponMap.put(productId,tmpFixCouponList);
+            }
         }
-        return rateCoupons;
+
+        for (Long productId : productIdAndFixCouponMap.keySet()) {
+            productIdAndFixCouponDtoList.add(ProductIdAndFixCouponDto
+                    .builder()
+                            .productId(productId)
+                            .fixCouponList(productIdAndFixCouponMap.get(productId))
+                    .build());
+        }
+        return productIdAndFixCouponDtoList;
     }
 
     private UserCoupon convertToUserFixCoupon(UserCouponDto userCouponDto, FixCoupon fixCoupon){

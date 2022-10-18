@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.service;
 
+import shop.kokodo.promotionservice.dto.ProductIdAndFixCouponDto;
 import shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto;
 import shop.kokodo.promotionservice.dto.UpdateUserCouponDto;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
@@ -19,5 +20,8 @@ public interface UserCouponService {
     public UserCoupon updateUsageStatus(UpdateUserCouponDto updateUserCouponDto, long userId);
 
     public List<ProductIdAndRateCouponDto> findRateCouponByMemberIdAndProductId(List<Long> productIdList, long memberId);
-    public List<FixCoupon> findFixCouponByMemberIdAndProductId(long productId, long memberId);
-}
+//    public List<FixCoupon> findFixCouponByMemberIdAndProductId(long productId, long memberId);
+
+    public List<ProductIdAndFixCouponDto> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId);
+
+    }
