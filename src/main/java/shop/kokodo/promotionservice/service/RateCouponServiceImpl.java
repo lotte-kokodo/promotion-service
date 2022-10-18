@@ -28,7 +28,7 @@ public class RateCouponServiceImpl implements RateCouponService{
 
     @Override
     public void save(RateCouponDto rateCouponDto) {
-
+        if(rateCouponRepository.findByName(rateCouponDto.getName()).isPresent()) throw new IllegalArgumentException("이미 존재하는 쿠폰명");
         for (Long productId : rateCouponDto.getProductList()) {
             RateCoupon rateCoupon=convertToRateCoupon(rateCouponDto,productId);
             rateCouponRepository.save(rateCoupon);

@@ -8,6 +8,7 @@ import shop.kokodo.promotionservice.entity.RateCoupon;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
@@ -32,5 +33,7 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
     @Query(value = "select r.productId from RateCoupon r "+
                 "where r.name = :name ")
     public List<Long> findProductIdByName(String name);
+
+    Optional<RateCoupon> findByName(String name);
 
 }

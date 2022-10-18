@@ -21,6 +21,7 @@ public class FixCouponServiceImpl implements FixCouponService{
     private final ProductServiceClient productServiceClient;
     @Override
     public void save(FixCouponDto fixCouponDto) {
+        if(fixCouponRepository.findByName(fixCouponDto.getName()).isPresent()) throw new IllegalArgumentException("이미 존재하는 쿠폰 이름");
 
         FixCoupon fixCoupon;
         for (Long productId : fixCouponDto.getProductList()) {

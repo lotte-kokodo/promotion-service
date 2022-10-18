@@ -7,6 +7,7 @@ import shop.kokodo.promotionservice.entity.FixCoupon;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
@@ -32,6 +33,7 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
             "and f.id in (select u.fixCoupon.id from UserCoupon u where u.userId=1 and u.usageStatus=0 and u.fixCoupon is not null and u.userId=:memberId ) ")
     List<FixCoupon> findValidFixCoupon(Long memberId, List<Long> productIdList, LocalDateTime now);
 
+    Optional<FixCoupon> findByName(String name);
 
 
 }
