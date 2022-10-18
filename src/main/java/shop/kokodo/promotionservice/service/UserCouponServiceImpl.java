@@ -105,17 +105,16 @@ public class UserCouponServiceImpl implements UserCouponService{
     }
 
     @Override
-    public List<ProductIdAndRateCouponDto> findRateCouponByMemberIdAndProductId(List<Long> productIdList, long memberId) {
+    public Map<Long, List<RateCoupon>> findRateCouponByMemberIdAndProductId(List<Long> productIdList, long memberId) {
 
         List<UserCoupon> list = userCouponRepository.findByInProductIdAndMemberId(productIdList,memberId, LocalDateTime.now());
 
-        List<ProductIdAndRateCouponDto> rateCoupons = new ArrayList<>();
-        Map<Long, ArrayList<RateCoupon>> productIdAndRateCouponListMap = new HashMap<>();
+        Map<Long, List<RateCoupon>> productIdAndRateCouponListMap = new HashMap<>();
 
         for (UserCoupon userCoupon : list) {
             long productId = userCoupon.getRateCoupon().getProductId();
             if(productIdAndRateCouponListMap.containsKey(productId)) {
-                ArrayList<RateCoupon> rateCouponList = productIdAndRateCouponListMap.get(productId);
+                List<RateCoupon> rateCouponList = productIdAndRateCouponListMap.get(productId);
                 rateCouponList.add(userCoupon.getRateCoupon());
                 productIdAndRateCouponListMap.put(productId,rateCouponList);
             }
@@ -127,42 +126,19 @@ public class UserCouponServiceImpl implements UserCouponService{
             }
         }
 
-        for (Long productId : productIdAndRateCouponListMap.keySet()) {
-            rateCoupons.add(createProductIdAndRateCouponDto(productId,productIdAndRateCouponListMap.get(productId)));
-        }
-
-        return rateCoupons;
+        return productIdAndRateCouponListMap;
     }
 
     @Override
-    public List<ProductIdAndFixCouponDto> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId) {
+    public List<Long> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId) {
        List<FixCoupon> fixCouponList = fixCouponRepository.findValidFixCoupon( memberId, productIds, LocalDateTime.now());
 
-        List<ProductIdAndFixCouponDto> productIdAndFixCouponDtoList = new ArrayList<>();
-        Map<Long,List<FixCoupon>> productIdAndFixCouponMap =new HashMap<>();
-
+        List<Long> list = new ArrayList<>();
         for (FixCoupon fixCoupon : fixCouponList) {
-            long productId = fixCoupon.getProductId();
-            if(productIdAndFixCouponMap.containsKey(fixCoupon.getProductId())){
-                List<FixCoupon> tmpFixCouponList = productIdAndFixCouponMap.get(productId);
-                tmpFixCouponList.add(fixCoupon);
-                productIdAndFixCouponMap.put(productId,tmpFixCouponList);
-            }
-            else{
-                List<FixCoupon> tmpFixCouponList = new ArrayList<>();
-                tmpFixCouponList.add(fixCoupon);
-                productIdAndFixCouponMap.put(productId,tmpFixCouponList);
-            }
+            if(!list.contains(fixCoupon.getSellerId())) list.add(fixCoupon.getSellerId());
         }
 
-        for (Long productId : productIdAndFixCouponMap.keySet()) {
-            productIdAndFixCouponDtoList.add(ProductIdAndFixCouponDto
-                    .builder()
-                            .productId(productId)
-                            .fixCouponList(productIdAndFixCouponMap.get(productId))
-                    .build());
-        }
-        return productIdAndFixCouponDtoList;
+        return list;
     }
 
     private UserCoupon convertToUserFixCoupon(UserCouponDto userCouponDto, FixCoupon fixCoupon){

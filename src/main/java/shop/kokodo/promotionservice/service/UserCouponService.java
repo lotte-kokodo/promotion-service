@@ -9,6 +9,7 @@ import shop.kokodo.promotionservice.entity.RateCoupon;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserCouponService {
 
@@ -19,9 +20,9 @@ public interface UserCouponService {
 
     public UserCoupon updateUsageStatus(UpdateUserCouponDto updateUserCouponDto, long userId);
 
-    public List<ProductIdAndRateCouponDto> findRateCouponByMemberIdAndProductId(List<Long> productIdList, long memberId);
+    public Map<Long, List<RateCoupon>> findRateCouponByMemberIdAndProductId(List<Long> productIdList, long memberId);
 //    public List<FixCoupon> findFixCouponByMemberIdAndProductId(long productId, long memberId);
 
-    public List<ProductIdAndFixCouponDto> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId);
+    public List<Long> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId);
 
     }

@@ -36,4 +36,8 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
 
     Optional<RateCoupon> findByName(String name);
 
+    @Query(value="select r from RateCoupon r " +
+            "where r.id in :rateCouponIdList ")
+    List<RateCoupon> findByIdList(List<Long> rateCouponIdList);
+
 }

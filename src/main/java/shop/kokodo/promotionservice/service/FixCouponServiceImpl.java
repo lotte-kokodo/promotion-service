@@ -11,6 +11,7 @@ import shop.kokodo.promotionservice.repository.FixCouponRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,6 +48,19 @@ public class FixCouponServiceImpl implements FixCouponService{
         List<Long> productIdList = fixCouponRepository.findProductIdByName(name);
 
         return productServiceClient.findProductByName(productIdList);
+    }
+
+    @Override
+    public List<Long> findByCouponIdList(List<Long> couponIdList) {
+        List<FixCoupon> fixCouponList = fixCouponRepository.findByCouponIdList(couponIdList);
+
+        List<Long> sellerIdList = new ArrayList<>();
+
+        for (FixCoupon fixCoupon : fixCouponList) {
+            long sellerId = fixCoupon.getSellerId();
+            if(!sellerIdList.contains(sellerId)) sellerIdList.add(sellerId);
+        }
+        return sellerIdList;
     }
 
 

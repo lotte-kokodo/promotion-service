@@ -12,7 +12,10 @@ import shop.kokodo.promotionservice.repository.RateCouponRepository;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -57,6 +60,30 @@ public class RateCouponServiceImpl implements RateCouponService{
 
         return productServiceClient.findProductByName(productIdList);
     }
+
+    @Override
+    public Map<Long, List<RateCoupon>> findByCouponIdList(List<Long> couponIdList) {
+        List<RateCoupon> rateCouponList = rateCouponRepository.findByIdList(couponIdList);
+        // productId - rateCoupon 리스트
+        Map<Long, List<RateCoupon>> productIdAndRateCouponListMap = new HashMap<>();
+
+        for (RateCoupon rateCoupon : rateCouponList) {
+            long productId =rateCoupon.getProductId();
+            if(productIdAndRateCouponListMap.containsKey(productId)){
+                List<RateCoupon> tmp = productIdAndRateCouponListMap.get(productId);
+                tmp.add(rateCoupon);
+                productIdAndRateCouponListMap.put(productId,tmp);
+            }
+            else{
+                List<RateCoupon> tmp = new ArrayList<>();
+                tmp.add(rateCoupon);
+                productIdAndRateCouponListMap.put(productId,tmp);
+            }
+        }
+
+        return productIdAndRateCouponListMap;
+    }
+
 
     private RateCoupon convertToRateCoupon(RateCouponDto rateCouponDto, long productId){
         return RateCoupon.builder()
