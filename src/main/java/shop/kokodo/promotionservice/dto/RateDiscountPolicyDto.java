@@ -21,4 +21,5 @@ public class RateDiscountPolicyDto {
     int rate;
     int minPrice;
     Long productId;
+    Long sellerId;
 }
