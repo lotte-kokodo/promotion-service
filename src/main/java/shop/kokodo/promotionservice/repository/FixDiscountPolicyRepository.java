@@ -3,6 +3,7 @@ package shop.kokodo.promotionservice.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import shop.kokodo.promotionservice.dto.ProductSeller;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 
@@ -22,5 +23,11 @@ public interface FixDiscountPolicyRepository extends JpaRepository<FixDiscountPo
             "WHERE f.productId IN (:productIdList)")
     List<RateDiscountPolicy> findAllByProductId(List<Long> productIdList);
 
-    Optional<FixDiscountPolicy> findByProductIdAndSellerId(Long productId, Long sellerId);
+//    @Query(value = "SELECT f FROM FixDiscountPolicy f " +
+//            "WHERE f.productId = :productId AND f.sellerId = :sellerId")
+//    List<FixDiscountPolicy> findAllByProductIdAndSellerIdIn(List<Long> productId, List<Long> sellerId);
+
+    @Query(value = "SELECT f FROM FixDiscountPolicy f " +
+            "WHERE f.productId = :productId AND f.sellerId = :sellerId")
+    FixDiscountPolicy findAllByProductIdAndSellerIdIn(Long productId, Long sellerId);
 }

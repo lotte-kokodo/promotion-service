@@ -17,4 +17,7 @@ public interface RateDiscountPolicyService {
     public List<RateDiscountPolicy> getRateDiscountPolicyByDate();
 
     public Map<Long, RateDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList);
+
+    public Response findBySellerId(Long sellerId);
+
 }

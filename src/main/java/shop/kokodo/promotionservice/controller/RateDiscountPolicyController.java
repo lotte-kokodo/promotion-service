@@ -52,5 +52,10 @@ public class RateDiscountPolicyController {
     public List<RateDiscountPolicy> getRateDiscountPolicyByDate() {
         return rateDiscountPolicyService.getRateDiscountPolicyByDate();
     }
+
+    @GetMapping(value="/rate-discount/seller/{sellerId}")
+    public Response getRateDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
+        return rateDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
+    }
 }
 

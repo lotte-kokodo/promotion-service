@@ -64,6 +64,12 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         return map;
     }
 
+    @Override
+    @Transactional
+    public Response findBySellerId(Long sellerId) {
+        return Response.success(rateDiscountPolicyRepository.findAllBySellerId(sellerId));
+    }
+
     @Transactional
     public Response findByProductId(Long productId) {
         Optional<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyRepository.findByProductId(productId);

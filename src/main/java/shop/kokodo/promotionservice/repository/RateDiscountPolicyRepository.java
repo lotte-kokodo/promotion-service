@@ -13,6 +13,10 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
     RateDiscountPolicy save(RateDiscountPolicy rateDiscountPolicy);
     Optional<RateDiscountPolicy> findById(Long id);
     Optional<RateDiscountPolicy> findByName(String name);
+
+    @Query(value = "SELECT r FROM RateDiscountPolicy r " +
+            "WHERE r.sellerId IN (:sellerId)")
+    List<RateDiscountPolicy> findAllBySellerId(Long sellerId);
     Optional<RateDiscountPolicy> findByProductId(Long productId);
     List<RateDiscountPolicy> findAll();
 
@@ -23,4 +27,7 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
     @Query(value = "SELECT r FROM RateDiscountPolicy r " +
             "WHERE r.productId IN (:productIdList)")
     List<RateDiscountPolicy> findAllByProductId(List<Long> productIdList);
+
+
+
 }
