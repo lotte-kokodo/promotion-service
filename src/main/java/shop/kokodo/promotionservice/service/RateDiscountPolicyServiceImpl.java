@@ -72,14 +72,23 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
     @Transactional
     public Response findByProductId(Long productId) {
-        Optional<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyRepository.findByProductId(productId);
+        List<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyRepository.findAllByProductId(productId);
         RateDiscountPolicy result;
-        try {
-            result = rateDiscountPolicy.orElseThrow();
-        }catch(Exception e) {
+        if(rateDiscountPolicy.isEmpty()) {
             result = new RateDiscountPolicy();
             result.setRate(0);
+            return Response.success(result);
         }
+
+        int index = -1;
+        int max = -1;
+        for(int i=0;i<rateDiscountPolicy.size();i++) {
+            if(rateDiscountPolicy.get(i).getRate() > max) {
+                index = i;
+                max = rateDiscountPolicy.get(i).getRate();
+            }
+        }
+        result = rateDiscountPolicy.get(index);
 
         return Response.success(result);
     }
