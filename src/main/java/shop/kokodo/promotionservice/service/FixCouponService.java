@@ -16,4 +16,6 @@ public interface FixCouponService {
 
     List<ProductDto> findProductByName(String name);
 
+    List<Long> findByCouponIdList(List<Long> couponIdList);
+
 }

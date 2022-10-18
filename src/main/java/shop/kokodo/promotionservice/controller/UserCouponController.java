@@ -19,6 +19,7 @@ import shop.kokodo.promotionservice.service.UserCouponService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/userCoupon")
@@ -89,17 +90,24 @@ public class UserCouponController {
         }
         return Response.success();
     }
-
+    // productId - List<RateCoupon> 리턴
     @GetMapping("/rateCoupon/list")
     public Response rateCouponList(@RequestParam List<Long> productIdList, @RequestHeader long memberId){
-        List<ProductIdAndRateCouponDto> list = userCouponService.findRateCouponByMemberIdAndProductId(productIdList,memberId);
+        return Response.success(userCouponService.findRateCouponByMemberIdAndProductId(productIdList,memberId));
 
-        return Response.success(list);
     }
 
+    /**
+     * productList에서 무료배송쿠폰이 있는 sellerId만 전송
+     * @param productIdList
+     * @param memberId
+     * @return
+     */
     @GetMapping("/fixCoupon/list")
     public Response fixCouponList(@RequestParam List<Long> productIdList, @RequestHeader long memberId){
         return Response.success(userCouponService.findFixCouponByMemberIdAndProductId(productIdList,memberId));
     }
+
+
 
 }

@@ -10,6 +10,7 @@ import shop.kokodo.promotionservice.service.RateCouponService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/rateCoupon")
@@ -44,6 +45,14 @@ public class RateCouponController {
         List<ProductDto> products = rateCouponService.findProductByRateCouponName(name);
 
         return Response.success(products);
+    }
+
+    /*
+        productId - List<RateCoupon
+     */
+    @GetMapping("/coupon/list")
+    public Map<Long,List<RateCoupon>> findRateCouponByCouponIdList(@RequestParam List<Long> couponIdList){
+        return rateCouponService.findByCouponIdList(couponIdList);
     }
 
 }
