@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface FixDiscountPolicyRepository extends JpaRepository<FixDiscountPolicy, Long> {
-    FixDiscountPolicy save(FixDiscountPolicy fixCoupon);
+    FixDiscountPolicy save(FixDiscountPolicy fixDiscountPolicy);
     Optional<FixDiscountPolicy> findById(Long id);
     Optional<FixDiscountPolicy> findByName(String name);
     Optional<FixDiscountPolicy> findByProductId(Long productId);
@@ -23,11 +23,11 @@ public interface FixDiscountPolicyRepository extends JpaRepository<FixDiscountPo
             "WHERE f.productId IN (:productIdList)")
     List<RateDiscountPolicy> findAllByProductId(List<Long> productIdList);
 
-//    @Query(value = "SELECT f FROM FixDiscountPolicy f " +
-//            "WHERE f.productId = :productId AND f.sellerId = :sellerId")
-//    List<FixDiscountPolicy> findAllByProductIdAndSellerIdIn(List<Long> productId, List<Long> sellerId);
-
     @Query(value = "SELECT f FROM FixDiscountPolicy f " +
             "WHERE f.productId = :productId AND f.sellerId = :sellerId")
     FixDiscountPolicy findAllByProductIdAndSellerIdIn(Long productId, Long sellerId);
+
+    @Query(value = "SELECT f FROM FixDiscountPolicy f " +
+            "WHERE f.sellerId IN (:sellerId)")
+    List<FixDiscountPolicy> findAllBySellerId(Long sellerId);
 }

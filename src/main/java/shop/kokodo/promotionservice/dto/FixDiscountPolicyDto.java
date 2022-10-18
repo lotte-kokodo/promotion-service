@@ -19,5 +19,6 @@ public class FixDiscountPolicyDto {
     LocalDateTime endDate;
     int price;
     int minPrice;
-    int productId;
+    Long productId;
+    Long sellerId;
 }

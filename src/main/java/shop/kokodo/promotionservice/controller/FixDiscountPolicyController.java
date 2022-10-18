@@ -9,7 +9,6 @@ import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.ProductSeller;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
-import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.service.FixDiscountPolicyService;
 
 import java.util.List;
@@ -46,5 +45,10 @@ public class FixDiscountPolicyController {
     @GetMapping(value="/fix-discount/status")
     public Response getFixDiscountPolicyStatus(@RequestParam List<Long> productIdList, @RequestParam List<Long> sellerIdList) {
         return fixDiscountPolicyService.getFixDiscountPolicyStatus(productIdList, sellerIdList);
+    }
+
+    @GetMapping(value="/fix-discount/seller/{sellerId}")
+    public Response getFixDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
+        return fixDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
     }
 }
