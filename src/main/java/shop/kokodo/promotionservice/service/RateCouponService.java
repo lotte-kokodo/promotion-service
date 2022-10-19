@@ -20,6 +20,6 @@ public interface RateCouponService {
 
     public List<ProductDto> findProductByRateCouponName(String name);
 
-    Map<Long, List<RateCoupon>> findByCouponIdList(List<Long> couponIdList);
+    Map<Long, RateCoupon> findByCouponIdList(List<Long> couponIdList);
 
 }

@@ -51,7 +51,7 @@ public class RateCouponController {
         productId - List<RateCoupon
      */
     @GetMapping("/coupon/list")
-    public Map<Long,List<RateCoupon>> findRateCouponByCouponIdList(@RequestParam List<Long> couponIdList){
+    public Map<Long, RateCoupon> findRateCouponByCouponIdList(@RequestParam List<Long> couponIdList){
         return rateCouponService.findByCouponIdList(couponIdList);
     }
 
