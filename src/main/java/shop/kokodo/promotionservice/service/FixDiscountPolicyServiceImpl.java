@@ -96,6 +96,33 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
+    public Map<Long, Boolean> getFixDiscountPolicyStatusForFeign(List<Long> productIdList, List<Long> sellerIdList) {
+        Map<Long, Boolean> response = new HashMap<Long, Boolean>();
+
+        if (productIdList.size() != sellerIdList.size()) {
+            throw new IllegalArgumentException("상품-셀러 아이디 리스트 크기 불일치");
+        }
+
+        List<ProductSeller> productSellerList = IntStream.range(0, productIdList.size()).boxed()
+            .map(idx -> new ProductSeller(productIdList.get(idx), sellerIdList.get(idx)) )
+            .collect(Collectors.toList());
+
+        productSellerList
+            .forEach(productSeller -> {
+                response.put(productSeller.getSellerId(), false);
+            });
+        productSellerList
+            .forEach(productSeller -> {
+                FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findAllByProductIdAndSellerIdIn(productSeller.getProductId(), productSeller.getSellerId());
+                if ((fixDiscountPolicy != null) && !response.get(productSeller.getSellerId())) {
+                    response.put(productSeller.getSellerId(), true);
+                }
+            });
+
+        return response;
+    }
+
+    @Override
     public Response findBySellerId(Long sellerId) {
         return Response.success(fixDiscountPolicyRepository.findAllBySellerId(sellerId));
     }

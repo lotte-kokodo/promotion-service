@@ -1,5 +1,7 @@
 package shop.kokodo.promotionservice.service;
 
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -130,15 +132,10 @@ public class UserCouponServiceImpl implements UserCouponService{
     }
 
     @Override
-    public List<Long> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId) {
+    public Map<Long, FixCoupon> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId) {
        List<FixCoupon> fixCouponList = fixCouponRepository.findValidFixCoupon( memberId, productIds, LocalDateTime.now());
-
-        List<Long> list = new ArrayList<>();
-        for (FixCoupon fixCoupon : fixCouponList) {
-            if(!list.contains(fixCoupon.getSellerId())) list.add(fixCoupon.getSellerId());
-        }
-
-        return list;
+        return fixCouponList.stream()
+           .collect(Collectors.toMap(FixCoupon::getSellerId, Function.identity()));
     }
 
     private UserCoupon convertToUserFixCoupon(UserCouponDto userCouponDto, FixCoupon fixCoupon){

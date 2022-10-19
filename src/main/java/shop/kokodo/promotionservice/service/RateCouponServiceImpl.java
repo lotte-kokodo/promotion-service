@@ -1,5 +1,7 @@
 package shop.kokodo.promotionservice.service;
 
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,26 +64,27 @@ public class RateCouponServiceImpl implements RateCouponService{
     }
 
     @Override
-    public Map<Long, List<RateCoupon>> findByCouponIdList(List<Long> couponIdList) {
+    public  Map<Long, RateCoupon>  findByCouponIdList(List<Long> couponIdList) {
         List<RateCoupon> rateCouponList = rateCouponRepository.findByIdList(couponIdList);
         // productId - rateCoupon 리스트
-        Map<Long, List<RateCoupon>> productIdAndRateCouponListMap = new HashMap<>();
+//        Map<Long, List<RateCoupon>> productIdAndRateCouponListMap = new HashMap<>();
+//
+//        for (RateCoupon rateCoupon : rateCouponList) {
+//            long productId =rateCoupon.getProductId();
+//            if(productIdAndRateCouponListMap.containsKey(productId)){
+//                List<RateCoupon> tmp = productIdAndRateCouponListMap.get(productId);
+//                tmp.add(rateCoupon);
+//                productIdAndRateCouponListMap.put(productId,tmp);
+//            }
+//            else{
+//                List<RateCoupon> tmp = new ArrayList<>();
+//                tmp.add(rateCoupon);
+//                productIdAndRateCouponListMap.put(productId,tmp);
+//            }
+//        }
 
-        for (RateCoupon rateCoupon : rateCouponList) {
-            long productId =rateCoupon.getProductId();
-            if(productIdAndRateCouponListMap.containsKey(productId)){
-                List<RateCoupon> tmp = productIdAndRateCouponListMap.get(productId);
-                tmp.add(rateCoupon);
-                productIdAndRateCouponListMap.put(productId,tmp);
-            }
-            else{
-                List<RateCoupon> tmp = new ArrayList<>();
-                tmp.add(rateCoupon);
-                productIdAndRateCouponListMap.put(productId,tmp);
-            }
-        }
-
-        return productIdAndRateCouponListMap;
+        return rateCouponList.stream().collect(Collectors.toMap(RateCoupon::getProductId,
+            Function.identity()));
     }
 
 
