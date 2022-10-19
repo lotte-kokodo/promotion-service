@@ -74,6 +74,7 @@ public class FixCouponServiceImpl implements FixCouponService{
                 .endDate(LocalDateTime.parse(fixCouponDto.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .productId(productId)
                 .sellerId(fixCouponDto.getSellerId())
+                .freeDelivery(true)
                 .build();
     }
 

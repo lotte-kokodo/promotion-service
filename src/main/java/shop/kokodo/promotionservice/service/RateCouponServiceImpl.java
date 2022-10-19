@@ -91,8 +91,8 @@ public class RateCouponServiceImpl implements RateCouponService{
                 .regdate(LocalDateTime.now())
                 .rate(rateCouponDto.getRate())
                 .minPrice(rateCouponDto.getMinPrice())
-                .startDate(LocalDateTime.parse(rateCouponDto.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                .endDate(LocalDateTime.parse(rateCouponDto.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                .startDate(LocalDateTime.parse(rateCouponDto.getStartDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .endDate(LocalDateTime.parse(rateCouponDto.getEndDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .productId(productId)
                 .sellerId(rateCouponDto.getSellerId())
                 .build();
