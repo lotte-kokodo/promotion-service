@@ -23,6 +23,6 @@ public interface UserCouponService {
     public Map<Long, List<RateCoupon>> findRateCouponByMemberIdAndProductId(List<Long> productIdList, long memberId);
 //    public List<FixCoupon> findFixCouponByMemberIdAndProductId(long productId, long memberId);
 
-    public List<Long> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId);
+    public Map<Long, FixCoupon> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId);
 
     }
