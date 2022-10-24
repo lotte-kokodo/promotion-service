@@ -11,6 +11,6 @@ import java.util.List;
 @FeignClient(name="product-service")
 public interface ProductServiceClient {
 
-    @GetMapping("/product/list")
+    @GetMapping("/products/feign/list")
     List<ProductDto> findProductByName(@RequestParam List<Long> productIdList);
 }

@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class RateDiscountPolicy extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rateDiscountPolicyId;
 
     @Column( nullable = false )
