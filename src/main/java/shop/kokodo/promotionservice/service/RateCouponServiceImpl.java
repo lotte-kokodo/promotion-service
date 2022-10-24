@@ -59,8 +59,12 @@ public class RateCouponServiceImpl implements RateCouponService{
     public List<ProductDto> findProductByRateCouponName(String name) {
 
         List<Long> productIdList = rateCouponRepository.findProductIdByName(name);
+        System.out.println(productIdList.size());
+        System.out.println("=====================");
+        List<ProductDto> dto = productServiceClient.findProductByName(productIdList);
 
-        return productServiceClient.findProductByName(productIdList);
+        System.out.println(dto);
+        return dto;
     }
 
     @Override

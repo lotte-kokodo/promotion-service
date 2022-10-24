@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class FixDiscountPolicy extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fixDiscountPolicyId;
 
     @Column( nullable = false )
