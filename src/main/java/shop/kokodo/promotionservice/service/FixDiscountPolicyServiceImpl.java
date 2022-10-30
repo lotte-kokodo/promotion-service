@@ -1,26 +1,24 @@
 package shop.kokodo.promotionservice.service;
 
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.ProductSeller;
-import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.repository.FixDiscountPolicyRepository;
 
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
-    private FixDiscountPolicyRepository fixDiscountPolicyRepository;
+    private final FixDiscountPolicyRepository fixDiscountPolicyRepository;
 
     @Autowired
     public FixDiscountPolicyServiceImpl(FixDiscountPolicyRepository fixDiscountPolicyRepository) {
@@ -28,7 +26,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public FixDiscountPolicy save(FixDiscountPolicyDto fixDiscountPolicyDto) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
@@ -37,18 +35,19 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public List<FixDiscountPolicy> getAll() {
         return fixDiscountPolicyRepository.findAll();
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = false)
     public FixDiscountPolicy getFixDiscountPolicy(Long productId) {
         return fixDiscountPolicyRepository.findByProductId(productId).orElse(new FixDiscountPolicy());
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Map<Long, FixDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList) {
         ModelMapper mapper = new ModelMapper();
 
@@ -69,6 +68,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Response getFixDiscountPolicyStatus(List<Long> productIdList, List<Long> sellerIdList) {
         Map<Long, Boolean> response = new HashMap<Long, Boolean>();
 
@@ -96,6 +96,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Map<Long, Boolean> getFixDiscountPolicyStatusForFeign(List<Long> productIdList, List<Long> sellerIdList) {
         Map<Long, Boolean> response = new HashMap<Long, Boolean>();
 
@@ -123,6 +124,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public Response findBySellerId(Long sellerId) {
         return Response.success(fixDiscountPolicyRepository.findAllBySellerId(sellerId));
     }
