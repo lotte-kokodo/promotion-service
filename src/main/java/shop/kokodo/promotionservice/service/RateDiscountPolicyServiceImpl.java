@@ -9,12 +9,11 @@ import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.repository.RateDiscountPolicyRepository;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,34 +25,31 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         this.rateDiscountPolicyRepository = rateDiscountPolicyRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<RateDiscountPolicy> getAll() {
         return rateDiscountPolicyRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = false)
     public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto) {
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+
         RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
         return rateDiscountPolicyRepository.save(rateDiscountPolicy);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RateDiscountPolicy> getRateDiscountPolicyByDate() {
         return rateDiscountPolicyRepository.findDateRangeRateDiscountPolicy(LocalDateTime.now());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Map<Long, RateDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList) {
-        ModelMapper mapper = new ModelMapper();
 
         List<RateDiscountPolicy> result = rateDiscountPolicyRepository.findAllByProductId(productIdList);
 
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
-        List<RateDiscountPolicyDto> list = result.stream()
-                .map(source -> mapper.map(source, RateDiscountPolicyDto.class))
-                .collect(Collectors.toList());
+        List<RateDiscountPolicyDto> rateDiscountPolicyDtoList = makeModelMappingList(result);
 
         Map<Long, RateDiscountPolicyDto> map = new HashMap<>();
 
@@ -65,12 +61,12 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Response findBySellerId(Long sellerId) {
         return Response.success(rateDiscountPolicyRepository.findAllBySellerId(sellerId));
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Response findByProductId(Long productId) {
         List<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyRepository.findAllByProductId(productId);
         RateDiscountPolicy result;
@@ -91,5 +87,16 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         result = rateDiscountPolicy.get(index);
 
         return Response.success(result);
+    }
+
+    public List<RateDiscountPolicyDto> makeModelMappingList(List<RateDiscountPolicy> list) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+
+        List<RateDiscountPolicyDto> resultList = list.stream()
+                .map(source -> mapper.map(source, RateDiscountPolicyDto.class))
+                .collect(Collectors.toList());
+
+        return resultList;
     }
 }

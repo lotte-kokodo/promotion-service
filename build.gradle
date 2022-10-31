@@ -47,8 +47,8 @@ dependencies {
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.1'
 
 	//zipkin
-	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
-	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.3.RELEASE'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin:2.2.3.RELEASE'
 }
 
 tasks.named('test') {
