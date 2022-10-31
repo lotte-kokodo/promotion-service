@@ -1,9 +1,6 @@
 package shop.kokodo.promotionservice.controller.response;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
@@ -14,6 +11,7 @@ public class RestResponse<T> {
     private String message;
     private T result;
 
+    @Builder
     public RestResponse(int code, String message, T result) {
         this.code = code;
         this.message = message;

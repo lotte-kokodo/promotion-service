@@ -59,5 +59,9 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
             " and r.productId in :productIdList " +
             " and u.userId= :memberId ")
     public List<UserCoupon> findByInProductIdAndMemberId(List<Long> productIdList, long memberId, LocalDateTime now);
-}
 
+    @Query(value =" select u from UserCoupon u where u.id in :userCouponIdList")
+    List<UserCoupon> findByUserCouponIdList(List<Long> userCouponIdList);
+
+    Optional<UserCoupon> findById(Long id);
+}
