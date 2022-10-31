@@ -17,6 +17,7 @@ import shop.kokodo.promotionservice.repository.FixCouponRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.doReturn;
 
@@ -26,10 +27,8 @@ public class FixCouponServiceMockTest {
 
     @InjectMocks
     FixCouponServiceImpl fixCouponServiceImpl;
-
     @Mock
     FixCouponRepository fixCouponRepository;
-
     FixCouponDto fixCouponDto;
     List<FixCoupon> coupons;
 
@@ -51,13 +50,21 @@ public class FixCouponServiceMockTest {
 
     @DisplayName("고정할인 쿠폰 생성 성공")
     @Test
-    public void save(){
+    public void save_success(){
         FixCoupon fixCoupon=FixCoupon.builder().build();
         doReturn(fixCoupon).when(fixCouponRepository).save(fixCoupon);
 
         fixCouponServiceImpl.save(fixCouponDto);
     }
+    @Test
+    @DisplayName("중복된 쿠폰 이름은 쿠폰 성공 실패")
+    public void save_fail_couponName(){
+        FixCoupon fixCoupon = FixCoupon.builder().name("testCoupon").build();
+        Optional<FixCoupon> fixCouponOptional = Optional.of(fixCoupon);
+        doReturn(fixCouponOptional).when(fixCouponRepository).findByName("testCoupon");
 
+        Assertions.assertThrows(IllegalArgumentException.class, () -> fixCouponServiceImpl.save(fixCouponDto));
+    }
     @Test
     @DisplayName("사용되지 않은 유저의 고정 할인 쿠폰 product id로 조회 성공")
     public void findUserNotUsedFixCouponByproductIdSuccess(){
