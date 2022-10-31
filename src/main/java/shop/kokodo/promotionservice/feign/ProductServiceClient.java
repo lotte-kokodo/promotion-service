@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.feign;
 
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,4 +14,8 @@ public interface ProductServiceClient {
 
     @GetMapping("/products/feign/list")
     List<ProductDto> findProductByName(@RequestParam List<Long> productIdList);
+
+    @GetMapping("/product/feign/id")
+    Boolean findProductById(@RequestParam(value = "productId") Long productId);
+
 }

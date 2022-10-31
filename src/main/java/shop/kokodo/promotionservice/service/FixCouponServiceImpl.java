@@ -1,12 +1,20 @@
 package shop.kokodo.promotionservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
+import shop.kokodo.promotionservice.exception.DuplicateCouponNameException;
+import shop.kokodo.promotionservice.exception.NoMemberException;
+import shop.kokodo.promotionservice.exception.NoProductException;
+import shop.kokodo.promotionservice.exception.NoSellerException;
+import shop.kokodo.promotionservice.feign.MemberServiceClient;
 import shop.kokodo.promotionservice.feign.ProductServiceClient;
+import shop.kokodo.promotionservice.feign.SellerServiceClient;
 import shop.kokodo.promotionservice.repository.FixCouponRepository;
 
 import java.time.LocalDateTime;
@@ -15,14 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class FixCouponServiceImpl implements FixCouponService{
 
     private final FixCouponRepository fixCouponRepository;
     private final ProductServiceClient productServiceClient;
+    private final SellerServiceClient sellerServiceClient;
+    private final MemberServiceClient memberServiceClient;
+
+    @Transactional
     @Override
     public void save(FixCouponDto fixCouponDto) {
-        if(fixCouponRepository.findByName(fixCouponDto.getName()).isPresent()) throw new IllegalArgumentException("이미 존재하는 쿠폰 이름");
+        if(fixCouponRepository.findByName(fixCouponDto.getName()).isPresent())
+            throw new DuplicateCouponNameException();
 
         FixCoupon fixCoupon;
         for (Long productId : fixCouponDto.getProductList()) {
@@ -32,14 +46,20 @@ public class FixCouponServiceImpl implements FixCouponService{
 
     }
 
-    public List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId){
-        return fixCouponRepository.findUserNotUsedFixCouponByproductId(userId,productId,LocalDateTime.now());
-    }
+    @Override
+    public List<FixCoupon> findUserNotUsedFixCouponByproductId(long memberId, long productId){
+        if(!memberServiceClient.getMember(memberId)) throw new NoMemberException();
 
+        if(!productServiceClient.findProductById(productId)) throw new NoProductException();
+
+        return fixCouponRepository.findUserNotUsedFixCouponByproductId(memberId,productId,LocalDateTime.now());
+    }
+    @Transactional(readOnly = true)
     @Override
     public List<FixCoupon> findBySellerId(long sellerId) {
-        
-        // TODO: sellerId  SELLER MS에서 확인해서 예외처리
+        if (!sellerServiceClient.getSeller(sellerId))
+            throw new NoSellerException();
+
         return fixCouponRepository.findBySellerId(sellerId);
     }
 
