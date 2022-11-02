@@ -32,10 +32,8 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
     @Transactional(readOnly = false)
     public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto) {
-
-//        RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
-//        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
-        return null;
+        RateDiscountPolicy rateDiscountPolicy = makeDtoToEntity(rateDiscountPolicyDto);
+        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
     }
 
     @Override
@@ -50,13 +48,13 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
         List<RateDiscountPolicy> result = rateDiscountPolicyRepository.findAllByProductId(productIdList);
 
-        List<RateDiscountPolicyDto> rateDiscountPolicyDtoList = makeModelMappingList(result);
+        List<RateDiscountPolicyDto> rateDiscountPolicyDtoList = makeEntityListToDtoList(result);
 
         Map<Long, RateDiscountPolicyDto> map = new HashMap<>();
 
-//        for(int i=0;i<list.size();i++) {
-//            map.put(productIdList.get(i), list.get(i));
-//        }
+        for(int i=0;i<rateDiscountPolicyDtoList.size();i++) {
+            map.put(productIdList.get(i), rateDiscountPolicyDtoList.get(i));
+        }
 
         return map;
     }
@@ -90,7 +88,7 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         return Response.success(result);
     }
 
-    public List<RateDiscountPolicyDto> makeModelMappingList(List<RateDiscountPolicy> list) {
+    public List<RateDiscountPolicyDto> makeEntityListToDtoList(List<RateDiscountPolicy> list) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
 
@@ -99,5 +97,13 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
                 .collect(Collectors.toList());
 
         return resultList;
+    }
+
+    public RateDiscountPolicy makeDtoToEntity(RateDiscountPolicyDto dto) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        RateDiscountPolicy rateDiscountPolicy;
+        rateDiscountPolicy = mapper.map(dto, RateDiscountPolicy.class);
+        return rateDiscountPolicy;
     }
 }
