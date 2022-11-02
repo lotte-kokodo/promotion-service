@@ -4,8 +4,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
 import shop.kokodo.promotionservice.dto.UpdateUserCouponDto;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
@@ -32,6 +34,9 @@ public class UserCouponServiceImpl implements UserCouponService{
     private final RateCouponRepository rateCouponRepository;
     private final MemberServiceClient memberServiceClient;
     private final ProductServiceClient productServiceClient;
+
+    private final CircuitBreaker circuitBreaker = AllCircuitBreaker.createSellerCircuitBreaker();
+
 
     @Override
     public List<UserCoupon> findByUserId(long userId) {
@@ -72,7 +77,10 @@ public class UserCouponServiceImpl implements UserCouponService{
 
     @Override
     public List<UserCoupon> findValidCouponByMemberIdGroupByCouponName(long memberId) {
-        if(!memberServiceClient.getMember(memberId)) throw new NoMemberException();
+
+        Boolean memberFlag = circuitBreaker.run(()-> memberServiceClient.getMember(memberId)
+                ,throwable -> true);
+        if(!memberFlag) throw new NoMemberException();
 
         final LocalDateTime now = LocalDateTime.now();
         List<UserCoupon> userCouponList=userCouponRepository.findFixCouponByMemberId(memberId, now);
@@ -114,7 +122,10 @@ public class UserCouponServiceImpl implements UserCouponService{
 
     @Override
     public Map<Long, List<RateCoupon>> findRateCouponByMemberIdAndProductId(List<Long> productIdList, long memberId) {
-        if(!memberServiceClient.getMember(memberId)) throw new NoMemberException();
+        Boolean memberFlag = circuitBreaker.run(()-> memberServiceClient.getMember(memberId)
+                ,throwable -> true);
+
+        if(!memberFlag) throw new NoMemberException();
 
         List<UserCoupon> list = userCouponRepository.findByInProductIdAndMemberId(productIdList,memberId, LocalDateTime.now());
 
@@ -141,11 +152,18 @@ public class UserCouponServiceImpl implements UserCouponService{
 
     @Override
     public Map<Long, FixCoupon> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId) {
-        if(!memberServiceClient.getMember(memberId)) throw new NoMemberException();
+
+        Boolean memberFlag = circuitBreaker.run(()-> memberServiceClient.getMember(memberId)
+                ,throwable -> true);
+
+        if(!memberFlag) throw new NoMemberException();
 
         for (Long productId : productIds) {
-            if(!productServiceClient.findProductById(productId)) throw new NoProductException();
+            Boolean productFlag = circuitBreaker.run(()-> productServiceClient.findProductById(productId)
+                    ,throwable -> true);
+            if(!productFlag) throw new NoProductException();
         }
+
        List<FixCoupon> fixCouponList = fixCouponRepository.findValidFixCoupon( memberId, productIds, LocalDateTime.now());
         return fixCouponList.stream()
            .collect(Collectors.toMap(FixCoupon::getSellerId, Function.identity()));

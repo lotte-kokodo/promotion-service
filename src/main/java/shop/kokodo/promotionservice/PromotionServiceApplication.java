@@ -26,4 +26,5 @@ public class PromotionServiceApplication {
 
 		return mapper;
 	}
+
 }

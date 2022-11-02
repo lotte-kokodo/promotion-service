@@ -33,8 +33,9 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     @Transactional(readOnly = false)
     public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto) {
 
-        RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
-        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
+//        RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
+//        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
+        return null;
     }
 
     @Override
@@ -53,8 +54,8 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
         Map<Long, RateDiscountPolicyDto> map = new HashMap<>();
 
-        for(int i=0;i<list.size();i++) {
-            map.put(productIdList.get(i), list.get(i));
+        for(int i=0;i<rateDiscountPolicyDtoList.size();i++) {
+            map.put(productIdList.get(i), rateDiscountPolicyDtoList.get(i));
         }
 
         return map;

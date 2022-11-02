@@ -24,50 +24,50 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@WebAppConfiguration
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@WebAppConfiguration
 class RateDiscountPolicyControllerTest {
-    @Autowired
-    private RateDiscountPolicyRepository rateDiscountPolicyRepository;
-
-    @BeforeEach
-    public void init() {
-
-    }
-
-    @Test
-    void 모든_비용할인정책_가져오기() {
-
-    }
-
-    @Test
-    void 셀러_비용할인정책_가져오기() {
-
-    }
-
-    @Test
-    void 셀러_비용할인정책_실패_sellerId_없음() {
-
-    }
-
-    @Test
-    void 상품_비용할인정책_가져오기() {
-
-    }
-
-    @Test
-    void 상품_비용할인정책_실패_productId_없음() {
-
-    }
-
-    @Test
-    void 비용할인정책_등록_성공() {
-
-    }
-
-    @Test
-    void 비용할인정책_등록_실패() {
-
-    }
+//    @Autowired
+//    private RateDiscountPolicyRepository rateDiscountPolicyRepository;
+//
+//    @BeforeEach
+//    public void init() {
+//
+//    }
+//
+//    @Test
+//    void 모든_비용할인정책_가져오기() {
+//
+//    }
+//
+//    @Test
+//    void 셀러_비용할인정책_가져오기() {
+//
+//    }
+//
+//    @Test
+//    void 셀러_비용할인정책_실패_sellerId_없음() {
+//
+//    }
+//
+//    @Test
+//    void 상품_비용할인정책_가져오기() {
+//
+//    }
+//
+//    @Test
+//    void 상품_비용할인정책_실패_productId_없음() {
+//
+//    }
+//
+//    @Test
+//    void 비용할인정책_등록_성공() {
+//
+//    }
+//
+//    @Test
+//    void 비용할인정책_등록_실패() {
+//
+//    }
 }
