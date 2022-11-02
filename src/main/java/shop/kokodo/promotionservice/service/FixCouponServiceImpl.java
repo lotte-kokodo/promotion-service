@@ -2,9 +2,11 @@ package shop.kokodo.promotionservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
+import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
@@ -32,6 +34,8 @@ public class FixCouponServiceImpl implements FixCouponService{
     private final SellerServiceClient sellerServiceClient;
     private final MemberServiceClient memberServiceClient;
 
+    private final CircuitBreaker circuitBreaker = AllCircuitBreaker.createSellerCircuitBreaker();
+
     @Transactional
     @Override
     public void save(FixCouponDto fixCouponDto) {
@@ -48,16 +52,25 @@ public class FixCouponServiceImpl implements FixCouponService{
 
     @Override
     public List<FixCoupon> findUserNotUsedFixCouponByproductId(long memberId, long productId){
-        if(!memberServiceClient.getMember(memberId)) throw new NoMemberException();
 
-        if(!productServiceClient.findProductById(productId)) throw new NoProductException();
+        Boolean memberFlag = circuitBreaker.run(()-> memberServiceClient.getMember(memberId)
+                ,throwable -> true);
+        Boolean productFlag = circuitBreaker.run(()-> productServiceClient.findProductById(productId)
+                ,throwable -> true);
+        if(!memberFlag) throw new NoMemberException();
+
+        if(!productFlag) throw new NoProductException();
 
         return fixCouponRepository.findUserNotUsedFixCouponByproductId(memberId,productId,LocalDateTime.now());
     }
     @Transactional(readOnly = true)
     @Override
     public List<FixCoupon> findBySellerId(long sellerId) {
-        if (!sellerServiceClient.getSeller(sellerId))
+
+        Boolean sellerFlag = circuitBreaker.run(()-> sellerServiceClient.getSeller(sellerId)
+                ,throwable -> true);
+
+        if (!sellerFlag)
             throw new NoSellerException();
 
         return fixCouponRepository.findBySellerId(sellerId);

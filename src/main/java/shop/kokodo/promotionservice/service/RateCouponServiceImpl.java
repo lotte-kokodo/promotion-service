@@ -3,9 +3,13 @@ package shop.kokodo.promotionservice.service;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
 import shop.kokodo.promotionservice.entity.RateCoupon;
@@ -33,6 +37,10 @@ public class RateCouponServiceImpl implements RateCouponService{
     private final MemberServiceClient memberServiceClient;
     private final SellerServiceClient sellerServiceClient;
 
+    private final CircuitBreaker circuitBreaker = AllCircuitBreaker.createSellerCircuitBreaker();
+
+
+
     public RateCouponServiceImpl(ProductServiceClient productServiceClient, RateCouponRepository rateCouponRepository,
                                  MemberServiceClient memberServiceClient, SellerServiceClient sellerServiceClient) {
         this.productServiceClient = productServiceClient;
@@ -56,21 +64,35 @@ public class RateCouponServiceImpl implements RateCouponService{
 
     @Override
     public List<RateCoupon> findUserNotUsedRateCouponByproductId(long memberId, long productId) {
-        if(!memberServiceClient.getMember(memberId)) throw new NoMemberException();
-        if(!productServiceClient.findProductById(productId)) throw new NoProductException();
+
+        Boolean memberFlag = circuitBreaker.run(()-> memberServiceClient.getMember(memberId)
+                ,throwable -> true);
+        Boolean productFlag = circuitBreaker.run(()-> productServiceClient.findProductById(productId)
+                ,throwable -> true);
+
+        if(!memberFlag) throw new NoMemberException();
+        if(!productFlag) throw new NoProductException();
 
         return rateCouponRepository.findUserNotUsedRateCouponByproductId(memberId,productId, LocalDateTime.now());
     }
 
     @Override
     public List<RateCoupon> findBySellerId(long sellerId) {
-        if(!sellerServiceClient.getSeller(sellerId)) throw new NoSellerException();
+
+        Boolean sellerFlag = circuitBreaker.run(()-> sellerServiceClient.getSeller(sellerId)
+                ,throwable -> true);
+
+        if(!sellerFlag) throw new NoSellerException();
         return rateCouponRepository.findDistinctRateCouponBySellerId(sellerId);
     }
 
     @Override
     public List<RateCoupon> findByProductId(long productId) {
-        if(!productServiceClient.findProductById(productId)) throw new NoProductException();
+
+        Boolean productFlag = circuitBreaker.run(()-> productServiceClient.findProductById(productId)
+                ,throwable -> true);
+
+        if(!productFlag) throw new NoProductException();
         return rateCouponRepository.findByProductId(productId, LocalDateTime.now());
     }
 

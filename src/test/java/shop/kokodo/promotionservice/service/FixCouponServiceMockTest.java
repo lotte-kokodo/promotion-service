@@ -12,6 +12,10 @@ import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
+import shop.kokodo.promotionservice.exception.DuplicateCouponNameException;
+import shop.kokodo.promotionservice.feign.MemberServiceClient;
+import shop.kokodo.promotionservice.feign.ProductServiceClient;
+import shop.kokodo.promotionservice.feign.SellerServiceClient;
 import shop.kokodo.promotionservice.repository.FixCouponRepository;
 
 import java.time.LocalDateTime;
@@ -29,6 +33,13 @@ public class FixCouponServiceMockTest {
     FixCouponServiceImpl fixCouponServiceImpl;
     @Mock
     FixCouponRepository fixCouponRepository;
+
+    @Mock
+    MemberServiceClient memberServiceClient;
+    @Mock
+    ProductServiceClient productServiceClient;
+    @Mock
+    SellerServiceClient sellerServiceClient;
     FixCouponDto fixCouponDto;
     List<FixCoupon> coupons;
 
@@ -63,7 +74,7 @@ public class FixCouponServiceMockTest {
         Optional<FixCoupon> fixCouponOptional = Optional.of(fixCoupon);
         doReturn(fixCouponOptional).when(fixCouponRepository).findByName("testCoupon");
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> fixCouponServiceImpl.save(fixCouponDto));
+        Assertions.assertThrows(DuplicateCouponNameException.class, () -> fixCouponServiceImpl.save(fixCouponDto));
     }
     @Test
     @DisplayName("사용되지 않은 유저의 고정 할인 쿠폰 product id로 조회 성공")
@@ -72,9 +83,14 @@ public class FixCouponServiceMockTest {
         final long productId=1L;
         final LocalDateTime day= LocalDateTime.of(2022,10,1,0,0);
         coupons = new ArrayList<>();
+        boolean memberFlag = true;
+        boolean productFlag = true;
 
         doReturn(coupons).when(fixCouponRepository)
                 .findUserNotUsedFixCouponByproductId(userId,productId,day);
+        doReturn(memberFlag).when(memberServiceClient).getMember(userId);
+        doReturn(productFlag).when(productServiceClient).findProductById(productId);
+
 
         List<FixCoupon> getCoupons=fixCouponServiceImpl.findUserNotUsedFixCouponByproductId(userId,productId);
         Assertions.assertEquals(getCoupons.size(),coupons.size());
@@ -86,6 +102,7 @@ public class FixCouponServiceMockTest {
     public void findBySellerIdSuccess(){
         final long sellerId= 10L;
         coupons=new ArrayList<>();
+        doReturn(true).when(sellerServiceClient).getSeller(sellerId);
         doReturn(coupons).when(fixCouponRepository).findBySellerId(sellerId);
 
         List<FixCoupon> getCoupons = fixCouponServiceImpl.findBySellerId(sellerId);
