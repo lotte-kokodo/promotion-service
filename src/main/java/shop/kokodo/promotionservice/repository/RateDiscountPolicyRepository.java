@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscountPolicy, Long> {
     RateDiscountPolicy save(RateDiscountPolicy rateDiscountPolicy);
-    Optional<RateDiscountPolicy> findById(Long id);
+
     Optional<RateDiscountPolicy> findByName(String name);
 
     @Query(value = "SELECT r FROM RateDiscountPolicy r " +
