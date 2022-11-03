@@ -2,20 +2,26 @@ package shop.kokodo.promotionservice.controller;
 
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
-import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.service.RateDiscountPolicyService;
 
 import java.util.List;
 
+/**
+ * packageName : shop.kokodo.promotionservice.controller
+ * fileName : RateDiscountPolicyController
+ * author : SSOsh
+ * date : 2022-11-03
+ * description : 비율 할인 정책을 관리 컨트롤러
+ * ======================================================
+ * DATE                AUTHOR                NOTE
+ * ======================================================
+ * 2022-11-03           SSOsh              최초 생성
+ */
 @RestController
 @Slf4j
 //@RequestMapping("/ratediscount")

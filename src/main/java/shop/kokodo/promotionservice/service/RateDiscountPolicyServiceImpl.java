@@ -16,6 +16,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * packageName : shop.kokodo.promotionservice.service
+ * fileName : RateDiscountPolicyServiceImpl
+ * author : SSOsh
+ * date : 2022-11-03
+ * description : 비율 할인 쿠폰 관리 서비스
+ * ======================================================
+ * DATE                AUTHOR                NOTE
+ * ======================================================
+ * 2022-11-03           SSOsh              최초 생성
+ */
 @Service
 public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService {
     private RateDiscountPolicyRepository rateDiscountPolicyRepository;
@@ -24,6 +35,7 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     public RateDiscountPolicyServiceImpl(RateDiscountPolicyRepository rateDiscountPolicyRepository) {
         this.rateDiscountPolicyRepository = rateDiscountPolicyRepository;
     }
+
 
     @Transactional(readOnly = true)
     public List<RateDiscountPolicy> getAll() {
@@ -92,11 +104,9 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
 
-        List<RateDiscountPolicyDto> resultList = list.stream()
+        return list.stream()
                 .map(source -> mapper.map(source, RateDiscountPolicyDto.class))
                 .collect(Collectors.toList());
-
-        return resultList;
     }
 
     public RateDiscountPolicy makeDtoToEntity(RateDiscountPolicyDto dto) {

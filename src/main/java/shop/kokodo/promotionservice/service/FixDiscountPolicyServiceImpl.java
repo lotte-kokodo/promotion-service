@@ -16,6 +16,17 @@ import shop.kokodo.promotionservice.repository.FixDiscountPolicyRepository;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * packageName : shop.kokodo.promotionservice.service
+ * fileName : FixDiscountPolicyService
+ * author : SSOsh
+ * date : 2022-11-03
+ * description : 고정 할인 쿠폰 관리 서비스
+ * ======================================================
+ * DATE                AUTHOR                NOTE
+ * ======================================================
+ * 2022-11-03           SSOsh              최초 생성
+ */
 @Service
 public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     private final FixDiscountPolicyRepository fixDiscountPolicyRepository;
