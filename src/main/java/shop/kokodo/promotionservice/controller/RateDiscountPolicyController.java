@@ -24,7 +24,7 @@ import java.util.List;
  */
 @RestController
 @Slf4j
-//@RequestMapping("/ratediscount")
+@RequestMapping("/rate-discount")
 public class RateDiscountPolicyController {
     private RateDiscountPolicyService rateDiscountPolicyService;
 
@@ -33,33 +33,33 @@ public class RateDiscountPolicyController {
         this.rateDiscountPolicyService = rateDiscountPolicyService;
     }
 
-    @PostMapping("/rate-discount/save")
+    @PostMapping("/save")
     public RateDiscountPolicy save(@RequestBody RateDiscountPolicyDto rateDiscountPolicyDto){
         return rateDiscountPolicyService.createRateDiscountPolicy(rateDiscountPolicyDto);
     }
 
-    @GetMapping(value="/rate-discount")
+    @GetMapping(value="/")
     public List<RateDiscountPolicy> getRateDiscountPolicyList() {
         List<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyService.getAll();
         return rateDiscountPolicy;
     }
 
-    @GetMapping(value="/rate-discount/{productId}")
+    @GetMapping(value="/{productId}")
     public Response getRateDiscountPolicy(@PathVariable("productId")Long productId) {
         return rateDiscountPolicyService.findByProductId(productId);
     }
 
-    @GetMapping(value="/rate-discount/list")
+    @GetMapping(value="/list")
     public Map<Long, RateDiscountPolicyDto> getRateDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
         return rateDiscountPolicyService.findAllByProductIdList(productIdList);
     }
 
-    @GetMapping(value="/rate-discount/date")
+    @GetMapping(value="/date")
     public List<RateDiscountPolicy> getRateDiscountPolicyByDate() {
         return rateDiscountPolicyService.getRateDiscountPolicyByDate();
     }
 
-    @GetMapping(value="/rate-discount/seller/{sellerId}")
+    @GetMapping(value="/seller/{sellerId}")
     public Response getRateDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
         return rateDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
     }
