@@ -44,8 +44,9 @@ public class RateDiscountPolicyController {
     }
 
     @GetMapping(value="/rate-discount/list")
-    public Map<Long, RateDiscountPolicyDto> getRateDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
-        return rateDiscountPolicyService.findAllByProductIdList(productIdList);
+    public Response getRateDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
+        Map<Long, RateDiscountPolicyDto> rateDiscountPolicyMap = rateDiscountPolicyService.findAllByProductIdList(productIdList);
+        return Response.success(rateDiscountPolicyMap);
     }
 
     @GetMapping(value="/rate-discount/date")
