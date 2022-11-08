@@ -32,8 +32,20 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * packageName : shop.kokodo.promotionservice.controller
+ * fileName : RateDiscountPolicyRestControllerTest
+ * author : SSOsh
+ * date : 2022-11-08
+ * description : 비율 할인 정책 rest docs 생성을 위한 Test Controller
+ * ======================================================
+ * DATE                AUTHOR                NOTE
+ * ======================================================
+ * 2022-11-08           SSOsh              최초 생성
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
@@ -244,7 +256,7 @@ public class RateDiscountPolicyRestControllerTest {
         this.mockMvc.perform(
                         get("/rate-discount/list")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .param("productIdList", productIdList.toString())
+                                .param("productIdList" , ListToString(productIdList))
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -254,70 +266,86 @@ public class RateDiscountPolicyRestControllerTest {
                                         parameterWithName("productIdList").description("상품 ID 리스트")
                                 ),
                                 responseFields(
-                                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
-                                        fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드")
+                                        fieldWithPath("*").type(JsonFieldType.OBJECT).description("비율 할인 정책 아이디").optional(),
+                                        fieldWithPath("*.rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디").optional(),
+                                        fieldWithPath("*.name").type(JsonFieldType.STRING).description("비율 할인 정책 이름").optional(),
+                                        fieldWithPath("*.regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자").optional(),
+                                        fieldWithPath("*.startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자").optional(),
+                                        fieldWithPath("*.endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자").optional(),
+                                        fieldWithPath("*.rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율").optional(),
+                                        fieldWithPath("*.minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액").optional(),
+                                        fieldWithPath("*.productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID").optional(),
+                                        fieldWithPath("*.sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID").optional()
                                 ))
                 );
     }
 
-//    @Test
-//    @DisplayName("비율 할인 정책 생성 api 테스트 성공")
-//    public void getRateDiscountPolicyByDate() throws Exception {
-//        this.mockMvc.perform(
-//                        post("/rate-discount")
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(objectMapper.writeValueAsString(rateDiscountPolicyDto1))
-//                )
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andDo(
-//                        document("rate-discount-policy-controller/save",
-//                                requestFields(
-//                                        fieldWithPath("rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("startDate").type(JsonFieldType.STRING).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("endDate").type(JsonFieldType.STRING).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("regDate").type(JsonFieldType.STRING).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디")
-//                                ),
-//                                responseFields(
-//                                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
-//                                        fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드")
-//                                ))
-//                );
-//    }
+    @Test
+    @DisplayName("비율 할인 정책 생성 api 테스트 성공")
+    public void getRateDiscountPolicyByDate() throws Exception {
+        rateDiscountPolicyRepository.save(rateDiscountPolicy1);
+        rateDiscountPolicyRepository.save(rateDiscountPolicy2);
+        rateDiscountPolicyRepository.save(rateDiscountPolicy3);
+        this.mockMvc.perform(
+                        get("/rate-discount/date")
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("rate-discount-policy-controller/date",
+                                responseFields(
+                                        fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
+                                        fieldWithPath("[].lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 수정 날짜").optional(),
+                                        fieldWithPath("[].rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디").optional(),
+                                        fieldWithPath("[].name").type(JsonFieldType.STRING).description("비율 할인 정책 이름").optional(),
+                                        fieldWithPath("[].regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자").optional(),
+                                        fieldWithPath("[].startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자").optional(),
+                                        fieldWithPath("[].endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자").optional(),
+                                        fieldWithPath("[].rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율").optional(),
+                                        fieldWithPath("[].minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액").optional(),
+                                        fieldWithPath("[].productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID").optional(),
+                                        fieldWithPath("[].sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID").optional()
+                                ))
+                );
+    }
 
-//    @Test
-//    @DisplayName("비율 할인 정책 생성 api 테스트 성공")
-//    public void getRateDiscountPolicyBySellerId() throws Exception {
-//        this.mockMvc.perform(
-//                        post("/rate-discount")
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(objectMapper.writeValueAsString(rateDiscountPolicyDto1))
-//                )
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andDo(
-//                        document("rate-discount-policy-controller/save",
-//                                requestFields(
-//                                        fieldWithPath("rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("startDate").type(JsonFieldType.STRING).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("endDate").type(JsonFieldType.STRING).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("regDate").type(JsonFieldType.STRING).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-//                                        fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디")
-//                                ),
-//                                responseFields(
-//                                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
-//                                        fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드")
-//                                ))
-//                );
-//    }
-
+    @Test
+    @DisplayName("비율 할인 정책 생성 api 테스트 성공")
+    public void getRateDiscountPolicyBySellerId() throws Exception {
+        Long sellerId = 1L;
+        rateDiscountPolicyRepository.save(rateDiscountPolicy1);
+        rateDiscountPolicyRepository.save(rateDiscountPolicy2);
+        rateDiscountPolicyRepository.save(rateDiscountPolicy3);
+        this.mockMvc.perform(
+                        get("/rate-discount/{sellerId}", sellerId)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("rate-discount-policy-controller/seller-id",
+                                responseFields(
+                                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
+                                        fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
+                                        fieldWithPath("result.data.createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
+                                        fieldWithPath("result.data.lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 수정 날짜").optional(),
+                                        fieldWithPath("result.data.rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디").optional(),
+                                        fieldWithPath("result.data.name").type(JsonFieldType.STRING).description("비율 할인 정책 이름").optional(),
+                                        fieldWithPath("result.data.regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자").optional(),
+                                        fieldWithPath("result.data.startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자").optional(),
+                                        fieldWithPath("result.data.endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자").optional(),
+                                        fieldWithPath("result.data.rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율").optional(),
+                                        fieldWithPath("result.data.minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액").optional(),
+                                        fieldWithPath("result.data.productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID").optional(),
+                                        fieldWithPath("result.data.sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID").optional()
+                                ))
+                );
+    }
+    public String ListToString(List<Long> list) {
+        StringBuilder result  = new StringBuilder();
+        for(int i=0;i<list.size() - 1;i++) {
+            result.append(list.get(i)).append(",");
+        }
+        result.append(list.get(list.size() - 1));
+        return result.toString();
+    }
 }
