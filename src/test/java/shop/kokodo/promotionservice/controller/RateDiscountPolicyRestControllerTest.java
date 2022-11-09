@@ -344,7 +344,7 @@ public class RateDiscountPolicyRestControllerTest {
         for(int i=0;i<list.size() - 1;i++) {
             result.append(list.get(i)).append(",");
         }
-        result.append(list.get(list.size() - 1));
+        if(!list.isEmpty()) result.append(list.get(list.size() - 1));
         return result.toString();
     }
 }
