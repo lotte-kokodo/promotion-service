@@ -62,7 +62,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     public Map<Long, FixDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList) {
         ModelMapper mapper = new ModelMapper();
 
-        List<RateDiscountPolicy> result = fixDiscountPolicyRepository.findAllByProductId(productIdList);
+        List<FixDiscountPolicy> result = fixDiscountPolicyRepository.findAllByProductId(productIdList);
 
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
         List<FixDiscountPolicyDto> list = result.stream()
