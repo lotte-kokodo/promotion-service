@@ -214,7 +214,6 @@ public class RateDiscountPolicyRestControllerTest {
         rateDiscountPolicyRepository.save(rateDiscountPolicy2);
         rateDiscountPolicyRepository.save(rateDiscountPolicy3);
 
-        System.out.println(rateDiscountPolicyRepository.findAllByProductId(rateDiscountPolicy1.getProductId()).size());
         this.mockMvc.perform(
                         get("/rate-discount/{productId}", rateDiscountPolicy1.getProductId())
                 )
