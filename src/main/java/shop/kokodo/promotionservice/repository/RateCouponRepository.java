@@ -22,7 +22,7 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
 
     public List<RateCoupon> findBySellerId(long sellerId);
 
-    @Query(value = "select r from RateCoupon r group by r.name")
+    @Query(value = "select r from RateCoupon r where sellerId = :sellerId group by r.name ")
     public List<RateCoupon> findDistinctRateCouponBySellerId(long sellerId);
 
     @Query(value = "select r from RateCoupon r " +
@@ -34,7 +34,7 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
                 "where r.name = :name ")
     public List<Long> findProductIdByName(String name);
 
-    Optional<RateCoupon> findByName(String name);
+    List<RateCoupon> findByName(String name);
 
     @Query(value="select r from RateCoupon r " +
             "where r.id in :rateCouponIdList ")

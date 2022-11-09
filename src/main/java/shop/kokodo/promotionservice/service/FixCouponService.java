@@ -10,6 +10,7 @@ import java.util.List;
 public interface FixCouponService {
     void save(FixCouponDto fixCouponDto);
 
+
     List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId);
 
     List<FixCoupon> findBySellerId(long sellerId);

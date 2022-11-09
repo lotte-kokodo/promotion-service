@@ -35,8 +35,9 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
 
-        RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
-        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
+//        RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
+//        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
+        return null;
     }
 
     @Override
@@ -55,8 +56,10 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
         Map<Long, RateDiscountPolicyDto> map = new HashMap<>();
 
+
         for (RateDiscountPolicyDto rateDiscountPolicyDto : list) {
             map.put(rateDiscountPolicyDto.getProductId(), rateDiscountPolicyDto);
+
         }
 
         return map;
