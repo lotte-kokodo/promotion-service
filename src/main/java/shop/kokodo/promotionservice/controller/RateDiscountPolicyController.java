@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
@@ -44,8 +45,15 @@ public class RateDiscountPolicyController {
     }
 
     @GetMapping(value="/rate-discount/list")
-    public Map<Long, RateDiscountPolicyDto> getRateDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
-        return rateDiscountPolicyService.findAllByProductIdList(productIdList);
+    public Response getRateDiscountPolicyIdList(@RequestParam List<Long> productIdList) {
+        Map<Long, RateDiscountPolicyDto> rateDiscountPolicyMap = rateDiscountPolicyService.findAllByProductIdList(productIdList);
+        return Response.success(rateDiscountPolicyMap);
+    }
+
+    @GetMapping(value="/feign/rate-discount/list")
+    public ResponseEntity<Map<Long, RateDiscountPolicyDto>> getRateDiscountPolicyIdListForFeign(@RequestParam List<Long> productIdList) {
+        Map<Long, RateDiscountPolicyDto> rateDiscountPolicyMap = rateDiscountPolicyService.findAllByProductIdList(productIdList);
+        return ResponseEntity.ok(rateDiscountPolicyMap);
     }
 
     @GetMapping(value="/rate-discount/date")
