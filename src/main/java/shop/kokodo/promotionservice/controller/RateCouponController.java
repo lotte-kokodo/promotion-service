@@ -20,7 +20,7 @@ import java.util.Map;
 public class RateCouponController {
     private final RateCouponService rateCouponService;
 
-    @PostMapping("/save")
+    @PostMapping
     public Response save(@RequestBody RateCouponDto rateCouponDto){
 
         rateCouponService.save(rateCouponDto);
@@ -44,7 +44,6 @@ public class RateCouponController {
 
     @GetMapping("/{name}/product")
     public Response findProductByCouponName(@PathVariable String name){
-        System.out.println(name);
         List<ProductDto> products = rateCouponService.findProductByRateCouponName(name);
 
         return Response.success(products);
