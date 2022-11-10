@@ -1,0 +1,60 @@
+= FixCoupon-Rest-Controller-Api
+:toc: left
+:toclevels: 4
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+
+endif::[]
+
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
+:toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
+:toclevels: 2
+:sectlinks:
+
+
+== save
+고정 할인 쿠폰 생성
+include::{snippets}/fix-coupon-rest-controller/save/curl-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/save/http-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/save/http-response.adoc[]
+include::{snippets}/fix-coupon-rest-controller/save/httpie-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/save/request-body.adoc[]
+include::{snippets}/fix-coupon-rest-controller/save/request-fields.adoc[]
+include::{snippets}/fix-coupon-rest-controller/save/response-body.adoc[]
+include::{snippets}/fix-coupon-rest-controller/save/response-fields.adoc[]
+
+== findBySellerId
+seller id로 고정 할인 쿠폰 조회
+include::{snippets}/fix-coupon-rest-controller/find-by-seller-id/curl-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-by-seller-id/http-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-by-seller-id/http-response.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-by-seller-id/httpie-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-by-seller-id/request-body.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-by-seller-id/request-parameters.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-by-seller-id/response-body.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-by-seller-id/response-fields.adoc[]
+
+== findFixCouponByCouponIdList
+고정 할인쿠폰 id 리스트로 해당 seller id 리스트 조회
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/curl-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/http-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/http-response.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/httpie-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/path-parameters.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/request-body.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/request-parameters.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/response-body.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-fixCoupon-by-couponIdList/response-fields.adoc[]
+
+== findProductByName
+고정 할인 쿠폰이름으로 상품 정보 조회
+include::{snippets}/fix-coupon-rest-controller/find-product-by-name/curl-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-product-by-name/http-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-product-by-name/http-response.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-product-by-name/httpie-request.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-product-by-name/path-parameters.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-product-by-name/request-body.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-product-by-name/response-body.adoc[]
+include::{snippets}/fix-coupon-rest-controller/find-product-by-name/response-fields.adoc[]

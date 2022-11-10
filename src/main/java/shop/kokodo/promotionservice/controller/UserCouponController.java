@@ -72,8 +72,7 @@ public class UserCouponController {
 
     @PostMapping("/list")
     public Response saveRateCouponList(@RequestParam List<Long> rateIdList, @RequestHeader long memberId){
-        System.out.println("UserCouponController.saveRateCouponList");
-        System.out.println(rateIdList.size());
+
         for (Long rate : rateIdList) {
             UserCouponDto userCouponDto = UserCouponDto.builder()
                     .userId(memberId)
@@ -88,6 +87,7 @@ public class UserCouponController {
                 else throw e;
             }
         }
+
         return Response.success();
     }
     // productId - List<RateCoupon> 리턴

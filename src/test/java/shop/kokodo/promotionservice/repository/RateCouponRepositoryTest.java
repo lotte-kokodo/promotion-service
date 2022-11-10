@@ -149,16 +149,16 @@ public class RateCouponRepositoryTest {
         Assertions.assertEquals(coupons.get(0).getName(),"rateCoupon3");
     }
 
-    @Test
-    @DisplayName("seller Id로 Rate Coupon 중복 제거 조회")
-    public void findDistinctRateCouponBySellerId(){
-        saveRateCoupon(rateCoupon,rateCoupon2,rateCoupon3,rateCoupon4);
-
-        List<RateCoupon> rateCoupons = rateCouponRepository.findDistinctRateCouponBySellerId(1L);
-
-        Assertions.assertEquals(rateCoupons.size(),2);
-
-    }
+//    @Test
+//    @DisplayName("seller Id로 Rate Coupon 중복 제거 조회")
+//    public void findDistinctRateCouponBySellerId(){
+//        saveRateCoupon(rateCoupon,rateCoupon2,rateCoupon3,rateCoupon4);
+//
+//        List<RateCoupon> rateCoupons = rateCouponRepository.findDistinctRateCouponBySellerId(1L);
+//
+//        Assertions.assertEquals(rateCoupons.size(),2);
+//
+//    }
 
     @Test
     @DisplayName("product id로 유효한 rate coupon 조회")

@@ -1,0 +1,69 @@
+= RateCoupon-Rest-Controller-Api
+:toc: left
+:toclevels: 4
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+
+endif::[]
+
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
+:toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
+:toclevels: 2
+:sectlinks:
+
+== save
+비율 할인 쿠폰 생성
+include::{snippets}/rate-coupon-rest-controller/save/curl-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/save/http-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/save/http-response.adoc[]
+include::{snippets}/rate-coupon-rest-controller/save/httpie-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/save/request-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/save/request-fields.adoc[]
+include::{snippets}/rate-coupon-rest-controller/save/response-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/save/response-fields.adoc[]
+
+== findBySellerId
+seller id로 비율 할인 쿠폰 조회
+include::{snippets}/rate-coupon-rest-controller/seller/curl-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/seller/http-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/seller/http-response.adoc[]
+include::{snippets}/rate-coupon-rest-controller/seller/httpie-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/seller/request-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/seller/request-parameters.adoc[]
+include::{snippets}/rate-coupon-rest-controller/seller/response-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/seller/response-fields.adoc[]
+
+== findByProductId
+상품 id에 해당하는 비율 할인 쿠폰 조회
+include::{snippets}/rate-coupon-rest-controller/find-by-productId/curl-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-by-productId/http-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-by-productId/http-response.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-by-productId/httpie-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-by-productId/request-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-by-productId/request-parameters.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-by-productId/response-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-by-productId/response-fields.adoc[]
+
+== findProductByCouponName
+비율 할인 쿠폰 이름에 해당되는 product 조회
+include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/curl-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/http-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/http-response.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/httpie-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/request-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/request-parameters.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/response-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/response-fields.adoc[]
+
+== findRateCouponByCouponIdList
+쿠폰 id 리스트로 비율 할인 쿠폰 조회
+include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/curl-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/http-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/http-response.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/httpie-request.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/request-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/request-parameters.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/response-body.adoc[]
+include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/response-fields.adoc[]

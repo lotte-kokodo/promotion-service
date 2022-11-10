@@ -100,7 +100,9 @@ public class RateCouponServiceImpl implements RateCouponService{
     public List<ProductDto> findProductByRateCouponName(String name) {
 
         List<Long> productIdList = rateCouponRepository.findProductIdByName(name);
-        List<ProductDto> dto = productServiceClient.findProductByName(productIdList);
+        List<ProductDto> dto = circuitBreaker.run(()-> productServiceClient.findProductByName(productIdList)
+                ,throwable -> new ArrayList<>());
+
 
         return dto;
     }

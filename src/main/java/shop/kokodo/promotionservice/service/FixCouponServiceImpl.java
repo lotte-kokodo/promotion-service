@@ -80,9 +80,13 @@ public class FixCouponServiceImpl implements FixCouponService{
     public List<ProductDto> findProductByName(String name) {
         List<Long> productIdList = fixCouponRepository.findProductIdByName(name);
 
-        return productServiceClient.findProductByName(productIdList);
+        return circuitBreaker.run(()-> productServiceClient.findProductByName(productIdList)
+                ,throwable -> new ArrayList<>());
     }
 
+    /*
+        fixcoupon id list로 seller id 리스트 리턴
+     */
     @Override
     public List<Long> findByCouponIdList(List<Long> couponIdList) {
         List<FixCoupon> fixCouponList = fixCouponRepository.findByCouponIdList(couponIdList);
