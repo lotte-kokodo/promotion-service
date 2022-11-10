@@ -125,7 +125,7 @@ public class FixDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/find-all",
+                        document("fix-discount-policy-rest-controller/save",
                                 responseFields(
                                         List.of(
                                                 fieldWithPath("createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
@@ -157,7 +157,7 @@ public class FixDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/find-all",
+                        document("fix-discount-policy-rest-controller/find-all",
                                 responseFields(
                                         List.of(
                                                 fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
@@ -189,7 +189,7 @@ public class FixDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/find-by-productId",
+                        document("fix-discount-policy-rest-controller/find-by-productId",
                                 responseFields(
                                         List.of(
                                                 fieldWithPath("createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
@@ -226,7 +226,7 @@ public class FixDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("fix-discount-policy-controller/get-fix-discount-policy-list",
+                        document("fix-discount-policy-rest-controller/get-fix-discount-policy-list",
                                 responseFields(
                                         fieldWithPath("*").type(JsonFieldType.OBJECT).description("고정 할인 정책").optional(),
                                         fieldWithPath("*.fixDiscountPolicyId").type(JsonFieldType.NUMBER).description("고정 할인 정책 아이디").optional(),
@@ -267,7 +267,7 @@ public class FixDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("fix-discount-policy-controller/get-fix-discount-policy-by-seller-id",
+                        document("fix-discount-policy-rest-controller/status",
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
@@ -301,7 +301,7 @@ public class FixDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("fix-discount-policy-controller/get-fix-discount-policy-by-seller-id",
+                        document("fix-discount-policy-rest-controller/feign-status",
                                 responseFields(
                                         fieldWithPath("*").type(JsonFieldType.BOOLEAN).description("상품 아이디 리스트, 고정 할인 가능여부")
 //                                        fieldWithPath("*.*").type(JsonFieldType.BOOLEAN).description("고정 할인 가능여부")
@@ -324,7 +324,7 @@ public class FixDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("fix-discount-policy-controller/get-fix-discount-policy-by-seller-id",
+                        document("fix-discount-policy-rest-controller/get-fix-discount-policy-by-seller-id",
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
