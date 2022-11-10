@@ -2,16 +2,26 @@ package shop.kokodo.promotionservice.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * packageName : shop.kokodo.promotionservice.repository
+ * fileName : RateDiscountPolicyRepository
+ * author : SSOsh
+ * date : 2022-11-03
+ * description : 비율 할인 쿠폰 관리 레포지토리
+ * ======================================================
+ * DATE                AUTHOR                NOTE
+ * ======================================================
+ * 2022-11-03           SSOsh              최초 생성
+ */
 public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscountPolicy, Long> {
     RateDiscountPolicy save(RateDiscountPolicy rateDiscountPolicy);
-    Optional<RateDiscountPolicy> findById(Long id);
+
     Optional<RateDiscountPolicy> findByName(String name);
 
     @Query(value = "SELECT r FROM RateDiscountPolicy r " +

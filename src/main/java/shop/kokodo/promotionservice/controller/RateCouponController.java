@@ -2,6 +2,7 @@ package shop.kokodo.promotionservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
@@ -53,8 +54,8 @@ public class RateCouponController {
         productId - List<RateCoupon
      */
     @GetMapping("/coupon/list")
-    public Map<Long, RateCoupon> findRateCouponByCouponIdList(@RequestParam List<Long> couponIdList){
-        return rateCouponService.findByCouponIdList(couponIdList);
+    public ResponseEntity<Map<Long, RateCoupon>> findRateCouponByCouponIdList(@RequestParam List<Long> couponIdList){
+        return ResponseEntity.ok(rateCouponService.findByCouponIdList(couponIdList));
     }
 
 }

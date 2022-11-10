@@ -31,7 +31,7 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
     public List<RateCoupon> findByProductId(long productId, LocalDateTime now);
 
     @Query(value = "select r.productId from RateCoupon r "+
-                "where r.name = :name ")
+            "where r.name = :name ")
     public List<Long> findProductIdByName(String name);
 
     List<RateCoupon> findByName(String name);

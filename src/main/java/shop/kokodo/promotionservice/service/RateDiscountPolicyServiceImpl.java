@@ -16,6 +16,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * packageName : shop.kokodo.promotionservice.service
+ * fileName : RateDiscountPolicyServiceImpl
+ * author : SSOsh
+ * date : 2022-11-03
+ * description : 비율 할인 쿠폰 관리 서비스
+ * ======================================================
+ * DATE                AUTHOR                NOTE
+ * ======================================================
+ * 2022-11-03           SSOsh              최초 생성
+ */
 @Service
 public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService {
     private RateDiscountPolicyRepository rateDiscountPolicyRepository;
@@ -25,6 +36,7 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         this.rateDiscountPolicyRepository = rateDiscountPolicyRepository;
     }
 
+
     @Transactional(readOnly = true)
     public List<RateDiscountPolicy> getAll() {
         return rateDiscountPolicyRepository.findAll();
@@ -32,10 +44,8 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
     @Transactional(readOnly = false)
     public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto) {
-
-//        RateDiscountPolicy rateDiscountPolicy = mapper.map(rateDiscountPolicyDto, RateDiscountPolicy.class);
-//        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
-        return null;
+        RateDiscountPolicy rateDiscountPolicy = makeDtoToEntity(rateDiscountPolicyDto);
+        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
     }
 
     @Override
@@ -50,12 +60,12 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
         List<RateDiscountPolicy> result = rateDiscountPolicyRepository.findAllByProductId(productIdList);
 
-        List<RateDiscountPolicyDto> rateDiscountPolicyDtoList = makeModelMappingList(result);
+        List<RateDiscountPolicyDto> rateDiscountPolicyDtoList = makeEntityListToDtoList(result);
 
         Map<Long, RateDiscountPolicyDto> map = new HashMap<>();
 
-        for(int i=0;i<rateDiscountPolicyDtoList.size();i++) {
-            map.put(productIdList.get(i), rateDiscountPolicyDtoList.get(i));
+        for (RateDiscountPolicyDto rateDiscountPolicyDto : list) {
+            map.put(rateDiscountPolicyDto.getProductId(), rateDiscountPolicyDto);
         }
 
         return map;
@@ -90,14 +100,20 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         return Response.success(result);
     }
 
-    public List<RateDiscountPolicyDto> makeModelMappingList(List<RateDiscountPolicy> list) {
+    public List<RateDiscountPolicyDto> makeEntityListToDtoList(List<RateDiscountPolicy> list) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
 
-        List<RateDiscountPolicyDto> resultList = list.stream()
+        return list.stream()
                 .map(source -> mapper.map(source, RateDiscountPolicyDto.class))
                 .collect(Collectors.toList());
+    }
 
-        return resultList;
+    public RateDiscountPolicy makeDtoToEntity(RateDiscountPolicyDto dto) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        RateDiscountPolicy rateDiscountPolicy;
+        rateDiscountPolicy = mapper.map(dto, RateDiscountPolicy.class);
+        return rateDiscountPolicy;
     }
 }
