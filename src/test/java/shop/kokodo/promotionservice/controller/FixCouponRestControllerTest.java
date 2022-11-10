@@ -82,11 +82,15 @@ public class FixCouponRestControllerTest {
 
         FixCoupon fixCoupon = FixCoupon.builder()
                 .minPrice(10000)
+                .name("fixCouponName")
                 .startDate(LocalDateTime.now())
                 .endDate(LocalDateTime.now())
                 .sellerId(sellerId)
                 .productId(1000)
-
+                .regdate(LocalDateTime.now())
+                .price(100)
+                .minPrice(10000)
+                .freeDelivery(true)
                 .build();
         couponIdList.add(fixCouponRepository.save(fixCoupon).getId());
     }
@@ -194,34 +198,33 @@ public class FixCouponRestControllerTest {
                 );
     }
 
-    @Test
-    @DisplayName("고정 할인 쿠폰 id 리스트로 한번에 조회")
-    public void findFixCouponByCouponIdList() throws Exception {
-
-        String param = "";
-        for (Long id : couponIdList) {
-            param+=id+",";
-        }
-
-        param = param.substring(0,param.length()-1);
-        System.out.println(param);
-
-
-        this.mockMvc.perform(
-                        get("/fixCoupon/coupon/list")
-                                .param("couponIdList","1,2")
-                                .contentType(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(
-                        document("fix-coupon-rest-controller/find-fixCoupon-by-couponIdList",
-                                requestParameters(
-                                        parameterWithName("couponIdList").description("쿠폰 id 리스트")
-                                ),
-                                responseFields(
-                                )
-                        )
-                );
-    }
+//    @Test
+//    @DisplayName("고정 할인 쿠폰 id 리스트로 한번에 조회")
+//    public void findFixCouponByCouponIdList() throws Exception {
+//
+//        String param = "";
+//        for (Long id : couponIdList) {
+//            param+=id+",";
+//        }
+//
+//        param = param.substring(0,param.length()-1);
+//
+//        this.mockMvc.perform(
+//                        get("/fixCoupon/coupon/list")
+//                                .param("couponIdList",param)
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                )
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andDo(
+//                        document("fix-coupon-rest-controller/find-fixCoupon-by-couponIdList",
+//                                requestParameters(
+//                                        parameterWithName("couponIdList").description("쿠폰 id 리스트")
+//                                ),
+//                                responseFields(
+//                                        fieldWithPath("*").type(JsonFieldType.NUMBER).description("")
+//                                )
+//                        )
+//                );
+//    }
 }
