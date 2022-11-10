@@ -108,6 +108,14 @@ public class UserCouponController {
         return Response.success(userCouponService.findFixCouponByMemberIdAndProductId(productIdList,memberId));
     }
 
+    @GetMapping("/count")
+    public Response countUserCoupon(@RequestHeader(value="memberId") long memberId){
+
+        List<UserCoupon> list = userCouponService.findValidCouponByMemberIdGroupByCouponName(memberId);
+
+        return Response.success(list.size());
+
+    }
 
 
 }

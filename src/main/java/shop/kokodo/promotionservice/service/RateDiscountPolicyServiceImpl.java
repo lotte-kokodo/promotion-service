@@ -64,8 +64,8 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
         Map<Long, RateDiscountPolicyDto> map = new HashMap<>();
 
-        for(int i=0;i<rateDiscountPolicyDtoList.size();i++) {
-            map.put(productIdList.get(i), rateDiscountPolicyDtoList.get(i));
+        for (RateDiscountPolicyDto rateDiscountPolicyDto : list) {
+            map.put(rateDiscountPolicyDto.getProductId(), rateDiscountPolicyDto);
         }
 
         return map;

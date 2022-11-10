@@ -2,6 +2,7 @@ package shop.kokodo.promotionservice.controller;
 
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
@@ -56,8 +57,8 @@ public class FixDiscountPolicyController {
     }
 
     @GetMapping(value="/feign/fix-discount/status")
-    public Map<Long, Boolean> getFixDiscountPolicyStatusForFeign(@RequestParam List<Long> productIdList, @RequestParam List<Long> sellerIdList) {
-        return fixDiscountPolicyService.getFixDiscountPolicyStatusForFeign(productIdList, sellerIdList);
+    public ResponseEntity<Map<Long, Boolean>> getFixDiscountPolicyStatusForFeign(@RequestParam List<Long> productIdList, @RequestParam List<Long> sellerIdList) {
+        return ResponseEntity.ok(fixDiscountPolicyService.getFixDiscountPolicyStatusForFeign(productIdList, sellerIdList));
     }
 
     @GetMapping(value="/fix-discount/seller/{sellerId}")
