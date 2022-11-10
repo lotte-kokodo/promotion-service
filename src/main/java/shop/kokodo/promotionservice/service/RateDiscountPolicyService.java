@@ -1,6 +1,8 @@
 package shop.kokodo.promotionservice.service;
 
 import java.util.Map;
+
+import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
@@ -30,4 +32,5 @@ public interface RateDiscountPolicyService {
 
     public Response findBySellerId(Long sellerId);
 
+    public List<ProductDto> findByProductByName(String name);
 }

@@ -4,13 +4,17 @@ import java.util.stream.IntStream;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.ProductSeller;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
+import shop.kokodo.promotionservice.feign.ProductServiceClient;
 import shop.kokodo.promotionservice.repository.FixDiscountPolicyRepository;
 
 import java.util.*;
@@ -30,10 +34,15 @@ import java.util.stream.Collectors;
 @Service
 public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     private final FixDiscountPolicyRepository fixDiscountPolicyRepository;
+    private final ProductServiceClient productServiceClient;
+
+    private final CircuitBreaker circuitBreaker = AllCircuitBreaker.createSellerCircuitBreaker();
 
     @Autowired
-    public FixDiscountPolicyServiceImpl(FixDiscountPolicyRepository fixDiscountPolicyRepository) {
+    public FixDiscountPolicyServiceImpl(FixDiscountPolicyRepository fixDiscountPolicyRepository
+            , ProductServiceClient productServiceClient) {
         this.fixDiscountPolicyRepository = fixDiscountPolicyRepository;
+        this.productServiceClient = productServiceClient;
     }
 
     @Override
@@ -132,6 +141,14 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
             });
 
         return response;
+    }
+
+    @Override
+    public List<ProductDto> findByProductByName(String name) {
+        List<Long> productIdList = fixDiscountPolicyRepository.findProductIdByName(name);
+
+        return circuitBreaker.run(() -> productServiceClient.findProductByName(productIdList)
+                , throwable -> new ArrayList<>());
     }
 
     @Override

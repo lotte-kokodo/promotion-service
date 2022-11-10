@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
@@ -71,6 +72,12 @@ public class RateDiscountPolicyController {
     @GetMapping(value="/seller/{sellerId}")
     public Response getRateDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
         return rateDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
+    }
+
+    @GetMapping(value="{name}/product")
+    public Response findProductByName(@PathVariable("name")String name) {
+        List<ProductDto> productDtos = rateDiscountPolicyService.findByProductByName(name);
+        return Response.success(productDtos);
     }
 }
 

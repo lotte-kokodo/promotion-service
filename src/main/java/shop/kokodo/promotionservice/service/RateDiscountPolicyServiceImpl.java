@@ -3,14 +3,19 @@ package shop.kokodo.promotionservice.service;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.stereotype.Service;
+import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
+import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
+import shop.kokodo.promotionservice.feign.ProductServiceClient;
 import shop.kokodo.promotionservice.repository.RateDiscountPolicyRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,10 +35,15 @@ import java.util.stream.Collectors;
 @Service
 public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService {
     private RateDiscountPolicyRepository rateDiscountPolicyRepository;
+    private final ProductServiceClient productServiceClient;
+
+    private final CircuitBreaker circuitBreaker = AllCircuitBreaker.createSellerCircuitBreaker();
 
     @Autowired
-    public RateDiscountPolicyServiceImpl(RateDiscountPolicyRepository rateDiscountPolicyRepository) {
+    public RateDiscountPolicyServiceImpl(RateDiscountPolicyRepository rateDiscountPolicyRepository
+    , ProductServiceClient productServiceClient) {
         this.rateDiscountPolicyRepository = rateDiscountPolicyRepository;
+        this.productServiceClient = productServiceClient;
     }
 
 
@@ -75,6 +85,14 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     @Transactional(readOnly = true)
     public Response findBySellerId(Long sellerId) {
         return Response.success(rateDiscountPolicyRepository.findAllBySellerId(sellerId));
+    }
+
+    @Override
+    public List<ProductDto> findByProductByName(String name) {
+        List<Long> productIdList = rateDiscountPolicyRepository.findProductIdByName(name);
+
+        return circuitBreaker.run(() -> productServiceClient.findProductByName(productIdList)
+        , throwable -> new ArrayList<>());
     }
 
     @Transactional(readOnly = true)
