@@ -147,7 +147,7 @@ public class RateDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/save",
+                        document("rate-discount-policy-rest-controller/save",
                                 requestFields(
                                         fieldWithPath("rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
                                         fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 이름"),
@@ -189,7 +189,7 @@ public class RateDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/get-all",
+                        document("rate-discount-policy-rest-controller/find-all",
                                 responseFields(
                                         fieldWithPath("[]").type(JsonFieldType.ARRAY).description("비율 할인 정책").optional(),
                                         fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
@@ -220,7 +220,7 @@ public class RateDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/find-by-productId",
+                        document("rate-discount-policy-rest-controller/find-by-productId",
                                 responseFields(
                                         List.of(
                                                 fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부").optional(),
@@ -260,21 +260,24 @@ public class RateDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/product-id-list",
+                        document("rate-discount-policy-rest-controller/product-id-list",
                                 requestParameters(
                                         parameterWithName("productIdList").description("상품 ID 리스트")
                                 ),
                                 responseFields(
-                                        fieldWithPath("*").type(JsonFieldType.OBJECT).description("비율 할인 정책 아이디").optional(),
-                                        fieldWithPath("*.rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디").optional(),
-                                        fieldWithPath("*.name").type(JsonFieldType.STRING).description("비율 할인 정책 이름").optional(),
-                                        fieldWithPath("*.regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자").optional(),
-                                        fieldWithPath("*.startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자").optional(),
-                                        fieldWithPath("*.endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자").optional(),
-                                        fieldWithPath("*.rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율").optional(),
-                                        fieldWithPath("*.minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액").optional(),
-                                        fieldWithPath("*.productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID").optional(),
-                                        fieldWithPath("*.sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID").optional()
+                                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
+                                        fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
+                                        fieldWithPath("result.data.*").type(JsonFieldType.OBJECT).description("비율 할인 정책 아이디").optional(),
+                                        fieldWithPath("result.data.*").type(JsonFieldType.OBJECT).description("비율 할인 정책 아이디").optional(),
+                                        fieldWithPath("result.data.*.rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디").optional(),
+                                        fieldWithPath("result.data.*.name").type(JsonFieldType.STRING).description("비율 할인 정책 이름").optional(),
+                                        fieldWithPath("result.data.*.regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자").optional(),
+                                        fieldWithPath("result.data.*.startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자").optional(),
+                                        fieldWithPath("result.data.*.endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자").optional(),
+                                        fieldWithPath("result.data.*.rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율").optional(),
+                                        fieldWithPath("result.data.*.minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액").optional(),
+                                        fieldWithPath("result.data.*.productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID").optional(),
+                                        fieldWithPath("result.data.*.sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID").optional()
                                 ))
                 );
     }
@@ -291,7 +294,7 @@ public class RateDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/date",
+                        document("rate-discount-policy-rest-controller/date",
                                 responseFields(
                                         fieldWithPath("[].createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
                                         fieldWithPath("[].lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 수정 날짜").optional(),
@@ -321,7 +324,7 @@ public class RateDiscountPolicyRestControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
-                        document("rate-discount-policy-controller/seller-id",
+                        document("rate-discount-policy-rest-controller/seller-id",
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
