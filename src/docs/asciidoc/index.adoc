@@ -9,6 +9,12 @@ endif::[]
 :toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
 :toclevels: 2
 :sectlinks:
-== FixCoupon
+== FixCoupon ( 무료 배송 쿠폰 )
+link:fixcoupon-rest-controller-api.html[]
 
-include::{snippets}/fix-coupon-rest-controller/save/curl-request.adoc[]
+== RateCoupon ( 비율 할인 쿠폰 )
+link:ratecoupon-rest-controller-api.html[]
+
+== UserCoupon
+link:usercoupon-rest-controller-api.html[]]
+
