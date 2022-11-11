@@ -13,7 +13,6 @@ import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.ProductSeller;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
-import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.feign.ProductServiceClient;
 import shop.kokodo.promotionservice.repository.FixDiscountPolicyRepository;
 
