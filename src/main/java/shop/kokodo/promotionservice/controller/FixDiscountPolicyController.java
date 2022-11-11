@@ -67,7 +67,7 @@ public class FixDiscountPolicyController {
         return fixDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
     }
 
-    @GetMapping(value="{name}/product")
+    @GetMapping(value="/fix-discount/{name}/product")
     public Response findProductByName(@PathVariable("name")String name) {
         List<ProductDto> productDtos = fixDiscountPolicyService.findByProductByName(name);
         return Response.success(productDtos);
