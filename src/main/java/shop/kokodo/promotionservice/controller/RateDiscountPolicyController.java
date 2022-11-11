@@ -74,10 +74,16 @@ public class RateDiscountPolicyController {
         return rateDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
     }
 
-    @GetMapping(value="{name}/product")
+    @GetMapping(value="/{name}/product")
     public Response findProductByName(@PathVariable("name")String name) {
         List<ProductDto> productDtos = rateDiscountPolicyService.findByProductByName(name);
         return Response.success(productDtos);
+    }
+
+    @GetMapping(value="/seller/{sellerId}/week")
+    public Response findProductBySellerId(@PathVariable("sellerId")Long sellerId) {
+        Integer result = rateDiscountPolicyService.findProductBySellerId(sellerId);
+        return Response.success(result);
     }
 }
 

@@ -10,6 +10,7 @@ import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
+import shop.kokodo.promotionservice.feign.OrderServiceClient;
 import shop.kokodo.promotionservice.feign.ProductServiceClient;
 import shop.kokodo.promotionservice.repository.RateDiscountPolicyRepository;
 
@@ -36,14 +37,17 @@ import java.util.stream.Collectors;
 public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService {
     private RateDiscountPolicyRepository rateDiscountPolicyRepository;
     private final ProductServiceClient productServiceClient;
+    private final OrderServiceClient orderServiceClient;
 
     private final CircuitBreaker circuitBreaker = AllCircuitBreaker.createSellerCircuitBreaker();
 
     @Autowired
     public RateDiscountPolicyServiceImpl(RateDiscountPolicyRepository rateDiscountPolicyRepository
-    , ProductServiceClient productServiceClient) {
+    , ProductServiceClient productServiceClient
+    , OrderServiceClient orderServiceClient) {
         this.rateDiscountPolicyRepository = rateDiscountPolicyRepository;
         this.productServiceClient = productServiceClient;
+        this.orderServiceClient = orderServiceClient;
     }
 
 
@@ -95,6 +99,34 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         , throwable -> new ArrayList<>());
     }
 
+    @Override
+    public Integer findProductBySellerId(Long sellerId) {
+        List<RateDiscountPolicy> rateDiscountPolicyList = rateDiscountPolicyRepository.findBySellerId(sellerId);
+
+        List<Long> productIdList = rateDiscountPolicyList.stream()
+                        .map(RateDiscountPolicy::getProductId)
+                        .collect(Collectors.toList());
+
+        Map<Long, List<Integer>> discountPrice = circuitBreaker.run(() -> orderServiceClient.findByProductId(productIdList)
+                , throwable -> new HashMap<Long, List<Integer>>());
+
+        Map<Long, Integer> discountRate = rateDiscountPolicyList.stream()
+                .collect(Collectors.toMap(
+                        RateDiscountPolicy::getProductId,
+                        RateDiscountPolicy::getRate
+                ));
+
+        Integer result = 0;
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(0);
+        for(Long productId : productIdList) {
+            result += calculateDiscountPrice(discountRate.getOrDefault(productId, 0), discountPrice.getOrDefault(productId, list));
+        }
+
+        return result;
+    }
+
     @Transactional(readOnly = true)
     public Response findByProductId(Long productId) {
         List<RateDiscountPolicy> rateDiscountPolicy = rateDiscountPolicyRepository.findAllByProductId(productId);
@@ -133,5 +165,11 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         RateDiscountPolicy rateDiscountPolicy;
         rateDiscountPolicy = mapper.map(dto, RateDiscountPolicy.class);
         return rateDiscountPolicy;
+    }
+
+    public Integer calculateDiscountPrice(Integer rate, List<Integer> priceAndQty) {
+        Integer price = priceAndQty.get(0);
+        Integer qty = priceAndQty.get(1);
+        return ((price * 100 / (100 - rate)) - price) * qty;
     }
 }

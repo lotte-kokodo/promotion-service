@@ -33,4 +33,6 @@ public interface RateDiscountPolicyService {
     public Response findBySellerId(Long sellerId);
 
     public List<ProductDto> findByProductByName(String name);
+
+    Integer findProductBySellerId(Long sellerId);
 }

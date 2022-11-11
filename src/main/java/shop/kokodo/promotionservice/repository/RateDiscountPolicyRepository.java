@@ -47,4 +47,8 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
     @Query(value = "SELECT r.productId FROM RateDiscountPolicy r " +
             "WHERE r.name = :name")
     List<Long> findProductIdByName(String name);
+
+    @Query(value = "SELECT r FROM RateDiscountPolicy r WHERE r.sellerId = :sellerId " +
+            "AND current_timestamp  BETWEEN r.startDate AND r.endDate")
+    List<RateDiscountPolicy> findBySellerId(Long sellerId);
 }
