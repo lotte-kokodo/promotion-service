@@ -1,0 +1,84 @@
+= FixCoupon-Rest-Controller-Api
+:toc: left
+:toclevels: 4
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+
+endif::[]
+
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
+:toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
+:toclevels: 2
+:sectlinks:
+== save
+고정 할인 정책 저장
+include::{snippets}/fix-discount-policy-rest-controller/save/curl-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/save/http-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/save/http-response.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/save/httpie-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/save/request-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/save/response-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/save/response-fields.adoc[]
+
+== findAll
+
+include::{snippets}/fix-discount-policy-rest-controller/find-all/curl-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-all/http-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-all/http-response.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-all/httpie-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-all/request-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-all/response-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-all/response-fields.adoc[]
+
+== productId
+
+include::{snippets}/fix-discount-policy-rest-controller/find-by-productId/curl-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-by-productId/http-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-by-productId/http-response.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-by-productId/httpie-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-by-productId/request-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-by-productId/response-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/find-by-productId/response-fields.adoc[]
+
+== productIdList
+상품 아이디 리스트로 고정 할인 정책 조회
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-list/curl-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-list/http-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-list/http-response.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-list/httpie-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-list/request-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-list/response-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-list/response-fields.adoc[]
+
+== status
+productId와 sellerId로 고정 할인 정책 상태 조회
+include::{snippets}/fix-discount-policy-rest-controller/status/curl-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/status/http-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/status/http-response.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/status/httpie-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/status/request-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/status/response-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/status/response-fields.adoc[]
+
+== feignStatus
+productId와 sellerId로 고정 할인 정책 상태 조회 (Feign)
+include::{snippets}/fix-discount-policy-rest-controller/feign-status/curl-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/feign-status/http-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/feign-status/http-response.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/feign-status/httpie-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/feign-status/request-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/feign-status/response-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/feign-status/response-fields.adoc[]
+
+== getFixDiscountPolicyBySellerId
+셀러 아이디로 고정 할인 정책 조회
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-by-seller-id/curl-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-by-seller-id/http-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-by-seller-id/http-response.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-by-seller-id/httpie-request.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-by-seller-id/request-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-by-seller-id/response-body.adoc[]
+include::{snippets}/fix-discount-policy-rest-controller/get-fix-discount-policy-by-seller-id/response-fields.adoc[]
+
