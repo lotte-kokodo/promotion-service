@@ -130,35 +130,42 @@ public class FixCouponRestControllerTest {
     @DisplayName("seller id로 고정 할인 쿠폰 조회")
     public void findBySellerId() throws Exception {
 
+        MultiValueMap<String,String> params =new LinkedMultiValueMap<>();
+
+        params.add("sellerId",String.valueOf(sellerId));
+        params.add("page","1");
+
         this.mockMvc.perform(
                         get("/fixCoupon/seller")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .param("sellerId", String.valueOf(sellerId))
+                                .params(params)
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(
                         document("fix-coupon-rest-controller/find-by-seller-id",
                                 requestParameters(
-                                        parameterWithName("sellerId").description("셀러 ID")
+                                        parameterWithName("sellerId").description("셀러 ID"),
+                                        parameterWithName("page").description("페이지 번호")
                                 ),
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
-                                        fieldWithPath("result.data[]").type(JsonFieldType.ARRAY).description("고정 할인 쿠폰 데이터"),
-                                        fieldWithPath("result.data[].createdDate").type(JsonFieldType.STRING).description("고정할인 쿠폰 생성 날짜").optional(),
-                                        fieldWithPath("result.data[].lastModifiedDate").type(JsonFieldType.STRING).description("고정 할인 쿠폰 마지막 수정 날짜").optional(),
-                                        fieldWithPath("result.data[].id").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 id"),
-                                        fieldWithPath("result.data[].name").type(JsonFieldType.STRING).description("고정 할인 쿠폰 이름"),
-                                        fieldWithPath("result.data[].regdate").type(JsonFieldType.STRING).description("고정 할인 쿠폰 등록일"),
-                                        fieldWithPath("result.data[].price").type(JsonFieldType.NUMBER).description("고정 할인 비용"),
-                                        fieldWithPath("result.data[].minPrice").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 적용 최소 비용"),
-                                        fieldWithPath("result.data[].startDate").type(JsonFieldType.STRING).description("고정 할인 쿠폰 적용 시작 날짜"),
-                                        fieldWithPath("result.data[].endDate").type(JsonFieldType.STRING).description("고정 할인 쿠폰 적용 마감 날짜"),
-                                        fieldWithPath("result.data[].productId").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 적용 상품 id"),
-                                        fieldWithPath("result.data[].sellerId").type(JsonFieldType.NUMBER).description("셀러 id"),
-                                        fieldWithPath("result.data[].freeDelivery").type(JsonFieldType.BOOLEAN).description("무료배송 쿠폰 여부"),
-                                        fieldWithPath("result.data[].couponFlag").type(JsonFieldType.NUMBER).description("쿠폰 구분")
+                                        fieldWithPath("result.data.totalCount").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 데이터"),
+                                        fieldWithPath("result.data.fixCouponList[]").type(JsonFieldType.ARRAY).description("고정 할인 쿠폰 데이터"),
+                                        fieldWithPath("result.data.fixCouponList[].createdDate").type(JsonFieldType.STRING).description("고정할인 쿠폰 생성 날짜").optional(),
+                                        fieldWithPath("result.data.fixCouponList[].lastModifiedDate").type(JsonFieldType.STRING).description("고정 할인 쿠폰 마지막 수정 날짜").optional(),
+                                        fieldWithPath("result.data.fixCouponList[].id").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 id"),
+                                        fieldWithPath("result.data.fixCouponList[].name").type(JsonFieldType.STRING).description("고정 할인 쿠폰 이름"),
+                                        fieldWithPath("result.data.fixCouponList[].regdate").type(JsonFieldType.STRING).description("고정 할인 쿠폰 등록일"),
+                                        fieldWithPath("result.data.fixCouponList[].price").type(JsonFieldType.NUMBER).description("고정 할인 비용"),
+                                        fieldWithPath("result.data.fixCouponList[].minPrice").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 적용 최소 비용"),
+                                        fieldWithPath("result.data.fixCouponList[].startDate").type(JsonFieldType.STRING).description("고정 할인 쿠폰 적용 시작 날짜"),
+                                        fieldWithPath("result.data.fixCouponList[].endDate").type(JsonFieldType.STRING).description("고정 할인 쿠폰 적용 마감 날짜"),
+                                        fieldWithPath("result.data.fixCouponList[].productId").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 적용 상품 id"),
+                                        fieldWithPath("result.data.fixCouponList[].sellerId").type(JsonFieldType.NUMBER).description("셀러 id"),
+                                        fieldWithPath("result.data.fixCouponList[].freeDelivery").type(JsonFieldType.BOOLEAN).description("무료배송 쿠폰 여부"),
+                                        fieldWithPath("result.data.fixCouponList[].couponFlag").type(JsonFieldType.NUMBER).description("쿠폰 구분")
                                 )
                         )
                 );

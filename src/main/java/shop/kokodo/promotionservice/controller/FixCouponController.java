@@ -3,6 +3,7 @@ package shop.kokodo.promotionservice.controller;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
@@ -30,11 +31,11 @@ public class FixCouponController {
         return Response.success();
     }
     @GetMapping("/seller")
-    public Response findBySellerId(@RequestParam long sellerId){
+    public Response findBySellerId(@RequestParam long sellerId,@RequestParam("page")int page){
 
-        List<FixCoupon> coupons = fixCouponService.findBySellerId(sellerId);
+        System.out.println("FixCouponController.findBySellerId");
 
-        return Response.success(coupons);
+        return Response.success(fixCouponService.findBySellerId(sellerId,page-1));
     }
 
     @GetMapping("/{name}/product")

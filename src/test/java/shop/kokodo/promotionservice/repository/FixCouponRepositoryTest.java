@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
@@ -17,6 +18,7 @@ import shop.kokodo.promotionservice.repository.FixCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +149,7 @@ public class FixCouponRepositoryTest {
    public void findBySellerIdSuccess(){
       saveFixCoupons(fixCoupon,fixCoupon2,fixCoupon3);
 
-      List<FixCoupon> coupons = fixCouponRepository.findBySellerId(1L);
+      List<FixCoupon> coupons = fixCouponRepository.findBySellerId(1L,PageRequest.of(0,10)).toList();
       for (FixCoupon coupon : coupons) {
          System.out.println(coupon.toString());
       }
