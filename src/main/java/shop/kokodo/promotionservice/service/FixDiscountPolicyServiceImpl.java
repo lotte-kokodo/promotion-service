@@ -69,36 +69,8 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
 
     @Override
     @Transactional(readOnly = false)
-    public Response getFixDiscountPolicyStatus(List<Long> productIdList, List<Long> sellerIdList) {
-        Map<Long, Boolean> response = new HashMap<Long, Boolean>();
-
-        if (productIdList.size() != sellerIdList.size()) {
-            throw new IllegalArgumentException("상품-셀러 아이디 리스트 크기 불일치");
-        }
-
-        List<ProductSeller> productSellerList = IntStream.range(0, productIdList.size()).boxed()
-            .map(idx -> new ProductSeller(productIdList.get(idx), sellerIdList.get(idx)) )
-            .collect(Collectors.toList());
-
-        productSellerList
-            .forEach(productSeller -> {
-                response.put(productSeller.getSellerId(), false);
-            });
-        productSellerList
-            .forEach(productSeller -> {
-                FixDiscountPolicy fixDiscountPolicy = fixDiscountPolicyRepository.findAllByProductIdAndSellerIdIn(productSeller.getProductId(), productSeller.getSellerId());
-                if ((fixDiscountPolicy != null) && !response.get(productSeller.getSellerId())) {
-                    response.put(productSeller.getSellerId(), true);
-                }
-            });
-
-        return Response.success(response);
-    }
-
-    @Override
-    @Transactional(readOnly = false)
-    public Map<Long, Boolean> getFixDiscountPolicyStatusForFeign(List<Long> productIdList, List<Long> sellerIdList) {
-        Map<Long, Boolean> response = new HashMap<Long, Boolean>();
+    public Map<Long, Boolean> getFixDiscountPolicyStatus(List<Long> productIdList, List<Long> sellerIdList) {
+        Map<Long, Boolean> response = new HashMap<>();
 
         if (productIdList.size() != sellerIdList.size()) {
             throw new IllegalArgumentException("상품-셀러 아이디 리스트 크기 불일치");

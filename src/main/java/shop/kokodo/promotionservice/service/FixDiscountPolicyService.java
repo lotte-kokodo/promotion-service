@@ -17,7 +17,5 @@ public interface FixDiscountPolicyService {
 
     public Response findBySellerId(Long sellerId);
 
-    public Response getFixDiscountPolicyStatus(List<Long> productIdList, List<Long> sellerIdList);
-
-    public Map<Long, Boolean> getFixDiscountPolicyStatusForFeign(List<Long> productIdList, List<Long> sellerIdList);
+    public Map<Long, Boolean> getFixDiscountPolicyStatus(List<Long> productIdList, List<Long> sellerIdList);
 }
