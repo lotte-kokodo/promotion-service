@@ -24,7 +24,7 @@ public class RateCouponController {
 
     @PostMapping
     public Response save(@RequestBody RateCouponDto rateCouponDto){
-
+        System.out.println("RateCouponController.save");
         rateCouponService.save(rateCouponDto);
 
         return Response.success();
@@ -48,6 +48,8 @@ public class RateCouponController {
     public Response findProductByCouponName(@PathVariable String name){
         List<ProductDto> products = rateCouponService.findProductByRateCouponName(name);
 
+        System.out.println(products.size());
+
         return Response.success(products);
     }
 
@@ -58,5 +60,7 @@ public class RateCouponController {
     public ResponseEntity<Map<Long, RateCoupon>> findRateCouponByCouponIdList(@RequestParam List<Long> couponIdList){
         return ResponseEntity.ok(rateCouponService.findByCouponIdList(couponIdList));
     }
+
+
 
 }

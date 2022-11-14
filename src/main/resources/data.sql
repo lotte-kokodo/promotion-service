@@ -28,19 +28,19 @@ insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, pr
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "단백질 타임세일", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",3,1);
 
 
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,1);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,2);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,3);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,4);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,5);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,6);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,7);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,8);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,9);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,10);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,11);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,12);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,13);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,14);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,null,15);
-insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id) values(0,1,1,null);
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,null,1,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,null,2,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,null,3,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,null,4,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,null,5,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,null,6,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,null,7,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,null,8,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,9,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,10,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,11,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,12,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,13,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,14,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,15,"2022-11-15 00:00:00");
+insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,1,null,"2022-11-15 00:00:00");

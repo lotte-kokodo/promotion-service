@@ -114,7 +114,11 @@ public class UserCouponController {
         List<UserCoupon> list = userCouponService.findValidCouponByMemberIdGroupByCouponName(memberId);
 
         return Response.success(list.size());
+    }
 
+    @GetMapping("/dashboard")
+    public Response findBestCoupon(@RequestHeader("sellerId") long sellerId){
+        return Response.success(userCouponService.findBestCoupon(sellerId));
     }
 
 
