@@ -64,4 +64,37 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
     List<UserCoupon> findByUserCouponIdList(List<Long> userCouponIdList);
 
     Optional<UserCoupon> findById(Long id);
+
+    @Query(value = "select t.name " +
+            "from ( " +
+            "select distinct r.name " +
+            "from rate_coupon r " +
+            "where r.rate_coupon_id in ( " +
+            "select u.rate_coupon_id " +
+            "from user_coupon u " +
+            "where :start <= u.last_modified_date and u.last_modified_date<=:end " +
+            "and u.usage_status=1 and u.rate_coupon_id is not null " +
+            ") and r.seller_id= :sellerId ) t  " +
+            "group by t.name " +
+            "order by count(t.name) " +
+            "limit 1 ", nativeQuery = true)
+    String findBestCoupon(long sellerId, LocalDateTime start, LocalDateTime end );
+
+    @Query(value = "select u " +
+            "from userCoupon u " +
+            "where u.userId=:userId " +
+            "and u.rateCoupon.id in ( " +
+            "select r.id " +
+            "from rateCoupon r where r.name in :rateCouponList ) " +
+            "and u.usageStatus=0")
+    List<UserCoupon> findByRateCouponNameList(List<String> rateCouponList, long userId);
+
+    @Query(value = "select u " +
+            "from userCoupon u " +
+            "where u.userId=:userId " +
+            "and u.fixCoupon.id in ( " +
+            "select f.id " +
+            "from fixCoupon f where f.name in :fixCouponList ) " +
+            "and u.usageStatus=0")
+    List<UserCoupon> findByFixCouponNameList(List<String> fixCouponList, long userId);
 }

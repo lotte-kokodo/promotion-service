@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.entity.UserCoupon;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,5 +42,7 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
     @Query(value="select r from RateCoupon r " +
             "where r.id in :rateCouponIdList ")
     List<RateCoupon> findByIdList(List<Long> rateCouponIdList);
+
+
 
 }

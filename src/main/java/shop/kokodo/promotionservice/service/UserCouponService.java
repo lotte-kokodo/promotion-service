@@ -8,6 +8,7 @@ import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -24,5 +25,7 @@ public interface UserCouponService {
 //    public List<FixCoupon> findFixCouponByMemberIdAndProductId(long productId, long memberId);
 
     public Map<Long, FixCoupon> findFixCouponByMemberIdAndProductId(List<Long> productIds, long memberId);
+
+    String findBestCoupon(long sellerId);
 
     }

@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.service;
 
+import java.time.ZoneId;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -167,6 +168,32 @@ public class UserCouponServiceImpl implements UserCouponService{
        List<FixCoupon> fixCouponList = fixCouponRepository.findValidFixCoupon( memberId, productIds, LocalDateTime.now());
         return fixCouponList.stream()
            .collect(Collectors.toMap(FixCoupon::getSellerId, Function.identity()));
+    }
+
+    @Override
+    public String findBestCoupon(long sellerId) {
+
+        Calendar cal = Calendar.getInstance(Locale.KOREA);
+        LocalDateTime startDate = getDate("start");
+        LocalDateTime endDate = getDate("end");
+
+        return userCouponRepository.findBestCoupon(sellerId,startDate,endDate);
+    }
+
+    LocalDateTime getDate(String flag) {
+        Calendar cal = Calendar.getInstance(Locale.KOREA);
+        //금주 시작 날짜
+        if(flag.equals("start")) {
+            cal.add(Calendar.DATE, 2 - cal.get(Calendar.DAY_OF_WEEK));
+        }
+        //금주 종료 날짜
+        else if(flag.equals("end")){
+            cal.add(Calendar.DATE, 8 - cal.get(Calendar.DAY_OF_WEEK));
+        }
+        TimeZone tz = cal.getTimeZone();
+        ZoneId zoneId = tz.toZoneId();
+
+        return LocalDateTime.ofInstant(cal.toInstant(), zoneId);
     }
 
     private UserCoupon convertToUserFixCoupon(UserCouponDto userCouponDto, FixCoupon fixCoupon){
