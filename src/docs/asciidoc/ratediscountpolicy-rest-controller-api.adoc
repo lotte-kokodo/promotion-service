@@ -1,4 +1,4 @@
-= RateCoupon-Rest-Controller-Api
+= RateDiscountPolicy-Rest-Controller-Api
 :toc: left
 :toclevels: 4
 ifndef::snippets[]
