@@ -39,4 +39,8 @@ public interface FixDiscountPolicyRepository extends JpaRepository<FixDiscountPo
     @Query(value = "SELECT f FROM FixDiscountPolicy f " +
             "WHERE f.sellerId IN (:sellerId)")
     List<FixDiscountPolicy> findAllBySellerId(Long sellerId);
+
+    @Query(value = "SELECT f.productId FROM FixDiscountPolicy f " +
+            "WHERE f.name = :name")
+    List<Long> findProductIdByName(String name);
 }

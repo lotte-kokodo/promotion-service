@@ -1,4 +1,4 @@
-= FixCoupon-Rest-Controller-Api
+= FixDiscountPolicy-Rest-Controller-Api
 :toc: left
 :toclevels: 4
 ifndef::snippets[]
