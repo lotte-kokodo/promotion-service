@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.service;
 
+import java.awt.print.Pageable;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -7,9 +8,12 @@ import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
+import shop.kokodo.promotionservice.dto.PagingRateCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
 import shop.kokodo.promotionservice.entity.RateCoupon;
@@ -77,13 +81,17 @@ public class RateCouponServiceImpl implements RateCouponService{
     }
 
     @Override
-    public List<RateCoupon> findBySellerId(long sellerId) {
+    public PagingRateCouponDto findBySellerId(long sellerId, int page) {
 
         Boolean sellerFlag = circuitBreaker.run(()-> sellerServiceClient.getSeller(sellerId)
                 ,throwable -> true);
 
         if(!sellerFlag) throw new NoSellerException();
-        return rateCouponRepository.findDistinctRateCouponBySellerId(sellerId);
+        Page<RateCoupon> rateCouponPage = rateCouponRepository.findDistinctRateCouponBySellerId(sellerId, PageRequest.of(page,7));
+        return PagingRateCouponDto.builder()
+                .rateCouponList(rateCouponPage.toList())
+                .totalCount(rateCouponPage.getTotalElements())
+                .build();
     }
 
     @Override

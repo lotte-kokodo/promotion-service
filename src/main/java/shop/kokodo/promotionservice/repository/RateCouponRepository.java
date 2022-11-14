@@ -1,5 +1,7 @@
 package shop.kokodo.promotionservice.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -23,7 +25,7 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
     public List<RateCoupon> findBySellerId(long sellerId);
 
     @Query(value = "select r from RateCoupon r where sellerId = :sellerId group by r.name ")
-    public List<RateCoupon> findDistinctRateCouponBySellerId(long sellerId);
+    public Page<RateCoupon> findDistinctRateCouponBySellerId(long sellerId, Pageable pageable);
 
     @Query(value = "select r from RateCoupon r " +
             "where r.productId = :productId and " +

@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.data.domain.PageRequest;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.exception.DuplicateCouponNameException;
@@ -103,9 +104,9 @@ public class FixCouponServiceMockTest {
         final long sellerId= 10L;
         coupons=new ArrayList<>();
         doReturn(true).when(sellerServiceClient).getSeller(sellerId);
-        doReturn(coupons).when(fixCouponRepository).findBySellerId(sellerId);
+        doReturn(coupons).when(fixCouponRepository).findBySellerId(sellerId, PageRequest.of(1,10));
 
-        List<FixCoupon> getCoupons = fixCouponServiceImpl.findBySellerId(sellerId);
+        List<FixCoupon> getCoupons = fixCouponServiceImpl.findBySellerId(sellerId,1).getFixCouponList();
         Assertions.assertEquals(getCoupons.size(),coupons.size());
     }
 

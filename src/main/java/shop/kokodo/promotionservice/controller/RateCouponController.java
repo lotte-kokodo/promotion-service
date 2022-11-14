@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import shop.kokodo.promotionservice.dto.PagingRateCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
 import shop.kokodo.promotionservice.dto.response.Response;
@@ -30,10 +31,10 @@ public class RateCouponController {
     }
 
     @GetMapping("/seller")
-    public Response findBySellerId(@RequestParam long sellerId){
-        List<RateCoupon> coupons = rateCouponService.findBySellerId(sellerId);
-        log.info("coupons = {}" + coupons);
-        return Response.success(coupons);
+    public Response findBySellerId(@RequestParam long sellerId, @RequestParam int page){
+        PagingRateCouponDto pagingRateCouponDto = rateCouponService.findBySellerId(sellerId, page-1);
+        log.info("coupons = {}" + pagingRateCouponDto);
+        return Response.success(pagingRateCouponDto);
     }
 
     @GetMapping("/{productId}")

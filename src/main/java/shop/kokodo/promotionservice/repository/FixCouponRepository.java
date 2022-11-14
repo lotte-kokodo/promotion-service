@@ -1,5 +1,7 @@
 package shop.kokodo.promotionservice.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -20,7 +22,7 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
     public List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId, LocalDateTime now);
 
     @Query(value = "select f from FixCoupon f where f.sellerId= :sellerId group by name ")
-    public List<FixCoupon> findBySellerId(long sellerId);
+    public Page<FixCoupon> findBySellerId(long sellerId, Pageable pageable);
 
     @Query(value = "select f.productId from FixCoupon f "+
             "where f.name = :name ")

@@ -3,11 +3,14 @@ package shop.kokodo.promotionservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
+import shop.kokodo.promotionservice.dto.PagingFixCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.exception.DuplicateCouponNameException;
@@ -65,7 +68,7 @@ public class FixCouponServiceImpl implements FixCouponService{
     }
     @Transactional(readOnly = true)
     @Override
-    public List<FixCoupon> findBySellerId(long sellerId) {
+    public PagingFixCouponDto findBySellerId(long sellerId, int page) {
 
         Boolean sellerFlag = circuitBreaker.run(()-> sellerServiceClient.getSeller(sellerId)
                 ,throwable -> true);
@@ -73,7 +76,14 @@ public class FixCouponServiceImpl implements FixCouponService{
         if (!sellerFlag)
             throw new NoSellerException();
 
-        return fixCouponRepository.findBySellerId(sellerId);
+        Page<FixCoupon> fixCoupons =  fixCouponRepository.findBySellerId(sellerId, PageRequest.of(page,7));
+
+        PagingFixCouponDto pagingFixCouponDto = PagingFixCouponDto.builder()
+                .fixCouponList(fixCoupons.toList())
+                .totalCount(fixCoupons.getTotalElements())
+                .build();
+
+        return pagingFixCouponDto;
     }
 
     @Override
