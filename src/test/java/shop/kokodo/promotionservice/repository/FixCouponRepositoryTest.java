@@ -8,13 +8,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
 import shop.kokodo.promotionservice.entity.FixCoupon;
+import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.entity.RateCoupon;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 import shop.kokodo.promotionservice.repository.FixCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 
 import javax.transaction.Transactional;
+import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,22 +26,25 @@ import java.util.Optional;
 
 @SpringBootTest
 @Transactional
+@ActiveProfiles("test")
 public class FixCouponRepositoryTest {
 
    @Autowired FixCouponRepository fixCouponRepository;
    @Autowired UserCouponRepository userCouponRepository;
+   @Autowired FixDiscountPolicyRepository fixDiscountPolicyRepository;
 
    FixCoupon fixCoupon;
    FixCoupon fixCoupon2;
    FixCoupon fixCoupon3;
-
    UserCoupon userCoupon;
    UserCoupon userCoupon2;
    UserCoupon userCoupon3;
-
+   FixDiscountPolicy fixDiscountPolicy;
    final Long userId=1L;
    final Long productId=1L;
    final LocalDateTime now=LocalDateTime.of(2022,9,25,0,0);
+   final LocalDateTime startDate = LocalDateTime.of(2022,9,25,0,0);
+   final LocalDateTime endDate = LocalDateTime.of(2023,9,25,0,0);
    final Long selectSellerId = 2L;
    @BeforeEach
    public void setUp(){
@@ -46,10 +53,11 @@ public class FixCouponRepositoryTest {
               .regdate(LocalDateTime.now())
               .price(1000)
               .minPrice(10000)
-              .startDate(LocalDateTime.of(2022,9,20,0,0))
-              .endDate(LocalDateTime.of(2023,10,1,0,0))
+              .startDate(startDate)
+              .endDate(endDate)
               .productId(1)
               .sellerId(1)
+              .freeDelivery(true)
               .build();
 
       fixCoupon2=FixCoupon.builder()
@@ -57,10 +65,11 @@ public class FixCouponRepositoryTest {
               .regdate(LocalDateTime.now())
               .price(1000)
               .minPrice(10000)
-              .startDate(LocalDateTime.of(2022,9,20,0,0))
-              .endDate(LocalDateTime.of(2023,10,1,0,0))
+              .startDate(startDate)
+              .endDate(endDate)
               .productId(1)
               .sellerId(1)
+              .freeDelivery(true)
               .build();
 
       fixCoupon3=FixCoupon.builder()
@@ -68,10 +77,11 @@ public class FixCouponRepositoryTest {
               .regdate(LocalDateTime.now())
               .price(1000)
               .minPrice(10000)
-              .startDate(LocalDateTime.of(2022,9,20,0,0))
-              .endDate(LocalDateTime.of(2023,10,1,0,0))
+              .startDate(startDate)
+              .endDate(endDate)
               .productId(2)
               .sellerId(selectSellerId)
+              .freeDelivery(true)
               .build();
 
       userCoupon = UserCoupon.builder()
@@ -90,6 +100,17 @@ public class FixCouponRepositoryTest {
               .fixCoupon(fixCoupon3)
               .userId(1)
               .usageStatus(0)
+              .build();
+
+      fixDiscountPolicy = FixDiscountPolicy.builder()
+              .name("fixDiscountPolicy")
+              .regDate(now)
+              .startDate(startDate)
+              .endDate(endDate)
+              .price(1000)
+              .minPrice(10000)
+              .productId(1L)
+              .sellerId(selectSellerId)
               .build();
    }
 
@@ -115,12 +136,8 @@ public class FixCouponRepositoryTest {
    @Test
    @DisplayName("상품ID로 유저의 사용하지 않은 고정할인 쿠폰 조회 성공")
    public void findUserNotUsedFixCouponByproductIdSuccess(){
-      fixCouponRepository.save(fixCoupon);
-      fixCouponRepository.save(fixCoupon2);
-      fixCouponRepository.save(fixCoupon3);
-      userCouponRepository.save(userCoupon);
-      userCouponRepository.save(userCoupon2);
-      userCouponRepository.save(userCoupon3);
+      saveFixCoupons(fixCoupon,fixCoupon2,fixCoupon3);
+      saveUserCoupons(userCoupon,userCoupon2,userCoupon3);
 
       List<FixCoupon> list=fixCouponRepository.findUserNotUsedFixCouponByproductId(userId, productId,now);
 
@@ -130,27 +147,86 @@ public class FixCouponRepositoryTest {
    @Test
    @DisplayName("Seller ID로 쿠폰 조회 성공")
    public void findBySellerIdSuccess(){
-      fixCouponRepository.save(fixCoupon);
-      fixCouponRepository.save(fixCoupon2);
-      fixCouponRepository.save(fixCoupon3);
+      saveFixCoupons(fixCoupon,fixCoupon2,fixCoupon3);
 
-      List<FixCoupon> coupons = fixCouponRepository.findBySellerId(selectSellerId);
+      List<FixCoupon> coupons = fixCouponRepository.findBySellerId(1L,PageRequest.of(0,10)).toList();
+      for (FixCoupon coupon : coupons) {
+         System.out.println(coupon.toString());
+      }
 
-      Assertions.assertEquals(coupons.size(),1);
-      Assertions.assertEquals(coupons.get(0).getName(),"fixCoupon3");
+      Assertions.assertEquals(coupons.size(),2);
    }
 
-   //
+   @Test
+   @DisplayName("고정쿠폰 이름으로 product id 리스트 조회")
+   public void findProductIdByName(){
+
+      saveFixCoupons(fixCoupon,fixCoupon2);
+
+      final String couponName = fixCoupon.getName();
+
+      List<Long> productIdList =fixCouponRepository.findProductIdByName(couponName);
+
+      Assertions.assertEquals(productIdList.size(),1);
+      Assertions.assertEquals(fixCoupon.getProductId(),productIdList.get(0));
+   }
+
+
    @Test
    @DisplayName("유저의 사용 가능한 무료배송 쿠폰 조회")
    public void findValidFixCoupon(){
+      final long memberId = 1L;
+
+      saveFixCoupons(fixCoupon,fixCoupon2,fixCoupon3);
+      saveUserCoupons(userCoupon,userCoupon2,userCoupon3);
+      fixDiscountPolicyRepository.save(fixDiscountPolicy);
 
       List<Long> productIdList = new ArrayList<>();
+      productIdList.add(1L);
+      productIdList.add(2L);
 
-      List<FixCoupon> fixCoupons = fixCouponRepository.findValidFixCoupon(1L,productIdList,LocalDateTime.now());
+      List<FixCoupon> fixCoupons = fixCouponRepository.findValidFixCoupon(memberId,productIdList,LocalDateTime.now());
 
+      Assertions.assertEquals(fixCoupons.size(),1);
       for (FixCoupon coupon : fixCoupons) {
-         System.out.println(coupon.toString());
+         Assertions.assertEquals(coupon.getProductId()==1L || coupon.getProductId()==2L, true);
+      }
+   }
+
+   @Test
+   @DisplayName("이름으로 고정 할인 쿠폰 조회")
+   public void findByName(){
+      saveFixCoupons(fixCoupon,fixCoupon2,fixCoupon3);
+
+      final String couponName = fixCoupon.getName();
+
+      FixCoupon selectFixCoupon = fixCouponRepository.findByName(couponName).get();
+
+      Assertions.assertEquals(selectFixCoupon.getName(),couponName);
+   }
+
+   @Test
+   @DisplayName("couponId 리스트로 고정할인 쿠폰 조회")
+   public void findByCouponIdList(){
+      List<Long> fixCouponIdList = new ArrayList<>();
+
+      fixCouponIdList.add(fixCouponRepository.save(fixCoupon).getId());
+      fixCouponIdList.add(fixCouponRepository.save(fixCoupon2).getId());
+      fixCouponRepository.save(fixCoupon3);
+
+      List<FixCoupon> fixCoupons = fixCouponRepository.findByCouponIdList(fixCouponIdList);
+
+      Assertions.assertEquals(fixCoupons.size(),2);
+   }
+
+   private void saveFixCoupons(FixCoupon ... fixCoupons){
+      for(int i=0;i<fixCoupons.length;++i){
+         fixCouponRepository.save(fixCoupons[i]);
+      }
+   }
+   private void saveUserCoupons(UserCoupon ... userCoupons){
+      for(int i=0;i<userCoupons.length;++i){
+         userCouponRepository.save(userCoupons[i]);
       }
    }
 

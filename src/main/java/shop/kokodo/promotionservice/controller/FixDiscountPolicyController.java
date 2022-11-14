@@ -1,19 +1,28 @@
 package shop.kokodo.promotionservice.controller;
 
 import java.util.Map;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
-import shop.kokodo.promotionservice.dto.ProductSeller;
+import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.service.FixDiscountPolicyService;
 
 import java.util.List;
 
+/**
+ * packageName : shop.kokodo.promotionservice.controller
+ * fileName : FixDiscountPolicyController
+ * author : SSOsh
+ * date : 2022-11-03
+ * description : 고정 할인 정책을 관리하는 컨트롤러
+ * ======================================================
+ * DATE                AUTHOR                NOTE
+ * ======================================================
+ * 2022-11-03           SSOsh              최초 생성
+ */
 @RestController
 public class FixDiscountPolicyController {
     private FixDiscountPolicyService fixDiscountPolicyService;
@@ -57,5 +66,11 @@ public class FixDiscountPolicyController {
     @GetMapping(value="/fix-discount/seller/{sellerId}")
     public Response getFixDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
         return fixDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
+    }
+
+    @GetMapping(value="/fix-discount/{name}/product")
+    public Response findProductByName(@PathVariable("name")String name) {
+        List<ProductDto> productDtos = fixDiscountPolicyService.findByProductByName(name);
+        return Response.success(productDtos);
     }
 }

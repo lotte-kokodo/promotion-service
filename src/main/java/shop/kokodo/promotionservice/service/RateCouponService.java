@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.service;
 
+import shop.kokodo.promotionservice.dto.PagingRateCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.ProductIdAndRateCouponDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
@@ -14,7 +15,7 @@ public interface RateCouponService {
     public void save(RateCouponDto rateCouponDto);
 
     public List<RateCoupon> findUserNotUsedRateCouponByproductId(long userId, long productId);
-    public List<RateCoupon> findBySellerId(long sellerId);
+    public PagingRateCouponDto findBySellerId(long sellerId, int page);
 
     public List<RateCoupon> findByProductId(long productId);
 

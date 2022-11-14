@@ -1,0 +1,25 @@
+= Rest Docs Example
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+
+endif::[]
+:doctype:  book
+:icons: font
+:source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
+:toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
+:toclevels: 2
+:sectlinks:
+== FixCoupon ( 무료 배송 쿠폰 )
+link:fixcoupon-rest-controller-api.html[]
+
+include::{snippets}/fix-coupon-rest-controller/save/curl-request.adoc[]
+
+== FixDiscountPolicy ( 고정 할인 정책 )
+link:fixdiscountpolicy-rest-controller-api.html[]
+
+include::{snippets}/fix-discount-policy-rest-controller/save/curl-request.adoc[]
+
+== RateDiscountPolicy ( 비율 할인 정책 )
+link:ratediscountpolicy-rest-controller-api.html[]
+
+include::{snippets}/rate-discount-policy-rest-controller/save/curl-request.adoc[]

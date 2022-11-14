@@ -72,8 +72,7 @@ public class UserCouponController {
 
     @PostMapping("/list")
     public Response saveRateCouponList(@RequestParam List<Long> rateIdList, @RequestHeader long memberId){
-        System.out.println("UserCouponController.saveRateCouponList");
-        System.out.println(rateIdList.size());
+
         for (Long rate : rateIdList) {
             UserCouponDto userCouponDto = UserCouponDto.builder()
                     .userId(memberId)
@@ -88,6 +87,7 @@ public class UserCouponController {
                 else throw e;
             }
         }
+
         return Response.success();
     }
     // productId - List<RateCoupon> 리턴
@@ -108,6 +108,18 @@ public class UserCouponController {
         return Response.success(userCouponService.findFixCouponByMemberIdAndProductId(productIdList,memberId));
     }
 
+    @GetMapping("/count")
+    public Response countUserCoupon(@RequestHeader(value="memberId") long memberId){
+
+        List<UserCoupon> list = userCouponService.findValidCouponByMemberIdGroupByCouponName(memberId);
+
+        return Response.success(list.size());
+    }
+
+    @GetMapping("/dashboard")
+    public Response findBestCoupon(@RequestHeader("sellerId") long sellerId){
+        return Response.success(userCouponService.findBestCoupon(sellerId));
+    }
 
 
 }

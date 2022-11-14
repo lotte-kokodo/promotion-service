@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RateDiscountPolicyDto {
