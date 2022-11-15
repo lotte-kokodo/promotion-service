@@ -214,11 +214,4 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         return rateDiscountPolicyList;
     }
 
-    public RateDiscountPolicy makeDtoToEntity(RateDiscountPolicyDto dto) {
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
-        RateDiscountPolicy rateDiscountPolicy;
-        rateDiscountPolicy = mapper.map(dto, RateDiscountPolicy.class);
-        return rateDiscountPolicy;
-    }
 }
