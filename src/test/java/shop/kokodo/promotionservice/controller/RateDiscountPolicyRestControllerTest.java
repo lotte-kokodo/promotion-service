@@ -136,44 +136,44 @@ public class RateDiscountPolicyRestControllerTest {
                 .build();
     }
 
-    @Test
-    @DisplayName("비율 할인 정책 생성 API 테스트")
-    public void save() throws Exception {
-        this.mockMvc.perform(
-                        post("/rate-discount/save")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(rateDiscountPolicyDto1))
-                )
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(
-                        document("rate-discount-policy-rest-controller/save",
-                                requestFields(
-                                        fieldWithPath("rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-                                        fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 이름"),
-                                        fieldWithPath("minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액"),
-                                        fieldWithPath("rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율"),
-                                        fieldWithPath("startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자"),
-                                        fieldWithPath("endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자"),
-                                        fieldWithPath("regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자"),
-                                        fieldWithPath("productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID"),
-                                        fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID")
-                                ),
-                                responseFields(
-                                        fieldWithPath("rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-                                        fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 이름"),
-                                        fieldWithPath("minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액"),
-                                        fieldWithPath("rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율"),
-                                        fieldWithPath("startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작 날짜"),
-                                        fieldWithPath("endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료 날짜"),
-                                        fieldWithPath("regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록 날짜"),
-                                        fieldWithPath("productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품 아이디"),
-                                        fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러 아이디"),
-                                        fieldWithPath("createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜"),
-                                        fieldWithPath("lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 최근 수정 날짜")
-                                ))
-                );
-    }
+//    @Test
+//    @DisplayName("비율 할인 정책 생성 API 테스트")
+//    public void save() throws Exception {
+//        this.mockMvc.perform(
+//                        post("/rate-discount/save")
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(objectMapper.writeValueAsString(rateDiscountPolicyDto1))
+//                )
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andDo(
+//                        document("rate-discount-policy-rest-controller/save",
+//                                requestFields(
+//                                        fieldWithPath("rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
+//                                        fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 이름"),
+//                                        fieldWithPath("minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액"),
+//                                        fieldWithPath("rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율"),
+//                                        fieldWithPath("startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자"),
+//                                        fieldWithPath("endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자"),
+//                                        fieldWithPath("regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자"),
+//                                        fieldWithPath("productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID"),
+//                                        fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID")
+//                                ),
+//                                responseFields(
+//                                        fieldWithPath("rateDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
+//                                        fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 이름"),
+//                                        fieldWithPath("minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액"),
+//                                        fieldWithPath("rate").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율"),
+//                                        fieldWithPath("startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작 날짜"),
+//                                        fieldWithPath("endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료 날짜"),
+//                                        fieldWithPath("regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록 날짜"),
+//                                        fieldWithPath("productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품 아이디"),
+//                                        fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러 아이디"),
+//                                        fieldWithPath("createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜"),
+//                                        fieldWithPath("lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 최근 수정 날짜")
+//                                ))
+//                );
+//    }
 
     @Test
     @DisplayName("비율 할인 정책 생성 API 테스트")
