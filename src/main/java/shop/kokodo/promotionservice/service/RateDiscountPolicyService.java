@@ -4,6 +4,7 @@ import java.util.Map;
 
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.RateDiscountPolicySaveDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 
@@ -24,13 +25,13 @@ public interface RateDiscountPolicyService {
     public List<RateDiscountPolicy> getAll();
     public Response findByProductId(Long productId);
 
-    public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto);
+    public List<RateDiscountPolicy> createRateDiscountPolicy(RateDiscountPolicySaveDto rateDiscountPolicySaveDto);
 
     public List<RateDiscountPolicy> getRateDiscountPolicyByDate();
 
     public Map<Long, RateDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList);
 
-    public Response findBySellerId(Long sellerId);
+    public List<RateDiscountPolicy> findBySellerId(Long sellerId);
 
     public List<ProductDto> findByProductByName(String name);
 
