@@ -13,18 +13,18 @@ insert into fix_coupon ( name, regdate, price, min_price, start_date, end_date, 
 
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "10월 닭가슴살 페스티벌", "1964-06-07 16:21:24", 5, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",3,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "10월 닭가슴살 페스티벌", "1964-06-07 16:21:24", 5, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",2,1);
-insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "10월 닭가슴살 페스티벌", "1964-06-07 16:21:24", 5, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",970,1);
+insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "10월 닭가슴살 페스티벌", "1964-06-07 16:21:24", 5, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",25,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "10월 닭가슴살 페스티벌", "1964-06-07 16:21:24", 5, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",5,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "10월 닭가슴살 페스티벌", "1964-06-07 16:21:24", 5, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",6,1);
-insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "닭가슴살의 왕 ", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",970,1);
+insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "닭가슴살의 왕 ", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",20,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "닭가슴살의 왕 ", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",4,1);
-insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "닭가슴살의 왕 ", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",717,1);
+insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "닭가슴살의 왕 ", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",40,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "닭가슴살의 왕 ", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",10,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "허닭 브랜드 위크", "1964-06-07 16:21:24", 9, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",1,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "허닭 브랜드 위크", "1964-06-07 16:21:24", 9, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",1,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "BE SPOKE 큐커 할인", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",1,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "BE SPOKE 큐커 할인", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",3,1);
-insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "단백질 타임세일", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",967,1);
+insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "단백질 타임세일", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",30,1);
 insert into rate_coupon (name,regdate, rate, min_price, start_date, end_date, product_id,seller_id) values ( "단백질 타임세일", "1964-06-07 16:21:24", 20, 10000, "2022-06-10 16:21:24", "2023-06-29 16:21:24",3,1);
 
 
@@ -44,3 +44,4 @@ insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,14,"2022-11-15 00:00:00");
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,2,null,15,"2022-11-15 00:00:00");
 insert into user_coupon(usage_status, user_id,fix_coupon_id, rate_coupon_id,last_modified_date) values(1,1,1,null,"2022-11-15 00:00:00");
+

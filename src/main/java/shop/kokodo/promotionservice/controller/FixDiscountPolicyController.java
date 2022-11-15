@@ -54,12 +54,13 @@ public class FixDiscountPolicyController {
 
     @GetMapping(value="/fix-discount/status")
     public Response getFixDiscountPolicyStatus(@RequestParam List<Long> productIdList, @RequestParam List<Long> sellerIdList) {
-        return fixDiscountPolicyService.getFixDiscountPolicyStatus(productIdList, sellerIdList);
+        Map<Long, Boolean> fixDiscountPolicyStatusMap = fixDiscountPolicyService.getFixDiscountPolicyStatus(productIdList, sellerIdList);
+        return Response.success(fixDiscountPolicyStatusMap);
     }
 
     @GetMapping(value="/feign/fix-discount/status")
     public ResponseEntity<Map<Long, Boolean>> getFixDiscountPolicyStatusForFeign(@RequestParam List<Long> productIdList, @RequestParam List<Long> sellerIdList) {
-        return ResponseEntity.ok(fixDiscountPolicyService.getFixDiscountPolicyStatusForFeign(productIdList, sellerIdList));
+        return ResponseEntity.ok(fixDiscountPolicyService.getFixDiscountPolicyStatus(productIdList, sellerIdList));
     }
 
     @GetMapping(value="/fix-discount/seller/{sellerId}")
