@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.RateDiscountPolicySaveDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.service.RateDiscountPolicyService;
@@ -25,6 +26,7 @@ import java.util.List;
  * ======================================================
  * 2022-11-03           SSOsh              최초 생성
  */
+@CrossOrigin
 @RestController
 @Slf4j
 @RequestMapping("/rate-discount")
@@ -37,8 +39,8 @@ public class RateDiscountPolicyController {
     }
 
     @PostMapping("/save")
-    public RateDiscountPolicy save(@RequestBody RateDiscountPolicyDto rateDiscountPolicyDto){
-        return rateDiscountPolicyService.createRateDiscountPolicy(rateDiscountPolicyDto);
+    public List<RateDiscountPolicy> save(@RequestBody RateDiscountPolicySaveDto rateDiscountPolicySaveDto){
+        return rateDiscountPolicyService.createRateDiscountPolicy(rateDiscountPolicySaveDto);
     }
 
     @GetMapping(value="/")
@@ -70,8 +72,8 @@ public class RateDiscountPolicyController {
     }
 
     @GetMapping(value="/seller/{sellerId}")
-    public Response getRateDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
-        return rateDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
+    public Response getRateDiscountPolicyBySellerId(@PathVariable("sellerId")Long sellerId) {
+        return Response.success(rateDiscountPolicyService.findBySellerId(sellerId));
     }
 
     @GetMapping(value="/{name}/product")

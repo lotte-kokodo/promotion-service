@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.RateDiscountPolicySaveDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 import shop.kokodo.promotionservice.feign.OrderServiceClient;
@@ -57,9 +58,11 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     }
 
     @Transactional(readOnly = false)
-    public RateDiscountPolicy createRateDiscountPolicy(RateDiscountPolicyDto rateDiscountPolicyDto) {
-        RateDiscountPolicy rateDiscountPolicy = makeDtoToEntity(rateDiscountPolicyDto);
-        return rateDiscountPolicyRepository.save(rateDiscountPolicy);
+    public List<RateDiscountPolicy> createRateDiscountPolicy(RateDiscountPolicySaveDto rateDiscountPolicySaveDto) {
+        System.out.println(rateDiscountPolicySaveDto.toString());
+        List<RateDiscountPolicy> rateDiscountPolicyList = saveDtoToDto(rateDiscountPolicySaveDto);
+
+        return rateDiscountPolicyRepository.saveAll(rateDiscountPolicyList);
     }
 
     @Override
@@ -87,8 +90,23 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
     @Override
     @Transactional(readOnly = true)
-    public Response findBySellerId(Long sellerId) {
-        return Response.success(rateDiscountPolicyRepository.findAllBySellerId(sellerId));
+    public List<RateDiscountPolicy> findBySellerId(Long sellerId) {
+        List<RateDiscountPolicy> list = rateDiscountPolicyRepository.findAllBySellerId(sellerId);
+
+        System.out.println(list.toString());
+
+        List<RateDiscountPolicy> result = new ArrayList<>();
+        for(RateDiscountPolicy rateDiscountPolicy : list) {
+            if(!result.isEmpty()) {
+                if(!rateDiscountPolicy.getName().equals(result.get(result.size() - 1).getName())) {
+                    result.add(rateDiscountPolicy);
+                }
+            }else {
+                result.add(rateDiscountPolicy);
+            }
+        }
+        System.out.println(result.toString());
+        return result;
     }
 
     @Override
@@ -171,5 +189,28 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         Integer price = priceAndQty.get(0);
         Integer qty = priceAndQty.get(1);
         return ((price * 100 / (100 - rate)) - price) * qty;
+    }
+
+    public List<RateDiscountPolicy> saveDtoToDto(RateDiscountPolicySaveDto dto) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        List<RateDiscountPolicy> rateDiscountPolicyList = new ArrayList<>();
+        for(Long productId : dto.getProductId()) {
+            rateDiscountPolicyList.add(
+                    RateDiscountPolicy.builder()
+                            .rateDiscountPolicyId(dto.getRateDiscountPolicyId())
+                            .name(dto.getName())
+                            .regDate(dto.getRegDate())
+                            .startDate(dto.getStartDate())
+                            .endDate(dto.getEndDate())
+                            .rate(dto.getRate())
+                            .minPrice(dto.getMinPrice())
+                            .productId(productId)
+                            .sellerId(dto.getSellerId())
+                            .build()
+
+            );
+        }
+        return rateDiscountPolicyList;
     }
 }

@@ -25,7 +25,7 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
     Optional<RateDiscountPolicy> findByName(String name);
 
     @Query(value = "SELECT r FROM RateDiscountPolicy r " +
-            "WHERE r.sellerId IN (:sellerId)")
+            "WHERE r.sellerId = :sellerId ORDER BY r.name")
     List<RateDiscountPolicy> findAllBySellerId(Long sellerId);
 
     @Query(value = "select r from RateDiscountPolicy r " +

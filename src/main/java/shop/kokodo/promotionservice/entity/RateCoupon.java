@@ -1,6 +1,5 @@
 package shop.kokodo.promotionservice.entity;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,6 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class RateCoupon extends BaseEntity{
 
     @Id
@@ -27,6 +27,9 @@ public class RateCoupon extends BaseEntity{
 
     @Transient
     private final int couponFlag=1;
+
+    @OneToOne(mappedBy = "rateCoupon", fetch = FetchType.LAZY)
+    private ArRateCoupon arRateCoupon;
 
     @Builder
     public RateCoupon(long id, String name, LocalDateTime regdate, int rate, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId, long sellerId) {
@@ -46,4 +49,7 @@ public class RateCoupon extends BaseEntity{
         this.regdate = regDate;
     }
 
+    public void setArRateCoupon(ArRateCoupon arRateCoupon){
+        this.arRateCoupon = arRateCoupon;
+    }
 }

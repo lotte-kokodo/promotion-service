@@ -8,9 +8,7 @@ import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
-import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
-import shop.kokodo.promotionservice.dto.ProductDto;
-import shop.kokodo.promotionservice.dto.ProductSeller;
+import shop.kokodo.promotionservice.dto.*;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
 import shop.kokodo.promotionservice.feign.ProductServiceClient;
@@ -46,11 +44,11 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
 
     @Override
     @Transactional(readOnly = false)
-    public FixDiscountPolicy save(FixDiscountPolicyDto fixDiscountPolicyDto) {
+    public List<FixDiscountPolicy> save(FixDiscountPolicySaveDto fixDiscountPolicySaveDto) {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
-        FixDiscountPolicy fixDiscountPolicy = mapper.map(fixDiscountPolicyDto, FixDiscountPolicy.class);
-        return fixDiscountPolicyRepository.save(fixDiscountPolicy);
+        List<FixDiscountPolicy> fixDiscountPolicyList = saveDtoToDto(fixDiscountPolicySaveDto);
+        return fixDiscountPolicyRepository.saveAll(fixDiscountPolicyList);
     }
 
     @Override
@@ -124,8 +122,45 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
 
     @Override
     @Transactional(readOnly = false)
-    public Response findBySellerId(Long sellerId) {
-        return Response.success(fixDiscountPolicyRepository.findAllBySellerId(sellerId));
+    public List<FixDiscountPolicy> findBySellerId(Long sellerId) {
+        List<FixDiscountPolicy> list = fixDiscountPolicyRepository.findAllBySellerId(sellerId);
+
+        System.out.println(list.toString());
+
+        List<FixDiscountPolicy> result = new ArrayList<>();
+        for(FixDiscountPolicy fixDiscountPolicy : list) {
+            if(!result.isEmpty()) {
+                if(!fixDiscountPolicy.getName().equals(result.get(result.size() - 1).getName())) {
+                    result.add(fixDiscountPolicy);
+                }
+            }else {
+                result.add(fixDiscountPolicy);
+            }
+        }
+        System.out.println(result.toString());
+        return result;
     }
 
+    public List<FixDiscountPolicy> saveDtoToDto(FixDiscountPolicySaveDto dto) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        List<FixDiscountPolicy> fixDiscountPolicyList = new ArrayList<>();
+        for(Long productId : dto.getProductId()) {
+            fixDiscountPolicyList.add(
+                    FixDiscountPolicy.builder()
+                            .fixDiscountPolicyId(dto.getFixDiscountPolicyId())
+                            .name(dto.getName())
+                            .regDate(dto.getRegDate())
+                            .startDate(dto.getStartDate())
+                            .endDate(dto.getEndDate())
+                            .price(dto.getPrice())
+                            .minPrice(dto.getMinPrice())
+                            .productId(productId)
+                            .sellerId(dto.getSellerId())
+                            .build()
+
+            );
+        }
+        return fixDiscountPolicyList;
+    }
 }
