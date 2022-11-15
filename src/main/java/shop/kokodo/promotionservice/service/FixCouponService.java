@@ -1,6 +1,8 @@
 package shop.kokodo.promotionservice.service;
 
+import org.springframework.data.domain.Page;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
+import shop.kokodo.promotionservice.dto.PagingFixCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 
@@ -10,9 +12,10 @@ import java.util.List;
 public interface FixCouponService {
     void save(FixCouponDto fixCouponDto);
 
+
     List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId);
 
-    List<FixCoupon> findBySellerId(long sellerId);
+    PagingFixCouponDto findBySellerId(long sellerId, int page);
 
     List<ProductDto> findProductByName(String name);
 

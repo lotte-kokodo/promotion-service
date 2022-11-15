@@ -3,6 +3,8 @@ package shop.kokodo.promotionservice.controller;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
@@ -22,18 +24,18 @@ public class FixCouponController {
     private final FixCouponService fixCouponService;
 
     @PostMapping
-    public Response save(@RequestBody FixCouponDto fixCouponDto){
-
+    public Response save(@RequestBody FixCouponDto fixCouponDto,@RequestHeader long sellerId){
+        fixCouponDto.setSellerId(sellerId);
         fixCouponService.save(fixCouponDto);
 
         return Response.success();
     }
     @GetMapping("/seller")
-    public Response findBySellerId(@RequestParam long sellerId){
+    public Response findBySellerId(@RequestHeader long sellerId,@RequestParam("page")int page){
 
-        List<FixCoupon> coupons = fixCouponService.findBySellerId(sellerId);
+        System.out.println("FixCouponController.findBySellerId");
 
-        return Response.success(coupons);
+        return Response.success(fixCouponService.findBySellerId(sellerId,page-1));
     }
 
     @GetMapping("/{name}/product")
@@ -43,8 +45,8 @@ public class FixCouponController {
     }
 
     @GetMapping("/coupon/list")
-    public List<Long> findFixCouponByCouponIdList(@RequestParam List<Long> couponIdList){
-        return fixCouponService.findByCouponIdList(couponIdList);
+    public ResponseEntity<List<Long>> findFixCouponByCouponIdList(@RequestParam List<Long> couponIdList){
+        return ResponseEntity.ok(fixCouponService.findByCouponIdList(couponIdList));
     }
 
 }

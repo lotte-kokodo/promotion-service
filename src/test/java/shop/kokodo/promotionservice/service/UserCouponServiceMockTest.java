@@ -14,7 +14,9 @@ import org.modelmapper.ModelMapper;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.entity.UsageStatus;
 import shop.kokodo.promotionservice.entity.UserCoupon;
+import shop.kokodo.promotionservice.exception.NoCouponException;
 import shop.kokodo.promotionservice.repository.FixCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 import shop.kokodo.promotionservice.repository.UserCouponRepository;
@@ -54,35 +56,35 @@ public class UserCouponServiceMockTest {
         fixUserCouponDto=UserCouponDto.builder()
                 .id(1L)
                 .userId(2L)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED.toString())
                 .fixCouponId(fixCouponId)
                 .build();
 
         rateUserCouponDto=UserCouponDto.builder()
                 .id(2L)
                 .userId(2L)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED.toString())
                 .rateCouponId(rateCouponId)
                 .build();
 
         fixUserCoupon = UserCoupon.builder()
                 .id(1L)
                 .userId(fixUserCouponDto.getUserId())
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .fixCoupon(new FixCoupon())
                 .build();
 
         rateUserCoupon=UserCoupon.builder()
                 .id(1L)
                 .userId(fixUserCouponDto.getUserId())
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .rateCoupon(new RateCoupon())
                 .build();
 
         failUserCouponDto = UserCouponDto.builder()
                 .id(1L)
                 .userId(2L)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED.toString())
                 .build();
     }
 
@@ -117,7 +119,7 @@ public class UserCouponServiceMockTest {
     public void fixUserCouponSaveFail(){
         doReturn(Optional.empty()).when(fixCouponRepository).findById(any());
 
-        Assertions.assertThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(NoCouponException.class,
                 ()->  userCouponService.save(fixUserCouponDto));
     }
 
@@ -126,14 +128,14 @@ public class UserCouponServiceMockTest {
     public void rateUserCouponSaveFail(){
         doReturn(Optional.empty()).when(rateCouponRepository).findById(any());
 
-        Assertions.assertThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(NoCouponException.class,
                 ()->  userCouponService.save(rateUserCouponDto));
     }
 
     @Test
     @DisplayName("쿠폰 아이디 둘 다 없는 경우 실패")
     public void noCouponIdFail(){
-        Assertions.assertThrows(IllegalArgumentException.class,
+        Assertions.assertThrows(NoCouponException.class,
                 () -> userCouponService.save(failUserCouponDto));
     }
 

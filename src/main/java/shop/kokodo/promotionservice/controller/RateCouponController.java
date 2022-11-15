@@ -2,7 +2,9 @@ package shop.kokodo.promotionservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import shop.kokodo.promotionservice.dto.PagingRateCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
 import shop.kokodo.promotionservice.dto.response.Response;
@@ -20,19 +22,21 @@ import java.util.Map;
 public class RateCouponController {
     private final RateCouponService rateCouponService;
 
-    @PostMapping("/save")
-    public Response save(@RequestBody RateCouponDto rateCouponDto){
-
+    @PostMapping
+    public Response save(@RequestBody RateCouponDto rateCouponDto, @RequestHeader long sellerId){
+        System.out.println("RateCouponController.save");
+        rateCouponDto.setSellerId(sellerId);
         rateCouponService.save(rateCouponDto);
 
         return Response.success();
     }
 
     @GetMapping("/seller")
-    public Response findBySellerId(@RequestParam long sellerId){
-        List<RateCoupon> coupons = rateCouponService.findBySellerId(sellerId);
-        log.info("coupons = {}" + coupons);
-        return Response.success(coupons);
+    public Response findBySellerId(@RequestHeader long sellerId, @RequestParam int page){
+        System.out.println("RateCouponController.findBySellerId "+ sellerId);
+        PagingRateCouponDto pagingRateCouponDto = rateCouponService.findBySellerId(sellerId, page-1);
+        log.info("coupons = {}" + pagingRateCouponDto);
+        return Response.success(pagingRateCouponDto);
     }
 
     @GetMapping("/{productId}")
@@ -44,8 +48,9 @@ public class RateCouponController {
 
     @GetMapping("/{name}/product")
     public Response findProductByCouponName(@PathVariable String name){
-        System.out.println(name);
         List<ProductDto> products = rateCouponService.findProductByRateCouponName(name);
+
+        System.out.println(products.size());
 
         return Response.success(products);
     }
@@ -54,8 +59,10 @@ public class RateCouponController {
         productId - List<RateCoupon
      */
     @GetMapping("/coupon/list")
-    public Map<Long, RateCoupon> findRateCouponByCouponIdList(@RequestParam List<Long> couponIdList){
-        return rateCouponService.findByCouponIdList(couponIdList);
+    public ResponseEntity<Map<Long, RateCoupon>> findRateCouponByCouponIdList(@RequestParam List<Long> couponIdList){
+        return ResponseEntity.ok(rateCouponService.findByCouponIdList(couponIdList));
     }
+
+
 
 }

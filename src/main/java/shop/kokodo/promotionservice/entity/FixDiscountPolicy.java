@@ -18,27 +18,20 @@ public class FixDiscountPolicy extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fixDiscountPolicyId;
 
-    @Column( nullable = false )
     private String name;
 
-    @Column( nullable = false )
     private LocalDateTime regDate;
 
-    @Column( nullable = false )
     private LocalDateTime startDate;
 
-    @Column( nullable = false )
     private LocalDateTime endDate;
 
-    @Column( nullable = false )
     private Integer price;
 
-    @Column( nullable = false )
     private Integer minPrice;
 
-    @Column( nullable = false )
     private Long productId;
 
-    @Column( nullable = false )
     private Long sellerId;
+
 }

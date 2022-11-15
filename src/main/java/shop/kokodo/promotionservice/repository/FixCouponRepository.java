@@ -1,5 +1,7 @@
 package shop.kokodo.promotionservice.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,13 +16,13 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
 
     @Query(value = "select f from FixCoupon f " +
             "where f.id in (select u.fixCoupon from UserCoupon u " +
-                            "where u.userId = :userId and u.usageStatus = 0 and u.fixCoupon is not null ) " +
+                            "where u.userId = :userId and u.usageStatus = 'NOT_USED' and u.fixCoupon is not null ) " +
             "and f.productId = :productId " +
             "and f.startDate <= :now and :now < f.endDate")
     public List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId, LocalDateTime now);
 
-    @Query(value = "select f from FixCoupon f group by name")
-    public List<FixCoupon> findBySellerId(long sellerId);
+    @Query(value = "select f from FixCoupon f where f.sellerId= :sellerId group by name ")
+    public Page<FixCoupon> findBySellerId(long sellerId, Pageable pageable);
 
     @Query(value = "select f.productId from FixCoupon f "+
             "where f.name = :name ")
@@ -28,9 +30,9 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
 
     @Query(value= " select f " +
             "from FixCoupon f " +
-            "where f.freeDelivery = 1 and f.startDate<=:now and :now <=f.endDate " +
+            "where f.freeDelivery = true and f.startDate<=:now and :now <=f.endDate " +
             "and f.productId not in( select d.productId from FixDiscountPolicy d where d.startDate <= :now and :now <=d.endDate and d.productId in :productIdList ) " +
-            "and f.id in (select u.fixCoupon.id from UserCoupon u where u.userId=1 and u.usageStatus=0 and u.fixCoupon is not null and u.userId=:memberId ) ")
+            "and f.id in (select u.fixCoupon.id from UserCoupon u where u.usageStatus= 'NOT_USED' and u.fixCoupon is not null and u.userId=:memberId ) ")
     List<FixCoupon> findValidFixCoupon(Long memberId, List<Long> productIdList, LocalDateTime now);
 
     Optional<FixCoupon> findByName(String name);
