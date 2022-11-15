@@ -23,15 +23,17 @@ public class RateCouponController {
     private final RateCouponService rateCouponService;
 
     @PostMapping
-    public Response save(@RequestBody RateCouponDto rateCouponDto){
+    public Response save(@RequestBody RateCouponDto rateCouponDto, @RequestHeader long sellerId){
         System.out.println("RateCouponController.save");
+        rateCouponDto.setSellerId(sellerId);
         rateCouponService.save(rateCouponDto);
 
         return Response.success();
     }
 
     @GetMapping("/seller")
-    public Response findBySellerId(@RequestParam long sellerId, @RequestParam int page){
+    public Response findBySellerId(@RequestHeader long sellerId, @RequestParam int page){
+        System.out.println("RateCouponController.findBySellerId "+ sellerId);
         PagingRateCouponDto pagingRateCouponDto = rateCouponService.findBySellerId(sellerId, page-1);
         log.info("coupons = {}" + pagingRateCouponDto);
         return Response.success(pagingRateCouponDto);
