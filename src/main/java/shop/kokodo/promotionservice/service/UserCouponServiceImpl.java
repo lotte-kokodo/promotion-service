@@ -13,6 +13,7 @@ import shop.kokodo.promotionservice.dto.UpdateUserCouponDto;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.entity.UsageStatus;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 import shop.kokodo.promotionservice.exception.*;
 import shop.kokodo.promotionservice.feign.MemberServiceClient;
@@ -199,7 +200,7 @@ public class UserCouponServiceImpl implements UserCouponService{
     private UserCoupon convertToUserFixCoupon(UserCouponDto userCouponDto, FixCoupon fixCoupon){
         return UserCoupon.builder()
                 .userId(userCouponDto.getUserId())
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .fixCoupon(fixCoupon)
                 .build();
     }
@@ -207,7 +208,7 @@ public class UserCouponServiceImpl implements UserCouponService{
     private UserCoupon convertToUserRateCoupon(UserCouponDto userCouponDto, RateCoupon rateCoupon){
         return UserCoupon.builder()
                 .userId(userCouponDto.getUserId())
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .rateCoupon(rateCoupon)
                 .build();
     }
