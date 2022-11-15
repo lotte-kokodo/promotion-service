@@ -16,7 +16,7 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
 
     @Query(value = "select f from FixCoupon f " +
             "where f.id in (select u.fixCoupon from UserCoupon u " +
-                            "where u.userId = :userId and u.usageStatus = 0 and u.fixCoupon is not null ) " +
+                            "where u.userId = :userId and u.usageStatus = 'NOT_USED' and u.fixCoupon is not null ) " +
             "and f.productId = :productId " +
             "and f.startDate <= :now and :now < f.endDate")
     public List<FixCoupon> findUserNotUsedFixCouponByproductId(long userId, long productId, LocalDateTime now);
@@ -32,7 +32,7 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
             "from FixCoupon f " +
             "where f.freeDelivery = true and f.startDate<=:now and :now <=f.endDate " +
             "and f.productId not in( select d.productId from FixDiscountPolicy d where d.startDate <= :now and :now <=d.endDate and d.productId in :productIdList ) " +
-            "and f.id in (select u.fixCoupon.id from UserCoupon u where u.usageStatus=0 and u.fixCoupon is not null and u.userId=:memberId ) ")
+            "and f.id in (select u.fixCoupon.id from UserCoupon u where u.usageStatus= 'NOT_USED' and u.fixCoupon is not null and u.userId=:memberId ) ")
     List<FixCoupon> findValidFixCoupon(Long memberId, List<Long> productIdList, LocalDateTime now);
 
     Optional<FixCoupon> findByName(String name);

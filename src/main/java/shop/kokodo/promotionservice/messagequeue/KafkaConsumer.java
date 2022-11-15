@@ -35,7 +35,7 @@ public class KafkaConsumer {
         }
         long memberId = couponNameDto.getMemberId();
         List<UserCoupon> rateUserCoupon = userCouponRepository.findByRateCouponNameList(couponNameDto.getRateCouponNames(),memberId);
-        List<UserCoupon> fixUserCoupon = userCouponRepository.findByFixCouponNameList(couponNameDto.getFixCouponNames(),memberId);
+        List<UserCoupon> fixUserCoupon = userCouponRepository.findByFixCouponIdList(couponNameDto.getFixCouponIdList(),memberId);
 
         for (UserCoupon userCoupon : fixUserCoupon) {
             userCoupon.useCoupon();

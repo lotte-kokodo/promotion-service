@@ -26,11 +26,11 @@ public class UserCoupon extends BaseEntity{
 
     private long userId;
 
-//    @Enumerated(EnumType.STRING)
-    private int usageStatus;
+    @Enumerated(EnumType.STRING)
+    private UsageStatus usageStatus;
 
     @Builder
-    public UserCoupon(long id, RateCoupon rateCoupon, FixCoupon fixCoupon, long userId, int usageStatus) {
+    public UserCoupon(long id, RateCoupon rateCoupon, FixCoupon fixCoupon, long userId, UsageStatus usageStatus) {
         this.id = id;
         this.rateCoupon = rateCoupon;
         this.fixCoupon = fixCoupon;
@@ -39,7 +39,7 @@ public class UserCoupon extends BaseEntity{
     }
 
     public void useCoupon(){
-        this.usageStatus=1;
+        this.usageStatus=UsageStatus.USED;
     }
 
 }

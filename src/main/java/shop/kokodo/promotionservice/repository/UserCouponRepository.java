@@ -19,7 +19,7 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
     @Query(value = "select u " +
             "from UserCoupon u join fetch u.fixCoupon f " +
             "where f.startDate <= :now and :now < f.endDate " +
-            " and u.usageStatus = 0 " +
+            " and u.usageStatus = 'NOT_USED' " +
             " and u.userId= :memberId " +
             "group by f.name" )
     public List<UserCoupon> findFixCouponByMemberId(long memberId, LocalDateTime now);
@@ -27,7 +27,7 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
     @Query(value = "select u " +
             "from UserCoupon u join fetch u.rateCoupon r " +
             "where r.startDate <= :now and :now < r.endDate " +
-            " and u.usageStatus = 0 " +
+            " and u.usageStatus = 'NOT_USED' " +
             " and u.userId= :memberId " +
             "group by r.name" )
     public List<UserCoupon> findRateCouponByMemberId(long memberId, LocalDateTime now);
@@ -35,7 +35,7 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
     @Query(value = "select u " +
             "from UserCoupon u join fetch u.rateCoupon r " +
             "where r.startDate <= :now and :now < r.endDate " +
-            " and u.usageStatus = 0 " +
+            " and u.usageStatus = 'NOT_USED' " +
             " and r.productId = :productId " +
             " and u.userId= :memberId ")
     public List<UserCoupon> findRateCouponByMemberIdAndProductId(long memberId, long productId, LocalDateTime now);
@@ -47,7 +47,7 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
     @Query(value = "select u " +
             "from UserCoupon u join fetch u.fixCoupon f " +
             "where f.startDate <= :now and :now < f.endDate " +
-            " and u.usageStatus = 0 " +
+            " and u.usageStatus = 'NOT_USED' " +
             " and f.productId = :productId " +
             " and u.userId= :memberId ")
     public List<UserCoupon> findFixCouponByMemberIdAndProductId(long memberId, long productId, LocalDateTime now);
@@ -55,7 +55,7 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
     @Query(value = "select u " +
             "from UserCoupon u join fetch u.rateCoupon r " +
             "where r.startDate <= :now and :now < r.endDate " +
-            " and u.usageStatus = 0 " +
+            " and u.usageStatus = 'NOT_USED' " +
             " and r.productId in :productIdList " +
             " and u.userId= :memberId ")
     public List<UserCoupon> findByInProductIdAndMemberId(List<Long> productIdList, long memberId, LocalDateTime now);
@@ -81,20 +81,15 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon,Long> {
     String findBestCoupon(long sellerId, LocalDateTime start, LocalDateTime end );
 
     @Query(value = "select u " +
-            "from userCoupon u " +
-            "where u.userId=:userId " +
-            "and u.rateCoupon.id in ( " +
-            "select r.id " +
-            "from rateCoupon r where r.name in :rateCouponList ) " +
-            "and u.usageStatus=0")
-    List<UserCoupon> findByRateCouponNameList(List<String> rateCouponList, long userId);
+            "from UserCoupon u " +
+            "where u.userId= :userId " +
+            "and u.rateCoupon.id in ( select r.id from RateCoupon r where r.name in :rateCouponList ) " +
+            "and u.usageStatus='NOT_USED' ")
+    List<UserCoupon> findByRateCouponNameList(List<String> rateCouponList, Long userId);
 
-    @Query(value = "select u " +
-            "from userCoupon u " +
-            "where u.userId=:userId " +
-            "and u.fixCoupon.id in ( " +
-            "select f.id " +
-            "from fixCoupon f where f.name in :fixCouponList ) " +
-            "and u.usageStatus=0")
-    List<UserCoupon> findByFixCouponNameList(List<String> fixCouponList, long userId);
+    @Query(value = "select  u from UserCoupon u where u.fixCoupon.id in( " +
+            "select t.id from FixCoupon t where t.name in ( " +
+            "select f.name from FixCoupon f where f.id = :fixCouponIdList ) ) " +
+            "and u.userId = :userId ")
+    List<UserCoupon> findByFixCouponIdList(List<Long> fixCouponIdList, Long userId);
 }

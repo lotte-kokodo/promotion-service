@@ -14,15 +14,15 @@ public class CouponNameDto {
 
     long memberId;
 
-    List<String> fixCouponNames;
+    List<Long> fixCouponIdList;
 
     List<String> rateCouponNames;
 
 
     @Builder
-    public CouponNameDto(long memberId, List<String> fixCouponNames, List<String> rateCouponNames) {
+    public CouponNameDto(long memberId, List<Long> fixCouponIdList, List<String> rateCouponNames) {
         this.memberId = memberId;
-        this.fixCouponNames = fixCouponNames;
+        this.fixCouponIdList = fixCouponIdList;
         this.rateCouponNames = rateCouponNames;
     }
 }

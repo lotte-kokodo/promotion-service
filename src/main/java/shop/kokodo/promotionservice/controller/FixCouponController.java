@@ -24,14 +24,14 @@ public class FixCouponController {
     private final FixCouponService fixCouponService;
 
     @PostMapping
-    public Response save(@RequestBody FixCouponDto fixCouponDto){
-
+    public Response save(@RequestBody FixCouponDto fixCouponDto,@RequestHeader long sellerId){
+        fixCouponDto.setSellerId(sellerId);
         fixCouponService.save(fixCouponDto);
 
         return Response.success();
     }
     @GetMapping("/seller")
-    public Response findBySellerId(@RequestParam long sellerId,@RequestParam("page")int page){
+    public Response findBySellerId(@RequestHeader long sellerId,@RequestParam("page")int page){
 
         System.out.println("FixCouponController.findBySellerId");
 
