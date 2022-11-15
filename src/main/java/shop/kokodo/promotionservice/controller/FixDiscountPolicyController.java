@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import shop.kokodo.promotionservice.dto.FixDiscountPolicyDto;
+import shop.kokodo.promotionservice.dto.FixDiscountPolicySaveDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
@@ -33,8 +34,8 @@ public class FixDiscountPolicyController {
     }
 
     @PostMapping("fix-discount/save")
-    public FixDiscountPolicy save(@RequestBody FixDiscountPolicyDto fixDiscountPolicyDto){
-        return fixDiscountPolicyService.save(fixDiscountPolicyDto);
+    public List<FixDiscountPolicy> save(@RequestBody FixDiscountPolicySaveDto fixDiscountPolicySaveDto){
+        return fixDiscountPolicyService.save(fixDiscountPolicySaveDto);
     }
 
     @GetMapping(value="/fix-discount")
@@ -64,7 +65,7 @@ public class FixDiscountPolicyController {
 
     @GetMapping(value="/fix-discount/seller/{sellerId}")
     public Response getFixDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
-        return fixDiscountPolicyService.findBySellerId(Long.parseLong(sellerId));
+        return Response.success(fixDiscountPolicyService.findBySellerId(Long.parseLong(sellerId)));
     }
 
     @GetMapping(value="/fix-discount/{name}/product")
