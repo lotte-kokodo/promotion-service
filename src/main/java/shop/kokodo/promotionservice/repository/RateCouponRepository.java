@@ -1,10 +1,13 @@
 package shop.kokodo.promotionservice.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.entity.UserCoupon;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,15 +18,15 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
 
     @Query(value = "select r from RateCoupon r " +
             "where r.id in (select u.rateCoupon from UserCoupon u " +
-                            "where u.userId = :userId and u.usageStatus = 0 and u.rateCoupon is not null ) " +
+                            "where u.userId = :userId and u.usageStatus = 'NOT_USED' and u.rateCoupon is not null ) " +
             "and r.productId = :productId " +
             "and r.startDate <= :now and :now < r.endDate")
     public List<RateCoupon> findUserNotUsedRateCouponByproductId(long userId, long productId, LocalDateTime now);
 
     public List<RateCoupon> findBySellerId(long sellerId);
 
-    @Query(value = "select r from RateCoupon r group by r.name")
-    public List<RateCoupon> findDistinctRateCouponBySellerId(long sellerId);
+    @Query(value = "select r from RateCoupon r where sellerId = :sellerId group by r.name ")
+    public Page<RateCoupon> findDistinctRateCouponBySellerId(long sellerId, Pageable pageable);
 
     @Query(value = "select r from RateCoupon r " +
             "where r.productId = :productId and " +
@@ -31,13 +34,15 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
     public List<RateCoupon> findByProductId(long productId, LocalDateTime now);
 
     @Query(value = "select r.productId from RateCoupon r "+
-                "where r.name = :name ")
+            "where r.name = :name ")
     public List<Long> findProductIdByName(String name);
 
-    Optional<RateCoupon> findByName(String name);
+    List<RateCoupon> findByName(String name);
 
     @Query(value="select r from RateCoupon r " +
             "where r.id in :rateCouponIdList ")
     List<RateCoupon> findByIdList(List<Long> rateCouponIdList);
+
+
 
 }

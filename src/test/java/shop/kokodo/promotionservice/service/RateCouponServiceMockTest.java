@@ -13,6 +13,9 @@ import org.mockito.quality.Strictness;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.feign.MemberServiceClient;
+import shop.kokodo.promotionservice.feign.ProductServiceClient;
+import shop.kokodo.promotionservice.feign.SellerServiceClient;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 
 import java.time.LocalDateTime;
@@ -30,6 +33,12 @@ public class RateCouponServiceMockTest {
 
     @Mock
     RateCouponRepository rateCouponRepository;
+    @Mock
+    MemberServiceClient memberServiceClient;
+    @Mock
+    ProductServiceClient productServiceClient;
+    @Mock
+    SellerServiceClient sellerServiceClient;
 
     RateCouponDto rateCouponDto;
     List<RateCoupon> coupons;
@@ -43,8 +52,8 @@ public class RateCouponServiceMockTest {
                 .name("testCoupon")
                 .rate(10)
                 .minPrice(10000)
-                .startDate("2022-01-01 12:00")
-                .endDate("2022-01-08 12:00")
+                .startDate("2022-01-01 00:00:00")
+                .endDate("2023-01-08 00:00:00")
                 .productList(productList)
                 .build();
     }
@@ -64,9 +73,12 @@ public class RateCouponServiceMockTest {
         final long productId=1L;
         final LocalDateTime day= LocalDateTime.of(2022,10,1,0,0);
         coupons = new ArrayList<>();
-
+        boolean memberFlag = true;
+        boolean productFlag = true;
         doReturn(coupons).when(rateCouponRepository)
                 .findUserNotUsedRateCouponByproductId(userId,productId,day);
+        doReturn(memberFlag).when(memberServiceClient).getMember(userId);
+        doReturn(productFlag).when(productServiceClient).findProductById(productId);
 
         List<RateCoupon> getCoupons=rateCouponService.findUserNotUsedRateCouponByproductId(userId,productId);
         Assertions.assertEquals(getCoupons.size(),coupons.size());
@@ -78,6 +90,9 @@ public class RateCouponServiceMockTest {
     public void findBySellerIdSuccess(){
         final long sellerId= 10L;
         coupons=new ArrayList<>();
+        boolean sellerFlag = true;
+
+        doReturn(sellerFlag).when(sellerServiceClient).getSeller(sellerId);
         doReturn(coupons).when(rateCouponRepository).findBySellerId(sellerId);
 
         List<RateCoupon> getCoupons = rateCouponService.findBySellerId(sellerId);

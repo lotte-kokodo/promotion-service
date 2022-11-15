@@ -1,0 +1,76 @@
+= RateDiscountPolicy-Rest-Controller-Api
+:toc: left
+:toclevels: 4
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+
+endif::[]
+
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
+:toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
+:toclevels: 2
+:sectlinks:
+
+== save
+비율 할인 정책 생성
+include::{snippets}/rate-discount-policy-rest-controller/save/curl-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/save/http-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/save/http-response.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/save/httpie-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/save/request-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/save/request-fields.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/save/response-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/save/response-fields.adoc[]
+
+== date
+날짜를 기준으로 이용 가능한 비율 할인 정책 조회
+include::{snippets}/rate-discount-policy-rest-controller/date/curl-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/date/http-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/date/http-response.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/date/httpie-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/date/request-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/date/response-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/date/response-fields.adoc[]
+
+== findAll
+전체 비율 할인 정책 조회
+include::{snippets}/rate-discount-policy-rest-controller/find-all/curl-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-all/http-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-all/http-response.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-all/httpie-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-all/request-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-all/response-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-all/response-fields.adoc[]
+
+== findByProductId
+상품 아이디로 비율 할인 정책 조회
+include::{snippets}/rate-discount-policy-rest-controller/find-by-productId/curl-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-by-productId/http-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-by-productId/http-response.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-by-productId/httpie-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-by-productId/request-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-by-productId/response-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/find-by-productId/response-fields.adoc[]
+
+== productIdList
+상품 아이디로 비율 할인 정책 조회
+include::{snippets}/rate-discount-policy-rest-controller/product-id-list/curl-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/product-id-list/http-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/product-id-list/http-response.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/product-id-list/httpie-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/product-id-list/request-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/product-id-list/response-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/product-id-list/response-fields.adoc[]
+
+== sellerId
+셀러 아이디로 비율 할인 정책 조회
+include::{snippets}/rate-discount-policy-rest-controller/seller-id/curl-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/seller-id/http-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/seller-id/http-response.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/seller-id/httpie-request.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/seller-id/request-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/seller-id/response-body.adoc[]
+include::{snippets}/rate-discount-policy-rest-controller/seller-id/response-fields.adoc[]
+

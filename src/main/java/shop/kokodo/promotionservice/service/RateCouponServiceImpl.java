@@ -1,17 +1,31 @@
 package shop.kokodo.promotionservice.service;
 
+import java.awt.print.Pageable;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
+import shop.kokodo.promotionservice.dto.PagingRateCouponDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.exception.DuplicateCouponNameException;
+import shop.kokodo.promotionservice.exception.NoMemberException;
+import shop.kokodo.promotionservice.exception.NoProductException;
+import shop.kokodo.promotionservice.exception.NoSellerException;
+import shop.kokodo.promotionservice.feign.MemberServiceClient;
 import shop.kokodo.promotionservice.feign.ProductServiceClient;
+import shop.kokodo.promotionservice.feign.SellerServiceClient;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,20 +34,32 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class RateCouponServiceImpl implements RateCouponService{
     private final ProductServiceClient productServiceClient;
     private final RateCouponRepository rateCouponRepository;
+    private final MemberServiceClient memberServiceClient;
+    private final SellerServiceClient sellerServiceClient;
+
+    private final CircuitBreaker circuitBreaker = AllCircuitBreaker.createSellerCircuitBreaker();
 
 
-    public RateCouponServiceImpl(ProductServiceClient productServiceClient, RateCouponRepository rateCouponRepository) {
+
+    public RateCouponServiceImpl(ProductServiceClient productServiceClient, RateCouponRepository rateCouponRepository,
+                                 MemberServiceClient memberServiceClient, SellerServiceClient sellerServiceClient) {
         this.productServiceClient = productServiceClient;
         this.rateCouponRepository = rateCouponRepository;
+        this.memberServiceClient = memberServiceClient;
+        this.sellerServiceClient = sellerServiceClient;
+
     }
 
+    @Transactional
     @Override
     public void save(RateCouponDto rateCouponDto) {
-        if(rateCouponRepository.findByName(rateCouponDto.getName()).isPresent()) throw new IllegalArgumentException("이미 존재하는 쿠폰명");
+        if(rateCouponRepository.findByName(rateCouponDto.getName()).size()>0)
+            throw new DuplicateCouponNameException();
+
         for (Long productId : rateCouponDto.getProductList()) {
             RateCoupon rateCoupon=convertToRateCoupon(rateCouponDto,productId);
             rateCouponRepository.save(rateCoupon);
@@ -41,17 +67,40 @@ public class RateCouponServiceImpl implements RateCouponService{
     }
 
     @Override
-    public List<RateCoupon> findUserNotUsedRateCouponByproductId(long userId, long productId) {
-        return rateCouponRepository.findUserNotUsedRateCouponByproductId(userId,productId, LocalDateTime.now());
+    public List<RateCoupon> findUserNotUsedRateCouponByproductId(long memberId, long productId) {
+
+        Boolean memberFlag = circuitBreaker.run(()-> memberServiceClient.getMember(memberId)
+                ,throwable -> true);
+        Boolean productFlag = circuitBreaker.run(()-> productServiceClient.findProductById(productId)
+                ,throwable -> true);
+
+        if(!memberFlag) throw new NoMemberException();
+        if(!productFlag) throw new NoProductException();
+
+        return rateCouponRepository.findUserNotUsedRateCouponByproductId(memberId,productId, LocalDateTime.now());
     }
 
     @Override
-    public List<RateCoupon> findBySellerId(long sellerId) {
-        return rateCouponRepository.findDistinctRateCouponBySellerId(sellerId);
+    public PagingRateCouponDto findBySellerId(long sellerId, int page) {
+
+        Boolean sellerFlag = circuitBreaker.run(()-> sellerServiceClient.getSeller(sellerId)
+                ,throwable -> true);
+
+        if(!sellerFlag) throw new NoSellerException();
+        Page<RateCoupon> rateCouponPage = rateCouponRepository.findDistinctRateCouponBySellerId(sellerId, PageRequest.of(page,7));
+        return PagingRateCouponDto.builder()
+                .rateCouponList(rateCouponPage.toList())
+                .totalCount(rateCouponPage.getTotalElements())
+                .build();
     }
 
     @Override
     public List<RateCoupon> findByProductId(long productId) {
+
+        Boolean productFlag = circuitBreaker.run(()-> productServiceClient.findProductById(productId)
+                ,throwable -> true);
+
+        if(!productFlag) throw new NoProductException();
         return rateCouponRepository.findByProductId(productId, LocalDateTime.now());
     }
 
@@ -59,8 +108,13 @@ public class RateCouponServiceImpl implements RateCouponService{
     public List<ProductDto> findProductByRateCouponName(String name) {
 
         List<Long> productIdList = rateCouponRepository.findProductIdByName(name);
+        System.out.println("productIdList : ");
+        System.out.println(productIdList);
+        List<ProductDto> dto = circuitBreaker.run(()-> productServiceClient.findProductByName(productIdList)
+                ,throwable -> new ArrayList<>());
 
-        return productServiceClient.findProductByName(productIdList);
+
+        return dto;
     }
 
     @Override
