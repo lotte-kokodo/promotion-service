@@ -13,3 +13,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+kafka:
+  address: 127.0.0.1:9092
