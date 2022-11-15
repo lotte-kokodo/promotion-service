@@ -12,12 +12,12 @@ public class UserCouponDto {
 
     long id;
     long userId;
-    int usageStatus;
+    String usageStatus;
     Long rateCouponId;
     Long fixCouponId;
 
     @Builder
-    public UserCouponDto(long id, long userId, int usageStatus, Long rateCouponId, Long fixCouponId) {
+    public UserCouponDto(long id, long userId, String usageStatus, Long rateCouponId, Long fixCouponId) {
         this.id = id;
         this.userId = userId;
         this.usageStatus = usageStatus;

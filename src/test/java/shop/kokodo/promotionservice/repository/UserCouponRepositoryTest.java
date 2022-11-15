@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.entity.UsageStatus;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 
 import javax.transaction.Transactional;
@@ -115,37 +116,37 @@ public class UserCouponRepositoryTest {
         userCoupon = UserCoupon.builder()
                 .fixCoupon(fixCoupon)
                 .userId(1)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
 
         userCoupon2 = UserCoupon.builder()
                 .fixCoupon(fixCoupon2)
                 .userId(1)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
 
         userCoupon3 = UserCoupon.builder()
                 .fixCoupon(fixCoupon3)
                 .userId(1)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
 
         userCoupon4=UserCoupon.builder()
                 .rateCoupon(rateCoupon)
                 .userId(userId)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
 
         userCoupon5=UserCoupon.builder()
                 .rateCoupon(rateCoupon2)
                 .userId(userId)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
 
         userCoupon6=UserCoupon.builder()
                 .rateCoupon(rateCoupon3)
                 .userId(userId)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
     }
 

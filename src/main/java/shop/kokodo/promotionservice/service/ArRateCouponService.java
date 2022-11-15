@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.promotionservice.dto.ArRateCouponFindDto;
 import shop.kokodo.promotionservice.dto.ArRateCouponInfo;
-import shop.kokodo.promotionservice.entity.ArClientRateCouponDto;
-import shop.kokodo.promotionservice.entity.ArRateCoupon;
-import shop.kokodo.promotionservice.entity.RateCoupon;
-import shop.kokodo.promotionservice.entity.UserCoupon;
+import shop.kokodo.promotionservice.entity.*;
 import shop.kokodo.promotionservice.repository.ArRateCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 import shop.kokodo.promotionservice.repository.UserCouponRepository;
@@ -65,7 +62,7 @@ public class ArRateCouponService {
         UserCoupon userCoupon = UserCoupon.builder()
                 .rateCoupon(arRateCoupon)
                 .userId(arRateCouponFindDto.getClientId())
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
         userCouponRepository.save(userCoupon);
     }

@@ -113,36 +113,36 @@ public class FixDiscountPolicyRestControllerTest {
 
     }
 
-    @Test
-    @DisplayName("고정 할인 정책 저장")
-    public void save() throws Exception {
-
-        this.mockMvc.perform(
-                        post("/fix-discount/save")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(fixDiscountPolicy1))
-                )
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andDo(
-                        document("fix-discount-policy-rest-controller/save",
-                                responseFields(
-                                        List.of(
-                                                fieldWithPath("createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
-                                                fieldWithPath("lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 수정 날짜").optional(),
-                                                fieldWithPath("fixDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디").optional(),
-                                                fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 이름").optional(),
-                                                fieldWithPath("regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자").optional(),
-                                                fieldWithPath("startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자").optional(),
-                                                fieldWithPath("endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자").optional(),
-                                                fieldWithPath("price").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율").optional(),
-                                                fieldWithPath("minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액").optional(),
-                                                fieldWithPath("productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID").optional(),
-                                                fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID").optional()
-                                        )
-                                ))
-                );
-    }
+//    @Test
+//    @DisplayName("고정 할인 정책 저장")
+//    public void save() throws Exception {
+//
+//        this.mockMvc.perform(
+//                        post("/fix-discount/save")
+//                                .contentType(MediaType.APPLICATION_JSON)
+//                                .content(objectMapper.writeValueAsString(fixDiscountPolicy1))
+//                )
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andDo(
+//                        document("fix-discount-policy-rest-controller/save",
+//                                responseFields(
+//                                        List.of(
+//                                                fieldWithPath("createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜").optional(),
+//                                                fieldWithPath("lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 수정 날짜").optional(),
+//                                                fieldWithPath("fixDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디").optional(),
+//                                                fieldWithPath("name").type(JsonFieldType.STRING).description("비율 할인 정책 이름").optional(),
+//                                                fieldWithPath("regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록일자").optional(),
+//                                                fieldWithPath("startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작일자").optional(),
+//                                                fieldWithPath("endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료일자").optional(),
+//                                                fieldWithPath("price").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율").optional(),
+//                                                fieldWithPath("minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액").optional(),
+//                                                fieldWithPath("productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품ID").optional(),
+//                                                fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러ID").optional()
+//                                        )
+//                                ))
+//                );
+//    }
 
     @Test
     @DisplayName("고정 할인 정책 전체 조회 API 테스트")

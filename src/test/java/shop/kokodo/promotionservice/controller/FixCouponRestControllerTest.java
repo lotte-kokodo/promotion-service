@@ -27,6 +27,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -74,8 +76,8 @@ public class FixCouponRestControllerTest {
                 .name(name)
                 .price(1000)
                 .minPrice(10000)
-                .startDate("2022-09-22 00:00")
-                .endDate("2022-10-22 00:00")
+                .startDate("2022-09-22 00:00:00")
+                .endDate("2022-10-22 00:00:00")
                 .productList(list)
                 .sellerId(sellerId)
                 .build();
@@ -103,6 +105,7 @@ public class FixCouponRestControllerTest {
                 post("/fixCoupon")
                 .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(fixCouponDto))
+                        .header("sellerId",sellerId)
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -118,6 +121,10 @@ public class FixCouponRestControllerTest {
                                     fieldWithPath("productList[]").type(JsonFieldType.ARRAY).description("고정 할인 쿠폰 적용 상품 리스트"),
                                     fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 생성 셀러 아이디")
                             ),
+                                requestHeaders(
+                                        headerWithName("sellerId").description("seller id")
+                                ),
+
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드")
@@ -138,6 +145,7 @@ public class FixCouponRestControllerTest {
         this.mockMvc.perform(
                         get("/fixCoupon/seller")
                                 .contentType(MediaType.APPLICATION_JSON)
+                                .header("sellerId",sellerId)
                                 .params(params)
                 )
                 .andDo(print())
@@ -147,6 +155,9 @@ public class FixCouponRestControllerTest {
                                 requestParameters(
                                         parameterWithName("sellerId").description("셀러 ID"),
                                         parameterWithName("page").description("페이지 번호")
+                                ),
+                                requestHeaders(
+                                        headerWithName("sellerId").description("seller id")
                                 ),
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),

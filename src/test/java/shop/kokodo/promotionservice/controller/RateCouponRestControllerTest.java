@@ -13,7 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import shop.kokodo.promotionservice.dto.RateCouponDto;
+
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 
 import javax.transaction.Transactional;
@@ -73,6 +78,7 @@ public class RateCouponRestControllerTest {
                         post("/rateCoupon")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(rateCouponDto))
+                                .header("sellerId","1")
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -88,6 +94,9 @@ public class RateCouponRestControllerTest {
                                         fieldWithPath("productList[]").type(JsonFieldType.ARRAY).description("비율 할인 쿠폰 적용 상품 리스트"),
                                         fieldWithPath("sellerId").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 생성 셀러 아이디")
                                 ),
+                                requestHeaders(
+                                        headerWithName("sellerId").description("seller id")
+                                ),
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드")
@@ -100,9 +109,11 @@ public class RateCouponRestControllerTest {
     @DisplayName("seller id로 비율 할인 쿠폰 조회")
     public void findBySellerId() throws Exception {
 
+
         this.mockMvc.perform(
                         get("/rateCoupon/seller")
-                                .param("sellerId", String.valueOf(sellerId))
+                                .param("page","1")
+                                .header("sellerId",sellerId)
                                 .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
@@ -110,21 +121,25 @@ public class RateCouponRestControllerTest {
                 .andDo(
                         document("rate-coupon-rest-controller/seller",
                                 requestParameters(
-                                        parameterWithName("sellerId").description("셀러 ID")
+                                        parameterWithName("page").description("페이지 번호")
+                                ),
+                                requestHeaders(
+                                        headerWithName("sellerId").description("seller id")
                                 ),
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
-                                        fieldWithPath("result.data[]").type(JsonFieldType.ARRAY).description("비율 할인 쿠폰 데이터").optional(),
-                                        fieldWithPath("result.data[].id").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 id").optional(),
-                                        fieldWithPath("result.data[].name").type(JsonFieldType.STRING).description("비율 할인 쿠폰 이름").optional(),
-                                        fieldWithPath("result.data[].regdate").type(JsonFieldType.STRING).description("비율 할인 쿠폰 등록날짜").optional(),
-                                        fieldWithPath("result.data[].rate").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 할인 비율").optional(),
-                                        fieldWithPath("result.data[].minPrice").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 최소 비용").optional(),
-                                        fieldWithPath("result.data[].startDate").type(JsonFieldType.STRING).description("비율 할인 쿠폰 적용 시작날짜").optional(),
-                                        fieldWithPath("result.data[].endDate").type(JsonFieldType.STRING).description("비율 할인 쿠폰 적용 마감 날짜").optional(),
-                                        fieldWithPath("result.data[].productId").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 적용 상품 id").optional(),
-                                        fieldWithPath("result.data[].sellerId").type(JsonFieldType.NUMBER).description("seller id").optional()
+                                        fieldWithPath("result.data.totalCount").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 데이터").optional(),
+                                        fieldWithPath("result.data.rateCouponList[]").type(JsonFieldType.ARRAY).description("비율 할인 쿠폰 데이터").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].id").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 id").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].name").type(JsonFieldType.STRING).description("비율 할인 쿠폰 이름").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].regdate").type(JsonFieldType.STRING).description("비율 할인 쿠폰 등록날짜").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].rate").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 할인 비율").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].minPrice").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 최소 비용").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].startDate").type(JsonFieldType.STRING).description("비율 할인 쿠폰 적용 시작날짜").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].endDate").type(JsonFieldType.STRING).description("비율 할인 쿠폰 적용 마감 날짜").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].productId").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 적용 상품 id").optional(),
+                                        fieldWithPath("result.data.rateCouponList[].sellerId").type(JsonFieldType.NUMBER).description("seller id").optional()
 
                                 )
                         )

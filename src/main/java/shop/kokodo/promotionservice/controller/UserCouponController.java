@@ -12,6 +12,7 @@ import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.entity.UsageStatus;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 import shop.kokodo.promotionservice.service.FixCouponService;
 import shop.kokodo.promotionservice.service.RateCouponService;
@@ -76,7 +77,7 @@ public class UserCouponController {
         for (Long rate : rateIdList) {
             UserCouponDto userCouponDto = UserCouponDto.builder()
                     .userId(memberId)
-                    .usageStatus(0)
+                    .usageStatus(UsageStatus.NOT_USED.toString())
                     .rateCouponId(rate)
                     .build();
             try {
