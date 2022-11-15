@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>FixCoupon-Rest-Controller-Api</title>
+<title>FixDiscountPolicy-Rest-Controller-Api</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,7 +438,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>FixCoupon-Rest-Controller-Api</h1>
+<h1>FixDiscountPolicy-Rest-Controller-Api</h1>
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
 </div>
@@ -466,7 +466,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/fix-discount/save' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{"createdDate":null,"lastModifiedDate":null,"fixDiscountPolicyId":1,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.3558529","startDate":"2022-11-09T15:48:40.3558529","endDate":"2022-11-11T15:48:40.3558529","price":1000,"minPrice":1000,"productId":1,"sellerId":1}'</code></pre>
+    -d '{"createdDate":null,"lastModifiedDate":null,"fixDiscountPolicyId":1,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.3553964","startDate":"2022-11-14T19:50:58.3553964","endDate":"2022-11-16T19:50:58.3553964","price":1000,"minPrice":1000,"productId":1,"sellerId":1}'</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -476,7 +476,7 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 275
 Host: localhost:8080
 
-{"createdDate":null,"lastModifiedDate":null,"fixDiscountPolicyId":1,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.3558529","startDate":"2022-11-09T15:48:40.3558529","endDate":"2022-11-11T15:48:40.3558529","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
+{"createdDate":null,"lastModifiedDate":null,"fixDiscountPolicyId":1,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.3553964","startDate":"2022-11-14T19:50:58.3553964","endDate":"2022-11-16T19:50:58.3553964","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -488,23 +488,23 @@ Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 325
 
-{"createdDate":"2022-11-10T15:48:40.4008499","lastModifiedDate":"2022-11-10T15:48:40.4008499","fixDiscountPolicyId":7,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.3558529","startDate":"2022-11-09T15:48:40.3558529","endDate":"2022-11-11T15:48:40.3558529","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
+{"createdDate":"2022-11-15T19:50:58.3857437","lastModifiedDate":"2022-11-15T19:50:58.3857437","fixDiscountPolicyId":7,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.3553964","startDate":"2022-11-14T19:50:58.3553964","endDate":"2022-11-16T19:50:58.3553964","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{"createdDate":null,"lastModifiedDate":null,"fixDiscountPolicyId":1,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.3558529","startDate":"2022-11-09T15:48:40.3558529","endDate":"2022-11-11T15:48:40.3558529","price":1000,"minPrice":1000,"productId":1,"sellerId":1}' | http POST 'http://localhost:8080/fix-discount/save' \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{"createdDate":null,"lastModifiedDate":null,"fixDiscountPolicyId":1,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.3553964","startDate":"2022-11-14T19:50:58.3553964","endDate":"2022-11-16T19:50:58.3553964","price":1000,"minPrice":1000,"productId":1,"sellerId":1}' | http POST 'http://localhost:8080/fix-discount/save' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"createdDate":null,"lastModifiedDate":null,"fixDiscountPolicyId":1,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.3558529","startDate":"2022-11-09T15:48:40.3558529","endDate":"2022-11-11T15:48:40.3558529","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
+<pre class="highlight nowrap"><code>{"createdDate":null,"lastModifiedDate":null,"fixDiscountPolicyId":1,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.3553964","startDate":"2022-11-14T19:50:58.3553964","endDate":"2022-11-16T19:50:58.3553964","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"createdDate":"2022-11-10T15:48:40.4008499","lastModifiedDate":"2022-11-10T15:48:40.4008499","fixDiscountPolicyId":7,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.3558529","startDate":"2022-11-09T15:48:40.3558529","endDate":"2022-11-11T15:48:40.3558529","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
+<pre class="highlight nowrap"><code>{"createdDate":"2022-11-15T19:50:58.3857437","lastModifiedDate":"2022-11-15T19:50:58.3857437","fixDiscountPolicyId":7,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.3553964","startDate":"2022-11-14T19:50:58.3553964","endDate":"2022-11-16T19:50:58.3553964","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -601,9 +601,9 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 981
+Content-Length: 979
 
-[{"createdDate":"2022-11-10T15:48:40.4348466","lastModifiedDate":"2022-11-10T15:48:40.4348466","fixDiscountPolicyId":8,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.4338482","startDate":"2022-11-09T15:48:40.4338482","endDate":"2022-11-11T15:48:40.4338482","price":1000,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:40.4368465","lastModifiedDate":"2022-11-10T15:48:40.4368465","fixDiscountPolicyId":9,"name":"고정할인정책2","regDate":"2022-11-10T15:48:40.4338482","startDate":"2022-11-09T15:48:40.4338482","endDate":"2022-11-11T15:48:40.4338482","price":15000,"minPrice":2000,"productId":2,"sellerId":1},{"createdDate":"2022-11-10T15:48:40.4368465","lastModifiedDate":"2022-11-10T15:48:40.4368465","fixDiscountPolicyId":10,"name":"고정할인정책3","regDate":"2022-11-10T15:48:40.4338482","startDate":"2022-11-09T15:48:40.4338482","endDate":"2022-11-11T15:48:40.4338482","price":3000,"minPrice":5000,"productId":3,"sellerId":1}]</code></pre>
+[{"createdDate":"2022-11-15T19:50:58.408564","lastModifiedDate":"2022-11-15T19:50:58.408564","fixDiscountPolicyId":8,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.4074859","startDate":"2022-11-14T19:50:58.4074859","endDate":"2022-11-16T19:50:58.4074859","price":1000,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.4105247","lastModifiedDate":"2022-11-15T19:50:58.4105247","fixDiscountPolicyId":9,"name":"고정할인정책2","regDate":"2022-11-15T19:50:58.4074859","startDate":"2022-11-14T19:50:58.4074859","endDate":"2022-11-16T19:50:58.4074859","price":15000,"minPrice":2000,"productId":2,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.4124852","lastModifiedDate":"2022-11-15T19:50:58.4124852","fixDiscountPolicyId":10,"name":"고정할인정책3","regDate":"2022-11-15T19:50:58.4074859","startDate":"2022-11-14T19:50:58.4074859","endDate":"2022-11-16T19:50:58.4074859","price":3000,"minPrice":5000,"productId":3,"sellerId":1}]</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -618,7 +618,7 @@ Content-Length: 981
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>[{"createdDate":"2022-11-10T15:48:40.4348466","lastModifiedDate":"2022-11-10T15:48:40.4348466","fixDiscountPolicyId":8,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.4338482","startDate":"2022-11-09T15:48:40.4338482","endDate":"2022-11-11T15:48:40.4338482","price":1000,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:40.4368465","lastModifiedDate":"2022-11-10T15:48:40.4368465","fixDiscountPolicyId":9,"name":"고정할인정책2","regDate":"2022-11-10T15:48:40.4338482","startDate":"2022-11-09T15:48:40.4338482","endDate":"2022-11-11T15:48:40.4338482","price":15000,"minPrice":2000,"productId":2,"sellerId":1},{"createdDate":"2022-11-10T15:48:40.4368465","lastModifiedDate":"2022-11-10T15:48:40.4368465","fixDiscountPolicyId":10,"name":"고정할인정책3","regDate":"2022-11-10T15:48:40.4338482","startDate":"2022-11-09T15:48:40.4338482","endDate":"2022-11-11T15:48:40.4338482","price":3000,"minPrice":5000,"productId":3,"sellerId":1}]</code></pre>
+<pre class="highlight nowrap"><code>[{"createdDate":"2022-11-15T19:50:58.408564","lastModifiedDate":"2022-11-15T19:50:58.408564","fixDiscountPolicyId":8,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.4074859","startDate":"2022-11-14T19:50:58.4074859","endDate":"2022-11-16T19:50:58.4074859","price":1000,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.4105247","lastModifiedDate":"2022-11-15T19:50:58.4105247","fixDiscountPolicyId":9,"name":"고정할인정책2","regDate":"2022-11-15T19:50:58.4074859","startDate":"2022-11-14T19:50:58.4074859","endDate":"2022-11-16T19:50:58.4074859","price":15000,"minPrice":2000,"productId":2,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.4124852","lastModifiedDate":"2022-11-15T19:50:58.4124852","fixDiscountPolicyId":10,"name":"고정할인정책3","regDate":"2022-11-15T19:50:58.4074859","startDate":"2022-11-14T19:50:58.4074859","endDate":"2022-11-16T19:50:58.4074859","price":3000,"minPrice":5000,"productId":3,"sellerId":1}]</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -715,9 +715,9 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 323
+Content-Length: 325
 
-{"createdDate":"2022-11-10T15:48:40.313848","lastModifiedDate":"2022-11-10T15:48:40.313848","fixDiscountPolicyId":4,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.3118483","startDate":"2022-11-09T15:48:40.3118483","endDate":"2022-11-11T15:48:40.3118483","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
+{"createdDate":"2022-11-15T19:50:58.3239831","lastModifiedDate":"2022-11-15T19:50:58.3239831","fixDiscountPolicyId":4,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.3229848","startDate":"2022-11-14T19:50:58.3229848","endDate":"2022-11-16T19:50:58.3229848","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -732,7 +732,7 @@ Content-Length: 323
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"createdDate":"2022-11-10T15:48:40.313848","lastModifiedDate":"2022-11-10T15:48:40.313848","fixDiscountPolicyId":4,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.3118483","startDate":"2022-11-09T15:48:40.3118483","endDate":"2022-11-11T15:48:40.3118483","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
+<pre class="highlight nowrap"><code>{"createdDate":"2022-11-15T19:50:58.3239831","lastModifiedDate":"2022-11-15T19:50:58.3239831","fixDiscountPolicyId":4,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.3229848","startDate":"2022-11-14T19:50:58.3229848","endDate":"2022-11-16T19:50:58.3229848","price":1000,"minPrice":1000,"productId":1,"sellerId":1}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -834,7 +834,7 @@ Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 716
 
-{"1":{"fixDiscountPolicyId":11,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.4818695","startDate":"2022-11-09T15:48:40.4818695","endDate":"2022-11-11T15:48:40.4818695","price":1000,"minPrice":1000,"productId":1,"sellerId":1},"2":{"fixDiscountPolicyId":12,"name":"고정할인정책2","regDate":"2022-11-10T15:48:40.4818695","startDate":"2022-11-09T15:48:40.4818695","endDate":"2022-11-11T15:48:40.4818695","price":15000,"minPrice":2000,"productId":2,"sellerId":1},"3":{"fixDiscountPolicyId":13,"name":"고정할인정책3","regDate":"2022-11-10T15:48:40.4818695","startDate":"2022-11-09T15:48:40.4818695","endDate":"2022-11-11T15:48:40.4818695","price":3000,"minPrice":5000,"productId":3,"sellerId":1}}</code></pre>
+{"1":{"fixDiscountPolicyId":11,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.4413306","startDate":"2022-11-14T19:50:58.4413306","endDate":"2022-11-16T19:50:58.4413306","price":1000,"minPrice":1000,"productId":1,"sellerId":1},"2":{"fixDiscountPolicyId":12,"name":"고정할인정책2","regDate":"2022-11-15T19:50:58.4413306","startDate":"2022-11-14T19:50:58.4413306","endDate":"2022-11-16T19:50:58.4413306","price":15000,"minPrice":2000,"productId":2,"sellerId":1},"3":{"fixDiscountPolicyId":13,"name":"고정할인정책3","regDate":"2022-11-15T19:50:58.4413306","startDate":"2022-11-14T19:50:58.4413306","endDate":"2022-11-16T19:50:58.4413306","price":3000,"minPrice":5000,"productId":3,"sellerId":1}}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -849,7 +849,7 @@ Content-Length: 716
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"1":{"fixDiscountPolicyId":11,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.4818695","startDate":"2022-11-09T15:48:40.4818695","endDate":"2022-11-11T15:48:40.4818695","price":1000,"minPrice":1000,"productId":1,"sellerId":1},"2":{"fixDiscountPolicyId":12,"name":"고정할인정책2","regDate":"2022-11-10T15:48:40.4818695","startDate":"2022-11-09T15:48:40.4818695","endDate":"2022-11-11T15:48:40.4818695","price":15000,"minPrice":2000,"productId":2,"sellerId":1},"3":{"fixDiscountPolicyId":13,"name":"고정할인정책3","regDate":"2022-11-10T15:48:40.4818695","startDate":"2022-11-09T15:48:40.4818695","endDate":"2022-11-11T15:48:40.4818695","price":3000,"minPrice":5000,"productId":3,"sellerId":1}}</code></pre>
+<pre class="highlight nowrap"><code>{"1":{"fixDiscountPolicyId":11,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.4413306","startDate":"2022-11-14T19:50:58.4413306","endDate":"2022-11-16T19:50:58.4413306","price":1000,"minPrice":1000,"productId":1,"sellerId":1},"2":{"fixDiscountPolicyId":12,"name":"고정할인정책2","regDate":"2022-11-15T19:50:58.4413306","startDate":"2022-11-14T19:50:58.4413306","endDate":"2022-11-16T19:50:58.4413306","price":15000,"minPrice":2000,"productId":2,"sellerId":1},"3":{"fixDiscountPolicyId":13,"name":"고정할인정책3","regDate":"2022-11-15T19:50:58.4413306","startDate":"2022-11-14T19:50:58.4413306","endDate":"2022-11-16T19:50:58.4413306","price":3000,"minPrice":5000,"productId":3,"sellerId":1}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1090,7 +1090,7 @@ Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 1027
 
-{"success":true,"code":0,"result":{"data":[{"createdDate":"2022-11-10T15:48:40.6008482","lastModifiedDate":"2022-11-10T15:48:40.6008482","fixDiscountPolicyId":17,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.5988482","startDate":"2022-11-09T15:48:40.5988482","endDate":"2022-11-11T15:48:40.5988482","price":1000,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:40.6018475","lastModifiedDate":"2022-11-10T15:48:40.6018475","fixDiscountPolicyId":18,"name":"고정할인정책2","regDate":"2022-11-10T15:48:40.5988482","startDate":"2022-11-09T15:48:40.5988482","endDate":"2022-11-11T15:48:40.5988482","price":15000,"minPrice":2000,"productId":2,"sellerId":1},{"createdDate":"2022-11-10T15:48:40.6038472","lastModifiedDate":"2022-11-10T15:48:40.6038472","fixDiscountPolicyId":19,"name":"고정할인정책3","regDate":"2022-11-10T15:48:40.5988482","startDate":"2022-11-09T15:48:40.5988482","endDate":"2022-11-11T15:48:40.5988482","price":3000,"minPrice":5000,"productId":3,"sellerId":1}]}}</code></pre>
+{"success":true,"code":0,"result":{"data":[{"createdDate":"2022-11-15T19:50:58.5128191","lastModifiedDate":"2022-11-15T19:50:58.5128191","fixDiscountPolicyId":17,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.5116582","startDate":"2022-11-14T19:50:58.5116582","endDate":"2022-11-16T19:50:58.5116582","price":1000,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.5148568","lastModifiedDate":"2022-11-15T19:50:58.5148568","fixDiscountPolicyId":18,"name":"고정할인정책2","regDate":"2022-11-15T19:50:58.5116582","startDate":"2022-11-14T19:50:58.5116582","endDate":"2022-11-16T19:50:58.5116582","price":15000,"minPrice":2000,"productId":2,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.5158153","lastModifiedDate":"2022-11-15T19:50:58.5158153","fixDiscountPolicyId":19,"name":"고정할인정책3","regDate":"2022-11-15T19:50:58.5116582","startDate":"2022-11-14T19:50:58.5116582","endDate":"2022-11-16T19:50:58.5116582","price":3000,"minPrice":5000,"productId":3,"sellerId":1}]}}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -1105,7 +1105,7 @@ Content-Length: 1027
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"success":true,"code":0,"result":{"data":[{"createdDate":"2022-11-10T15:48:40.6008482","lastModifiedDate":"2022-11-10T15:48:40.6008482","fixDiscountPolicyId":17,"name":"고정할인정책1","regDate":"2022-11-10T15:48:40.5988482","startDate":"2022-11-09T15:48:40.5988482","endDate":"2022-11-11T15:48:40.5988482","price":1000,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:40.6018475","lastModifiedDate":"2022-11-10T15:48:40.6018475","fixDiscountPolicyId":18,"name":"고정할인정책2","regDate":"2022-11-10T15:48:40.5988482","startDate":"2022-11-09T15:48:40.5988482","endDate":"2022-11-11T15:48:40.5988482","price":15000,"minPrice":2000,"productId":2,"sellerId":1},{"createdDate":"2022-11-10T15:48:40.6038472","lastModifiedDate":"2022-11-10T15:48:40.6038472","fixDiscountPolicyId":19,"name":"고정할인정책3","regDate":"2022-11-10T15:48:40.5988482","startDate":"2022-11-09T15:48:40.5988482","endDate":"2022-11-11T15:48:40.5988482","price":3000,"minPrice":5000,"productId":3,"sellerId":1}]}}</code></pre>
+<pre class="highlight nowrap"><code>{"success":true,"code":0,"result":{"data":[{"createdDate":"2022-11-15T19:50:58.5128191","lastModifiedDate":"2022-11-15T19:50:58.5128191","fixDiscountPolicyId":17,"name":"고정할인정책1","regDate":"2022-11-15T19:50:58.5116582","startDate":"2022-11-14T19:50:58.5116582","endDate":"2022-11-16T19:50:58.5116582","price":1000,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.5148568","lastModifiedDate":"2022-11-15T19:50:58.5148568","fixDiscountPolicyId":18,"name":"고정할인정책2","regDate":"2022-11-15T19:50:58.5116582","startDate":"2022-11-14T19:50:58.5116582","endDate":"2022-11-16T19:50:58.5116582","price":15000,"minPrice":2000,"productId":2,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.5158153","lastModifiedDate":"2022-11-15T19:50:58.5158153","fixDiscountPolicyId":19,"name":"고정할인정책3","regDate":"2022-11-15T19:50:58.5116582","startDate":"2022-11-14T19:50:58.5116582","endDate":"2022-11-16T19:50:58.5116582","price":3000,"minPrice":5000,"productId":3,"sellerId":1}]}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1195,7 +1195,7 @@ Content-Length: 1027
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-10 15:41:11 +0900
+Last updated 2022-11-14 14:54:35 +0900
 </div>
 </div>
 </body>

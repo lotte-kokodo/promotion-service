@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
-import shop.kokodo.promotionservice.entity.FixCoupon;
-import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
-import shop.kokodo.promotionservice.entity.RateCoupon;
-import shop.kokodo.promotionservice.entity.UserCoupon;
+import shop.kokodo.promotionservice.entity.*;
 import shop.kokodo.promotionservice.repository.FixCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 
@@ -87,19 +84,19 @@ public class FixCouponRepositoryTest {
       userCoupon = UserCoupon.builder()
               .fixCoupon(fixCoupon)
               .userId(1)
-              .usageStatus(0)
+              .usageStatus(UsageStatus.NOT_USED)
               .build();
 
       userCoupon2 = UserCoupon.builder()
               .fixCoupon(fixCoupon2)
               .userId(1)
-              .usageStatus(0)
+              .usageStatus(UsageStatus.NOT_USED)
               .build();
 
       userCoupon3 = UserCoupon.builder()
               .fixCoupon(fixCoupon3)
               .userId(1)
-              .usageStatus(0)
+              .usageStatus(UsageStatus.NOT_USED)
               .build();
 
       fixDiscountPolicy = FixDiscountPolicy.builder()

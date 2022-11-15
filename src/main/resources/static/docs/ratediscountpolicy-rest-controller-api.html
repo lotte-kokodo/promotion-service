@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>RateCoupon-Rest-Controller-Api</title>
+<title>RateDiscountPolicy-Rest-Controller-Api</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,7 +438,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>RateCoupon-Rest-Controller-Api</h1>
+<h1>RateDiscountPolicy-Rest-Controller-Api</h1>
 <div class="details">
 <span id="revnumber">version 0.0.1-SNAPSHOT</span>
 </div>
@@ -465,7 +465,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/rate-discount/save' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{"rateDiscountPolicyId":1,"name":"비용할인정책DTO1","regDate":"2022-11-10T15:48:40.9788486","startDate":"2022-11-10T15:48:40.9788486","endDate":"2022-11-10T15:48:40.9788486","rate":5,"minPrice":1000,"productId":2,"sellerId":1}'</code></pre>
+    -d '{"rateDiscountPolicyId":1,"name":"비용할인정책DTO1","regDate":"2022-11-15T19:50:58.9009154","startDate":"2022-11-15T19:50:58.9009154","endDate":"2022-11-15T19:50:58.9009154","rate":5,"minPrice":1000,"productId":2,"sellerId":1}'</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -475,7 +475,7 @@ Content-Type: application/json;charset=UTF-8
 Content-Length: 232
 Host: localhost:8080
 
-{"rateDiscountPolicyId":1,"name":"비용할인정책DTO1","regDate":"2022-11-10T15:48:40.9788486","startDate":"2022-11-10T15:48:40.9788486","endDate":"2022-11-10T15:48:40.9788486","rate":5,"minPrice":1000,"productId":2,"sellerId":1}</code></pre>
+{"rateDiscountPolicyId":1,"name":"비용할인정책DTO1","regDate":"2022-11-15T19:50:58.9009154","startDate":"2022-11-15T19:50:58.9009154","endDate":"2022-11-15T19:50:58.9009154","rate":5,"minPrice":1000,"productId":2,"sellerId":1}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -487,18 +487,18 @@ Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 325
 
-{"createdDate":"2022-11-10T15:48:40.9878484","lastModifiedDate":"2022-11-10T15:48:40.9878484","rateDiscountPolicyId":7,"name":"비용할인정책DTO1","regDate":"2022-11-10T15:48:40.9788486","startDate":"2022-11-10T15:48:40.9788486","endDate":"2022-11-10T15:48:40.9788486","rate":5,"minPrice":1000,"productId":2,"sellerId":1}</code></pre>
+{"createdDate":"2022-11-15T19:50:58.9079163","lastModifiedDate":"2022-11-15T19:50:58.9079163","rateDiscountPolicyId":7,"name":"비용할인정책DTO1","regDate":"2022-11-15T19:50:58.9009154","startDate":"2022-11-15T19:50:58.9009154","endDate":"2022-11-15T19:50:58.9009154","rate":5,"minPrice":1000,"productId":2,"sellerId":1}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{"rateDiscountPolicyId":1,"name":"비용할인정책DTO1","regDate":"2022-11-10T15:48:40.9788486","startDate":"2022-11-10T15:48:40.9788486","endDate":"2022-11-10T15:48:40.9788486","rate":5,"minPrice":1000,"productId":2,"sellerId":1}' | http POST 'http://localhost:8080/rate-discount/save' \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ echo '{"rateDiscountPolicyId":1,"name":"비용할인정책DTO1","regDate":"2022-11-15T19:50:58.9009154","startDate":"2022-11-15T19:50:58.9009154","endDate":"2022-11-15T19:50:58.9009154","rate":5,"minPrice":1000,"productId":2,"sellerId":1}' | http POST 'http://localhost:8080/rate-discount/save' \
     'Content-Type:application/json;charset=UTF-8'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"rateDiscountPolicyId":1,"name":"비용할인정책DTO1","regDate":"2022-11-10T15:48:40.9788486","startDate":"2022-11-10T15:48:40.9788486","endDate":"2022-11-10T15:48:40.9788486","rate":5,"minPrice":1000,"productId":2,"sellerId":1}</code></pre>
+<pre class="highlight nowrap"><code>{"rateDiscountPolicyId":1,"name":"비용할인정책DTO1","regDate":"2022-11-15T19:50:58.9009154","startDate":"2022-11-15T19:50:58.9009154","endDate":"2022-11-15T19:50:58.9009154","rate":5,"minPrice":1000,"productId":2,"sellerId":1}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -564,7 +564,7 @@ Content-Length: 325
 </table>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"createdDate":"2022-11-10T15:48:40.9878484","lastModifiedDate":"2022-11-10T15:48:40.9878484","rateDiscountPolicyId":7,"name":"비용할인정책DTO1","regDate":"2022-11-10T15:48:40.9788486","startDate":"2022-11-10T15:48:40.9788486","endDate":"2022-11-10T15:48:40.9788486","rate":5,"minPrice":1000,"productId":2,"sellerId":1}</code></pre>
+<pre class="highlight nowrap"><code>{"createdDate":"2022-11-15T19:50:58.9079163","lastModifiedDate":"2022-11-15T19:50:58.9079163","rateDiscountPolicyId":7,"name":"비용할인정책DTO1","regDate":"2022-11-15T19:50:58.9009154","startDate":"2022-11-15T19:50:58.9009154","endDate":"2022-11-15T19:50:58.9009154","rate":5,"minPrice":1000,"productId":2,"sellerId":1}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -666,7 +666,7 @@ Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 974
 
-[{"createdDate":"2022-11-10T15:48:41.0678475","lastModifiedDate":"2022-11-10T15:48:41.0678475","rateDiscountPolicyId":11,"name":"비용할인정책1","regDate":"2022-11-10T15:48:41.0668477","startDate":"2022-11-09T15:48:41.0668477","endDate":"2022-11-11T15:48:41.0668477","rate":5,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:41.0698467","lastModifiedDate":"2022-11-10T15:48:41.0698467","rateDiscountPolicyId":12,"name":"비용할인정책2","regDate":"2022-11-10T15:48:41.0668477","startDate":"2022-11-09T15:48:41.0668477","endDate":"2022-11-11T15:48:41.0668477","rate":8,"minPrice":10000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:41.0708473","lastModifiedDate":"2022-11-10T15:48:41.0708473","rateDiscountPolicyId":13,"name":"비용할인정책3","regDate":"2022-11-10T15:48:41.0668477","startDate":"2022-11-09T15:48:41.0668477","endDate":"2022-11-11T15:48:41.0668477","rate":3,"minPrice":2000,"productId":2,"sellerId":1}]</code></pre>
+[{"createdDate":"2022-11-15T19:50:58.9754669","lastModifiedDate":"2022-11-15T19:50:58.9754669","rateDiscountPolicyId":11,"name":"비용할인정책1","regDate":"2022-11-15T19:50:58.9744612","startDate":"2022-11-14T19:50:58.9744612","endDate":"2022-11-16T19:50:58.9744612","rate":5,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.9784672","lastModifiedDate":"2022-11-15T19:50:58.9784672","rateDiscountPolicyId":12,"name":"비용할인정책2","regDate":"2022-11-15T19:50:58.9744612","startDate":"2022-11-14T19:50:58.9744612","endDate":"2022-11-16T19:50:58.9744612","rate":8,"minPrice":10000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.9808748","lastModifiedDate":"2022-11-15T19:50:58.9808748","rateDiscountPolicyId":13,"name":"비용할인정책3","regDate":"2022-11-15T19:50:58.9744612","startDate":"2022-11-14T19:50:58.9744612","endDate":"2022-11-16T19:50:58.9744612","rate":3,"minPrice":2000,"productId":2,"sellerId":1}]</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -681,7 +681,7 @@ Content-Length: 974
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>[{"createdDate":"2022-11-10T15:48:41.0678475","lastModifiedDate":"2022-11-10T15:48:41.0678475","rateDiscountPolicyId":11,"name":"비용할인정책1","regDate":"2022-11-10T15:48:41.0668477","startDate":"2022-11-09T15:48:41.0668477","endDate":"2022-11-11T15:48:41.0668477","rate":5,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:41.0698467","lastModifiedDate":"2022-11-10T15:48:41.0698467","rateDiscountPolicyId":12,"name":"비용할인정책2","regDate":"2022-11-10T15:48:41.0668477","startDate":"2022-11-09T15:48:41.0668477","endDate":"2022-11-11T15:48:41.0668477","rate":8,"minPrice":10000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:41.0708473","lastModifiedDate":"2022-11-10T15:48:41.0708473","rateDiscountPolicyId":13,"name":"비용할인정책3","regDate":"2022-11-10T15:48:41.0668477","startDate":"2022-11-09T15:48:41.0668477","endDate":"2022-11-11T15:48:41.0668477","rate":3,"minPrice":2000,"productId":2,"sellerId":1}]</code></pre>
+<pre class="highlight nowrap"><code>[{"createdDate":"2022-11-15T19:50:58.9754669","lastModifiedDate":"2022-11-15T19:50:58.9754669","rateDiscountPolicyId":11,"name":"비용할인정책1","regDate":"2022-11-15T19:50:58.9744612","startDate":"2022-11-14T19:50:58.9744612","endDate":"2022-11-16T19:50:58.9744612","rate":5,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.9784672","lastModifiedDate":"2022-11-15T19:50:58.9784672","rateDiscountPolicyId":12,"name":"비용할인정책2","regDate":"2022-11-15T19:50:58.9744612","startDate":"2022-11-14T19:50:58.9744612","endDate":"2022-11-16T19:50:58.9744612","rate":8,"minPrice":10000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.9808748","lastModifiedDate":"2022-11-15T19:50:58.9808748","rateDiscountPolicyId":13,"name":"비용할인정책3","regDate":"2022-11-15T19:50:58.9744612","startDate":"2022-11-14T19:50:58.9744612","endDate":"2022-11-16T19:50:58.9744612","rate":3,"minPrice":2000,"productId":2,"sellerId":1}]</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -783,9 +783,9 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 972
+Content-Length: 970
 
-[{"createdDate":"2022-11-10T15:48:41.0258484","lastModifiedDate":"2022-11-10T15:48:41.0258484","rateDiscountPolicyId":8,"name":"비용할인정책1","regDate":"2022-11-10T15:48:41.0248484","startDate":"2022-11-09T15:48:41.0248484","endDate":"2022-11-11T15:48:41.0248484","rate":5,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:41.0288482","lastModifiedDate":"2022-11-10T15:48:41.0288482","rateDiscountPolicyId":9,"name":"비용할인정책2","regDate":"2022-11-10T15:48:41.0248484","startDate":"2022-11-09T15:48:41.0248484","endDate":"2022-11-11T15:48:41.0248484","rate":8,"minPrice":10000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:41.0298475","lastModifiedDate":"2022-11-10T15:48:41.0298475","rateDiscountPolicyId":10,"name":"비용할인정책3","regDate":"2022-11-10T15:48:41.0248484","startDate":"2022-11-09T15:48:41.0248484","endDate":"2022-11-11T15:48:41.0248484","rate":3,"minPrice":2000,"productId":2,"sellerId":1}]</code></pre>
+[{"createdDate":"2022-11-15T19:50:58.942376","lastModifiedDate":"2022-11-15T19:50:58.942376","rateDiscountPolicyId":8,"name":"비용할인정책1","regDate":"2022-11-15T19:50:58.9412068","startDate":"2022-11-14T19:50:58.9412068","endDate":"2022-11-16T19:50:58.9412068","rate":5,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.9457915","lastModifiedDate":"2022-11-15T19:50:58.9457915","rateDiscountPolicyId":9,"name":"비용할인정책2","regDate":"2022-11-15T19:50:58.9412068","startDate":"2022-11-14T19:50:58.9412068","endDate":"2022-11-16T19:50:58.9412068","rate":8,"minPrice":10000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.9477916","lastModifiedDate":"2022-11-15T19:50:58.9477916","rateDiscountPolicyId":10,"name":"비용할인정책3","regDate":"2022-11-15T19:50:58.9412068","startDate":"2022-11-14T19:50:58.9412068","endDate":"2022-11-16T19:50:58.9412068","rate":3,"minPrice":2000,"productId":2,"sellerId":1}]</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -801,7 +801,7 @@ Content-Length: 972
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>[{"createdDate":"2022-11-10T15:48:41.0258484","lastModifiedDate":"2022-11-10T15:48:41.0258484","rateDiscountPolicyId":8,"name":"비용할인정책1","regDate":"2022-11-10T15:48:41.0248484","startDate":"2022-11-09T15:48:41.0248484","endDate":"2022-11-11T15:48:41.0248484","rate":5,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:41.0288482","lastModifiedDate":"2022-11-10T15:48:41.0288482","rateDiscountPolicyId":9,"name":"비용할인정책2","regDate":"2022-11-10T15:48:41.0248484","startDate":"2022-11-09T15:48:41.0248484","endDate":"2022-11-11T15:48:41.0248484","rate":8,"minPrice":10000,"productId":1,"sellerId":1},{"createdDate":"2022-11-10T15:48:41.0298475","lastModifiedDate":"2022-11-10T15:48:41.0298475","rateDiscountPolicyId":10,"name":"비용할인정책3","regDate":"2022-11-10T15:48:41.0248484","startDate":"2022-11-09T15:48:41.0248484","endDate":"2022-11-11T15:48:41.0248484","rate":3,"minPrice":2000,"productId":2,"sellerId":1}]</code></pre>
+<pre class="highlight nowrap"><code>[{"createdDate":"2022-11-15T19:50:58.942376","lastModifiedDate":"2022-11-15T19:50:58.942376","rateDiscountPolicyId":8,"name":"비용할인정책1","regDate":"2022-11-15T19:50:58.9412068","startDate":"2022-11-14T19:50:58.9412068","endDate":"2022-11-16T19:50:58.9412068","rate":5,"minPrice":1000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.9457915","lastModifiedDate":"2022-11-15T19:50:58.9457915","rateDiscountPolicyId":9,"name":"비용할인정책2","regDate":"2022-11-15T19:50:58.9412068","startDate":"2022-11-14T19:50:58.9412068","endDate":"2022-11-16T19:50:58.9412068","rate":8,"minPrice":10000,"productId":1,"sellerId":1},{"createdDate":"2022-11-15T19:50:58.9477916","lastModifiedDate":"2022-11-15T19:50:58.9477916","rateDiscountPolicyId":10,"name":"비용할인정책3","regDate":"2022-11-15T19:50:58.9412068","startDate":"2022-11-14T19:50:58.9412068","endDate":"2022-11-16T19:50:58.9412068","rate":3,"minPrice":2000,"productId":2,"sellerId":1}]</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -906,9 +906,9 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 367
+Content-Length: 364
 
-{"success":true,"code":0,"result":{"data":{"createdDate":"2022-11-10T15:48:40.9018488","lastModifiedDate":"2022-11-10T15:48:40.9018488","rateDiscountPolicyId":2,"name":"비용할인정책2","regDate":"2022-11-10T15:48:40.8918688","startDate":"2022-11-09T15:48:40.8918688","endDate":"2022-11-11T15:48:40.8918688","rate":8,"minPrice":10000,"productId":1,"sellerId":1}}}</code></pre>
+{"success":true,"code":0,"result":{"data":{"createdDate":"2022-11-15T19:50:58.8263428","lastModifiedDate":"2022-11-15T19:50:58.8263428","rateDiscountPolicyId":2,"name":"비용할인정책2","regDate":"2022-11-15T19:50:58.816343","startDate":"2022-11-14T19:50:58.816343","endDate":"2022-11-16T19:50:58.816343","rate":8,"minPrice":10000,"productId":1,"sellerId":1}}}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -923,7 +923,7 @@ Content-Length: 367
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"success":true,"code":0,"result":{"data":{"createdDate":"2022-11-10T15:48:40.9018488","lastModifiedDate":"2022-11-10T15:48:40.9018488","rateDiscountPolicyId":2,"name":"비용할인정책2","regDate":"2022-11-10T15:48:40.8918688","startDate":"2022-11-09T15:48:40.8918688","endDate":"2022-11-11T15:48:40.8918688","rate":8,"minPrice":10000,"productId":1,"sellerId":1}}}</code></pre>
+<pre class="highlight nowrap"><code>{"success":true,"code":0,"result":{"data":{"createdDate":"2022-11-15T19:50:58.8263428","lastModifiedDate":"2022-11-15T19:50:58.8263428","rateDiscountPolicyId":2,"name":"비용할인정책2","regDate":"2022-11-15T19:50:58.816343","startDate":"2022-11-14T19:50:58.816343","endDate":"2022-11-16T19:50:58.816343","rate":8,"minPrice":10000,"productId":1,"sellerId":1}}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1037,7 +1037,7 @@ Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 516
 
-{"success":true,"code":0,"result":{"data":{"1":{"rateDiscountPolicyId":15,"name":"비용할인정책2","regDate":"2022-11-10T15:48:41.1008501","startDate":"2022-11-09T15:48:41.1008501","endDate":"2022-11-11T15:48:41.1008501","rate":8,"minPrice":10000,"productId":1,"sellerId":1},"2":{"rateDiscountPolicyId":16,"name":"비용할인정책3","regDate":"2022-11-10T15:48:41.1008501","startDate":"2022-11-09T15:48:41.1008501","endDate":"2022-11-11T15:48:41.1008501","rate":3,"minPrice":2000,"productId":2,"sellerId":1}}}}</code></pre>
+{"success":true,"code":0,"result":{"data":{"1":{"rateDiscountPolicyId":15,"name":"비용할인정책2","regDate":"2022-11-15T19:50:59.0091051","startDate":"2022-11-14T19:50:59.0091051","endDate":"2022-11-16T19:50:59.0091051","rate":8,"minPrice":10000,"productId":1,"sellerId":1},"2":{"rateDiscountPolicyId":16,"name":"비용할인정책3","regDate":"2022-11-15T19:50:59.0091051","startDate":"2022-11-14T19:50:59.0091051","endDate":"2022-11-16T19:50:59.0091051","rate":3,"minPrice":2000,"productId":2,"sellerId":1}}}}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -1053,7 +1053,7 @@ Content-Length: 516
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"success":true,"code":0,"result":{"data":{"1":{"rateDiscountPolicyId":15,"name":"비용할인정책2","regDate":"2022-11-10T15:48:41.1008501","startDate":"2022-11-09T15:48:41.1008501","endDate":"2022-11-11T15:48:41.1008501","rate":8,"minPrice":10000,"productId":1,"sellerId":1},"2":{"rateDiscountPolicyId":16,"name":"비용할인정책3","regDate":"2022-11-10T15:48:41.1008501","startDate":"2022-11-09T15:48:41.1008501","endDate":"2022-11-11T15:48:41.1008501","rate":3,"minPrice":2000,"productId":2,"sellerId":1}}}}</code></pre>
+<pre class="highlight nowrap"><code>{"success":true,"code":0,"result":{"data":{"1":{"rateDiscountPolicyId":15,"name":"비용할인정책2","regDate":"2022-11-15T19:50:59.0091051","startDate":"2022-11-14T19:50:59.0091051","endDate":"2022-11-16T19:50:59.0091051","rate":8,"minPrice":10000,"productId":1,"sellerId":1},"2":{"rateDiscountPolicyId":16,"name":"비용할인정책3","regDate":"2022-11-15T19:50:59.0091051","startDate":"2022-11-14T19:50:59.0091051","endDate":"2022-11-16T19:50:59.0091051","rate":3,"minPrice":2000,"productId":2,"sellerId":1}}}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1165,7 +1165,7 @@ Vary: Access-Control-Request-Headers
 Content-Type: application/json
 Content-Length: 367
 
-{"success":true,"code":0,"result":{"data":{"createdDate":"2022-11-10T15:48:40.9458472","lastModifiedDate":"2022-11-10T15:48:40.9458472","rateDiscountPolicyId":5,"name":"비용할인정책2","regDate":"2022-11-10T15:48:40.9438477","startDate":"2022-11-09T15:48:40.9438477","endDate":"2022-11-11T15:48:40.9438477","rate":8,"minPrice":10000,"productId":1,"sellerId":1}}}</code></pre>
+{"success":true,"code":0,"result":{"data":{"createdDate":"2022-11-15T19:50:58.8679187","lastModifiedDate":"2022-11-15T19:50:58.8679187","rateDiscountPolicyId":5,"name":"비용할인정책2","regDate":"2022-11-15T19:50:58.8634504","startDate":"2022-11-14T19:50:58.8634504","endDate":"2022-11-16T19:50:58.8634504","rate":8,"minPrice":10000,"productId":1,"sellerId":1}}}</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -1180,7 +1180,7 @@ Content-Length: 367
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code>{"success":true,"code":0,"result":{"data":{"createdDate":"2022-11-10T15:48:40.9458472","lastModifiedDate":"2022-11-10T15:48:40.9458472","rateDiscountPolicyId":5,"name":"비용할인정책2","regDate":"2022-11-10T15:48:40.9438477","startDate":"2022-11-09T15:48:40.9438477","endDate":"2022-11-11T15:48:40.9438477","rate":8,"minPrice":10000,"productId":1,"sellerId":1}}}</code></pre>
+<pre class="highlight nowrap"><code>{"success":true,"code":0,"result":{"data":{"createdDate":"2022-11-15T19:50:58.8679187","lastModifiedDate":"2022-11-15T19:50:58.8679187","rateDiscountPolicyId":5,"name":"비용할인정책2","regDate":"2022-11-15T19:50:58.8634504","startDate":"2022-11-14T19:50:58.8634504","endDate":"2022-11-16T19:50:58.8634504","rate":8,"minPrice":10000,"productId":1,"sellerId":1}}}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1270,7 +1270,7 @@ Content-Length: 367
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2022-11-10 15:30:16 +0900
+Last updated 2022-11-14 14:54:35 +0900
 </div>
 </div>
 </body>

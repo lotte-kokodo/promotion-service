@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.entity.UsageStatus;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 import shop.kokodo.promotionservice.exception.NoCouponException;
 import shop.kokodo.promotionservice.repository.FixCouponRepository;
@@ -55,35 +56,35 @@ public class UserCouponServiceMockTest {
         fixUserCouponDto=UserCouponDto.builder()
                 .id(1L)
                 .userId(2L)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED.toString())
                 .fixCouponId(fixCouponId)
                 .build();
 
         rateUserCouponDto=UserCouponDto.builder()
                 .id(2L)
                 .userId(2L)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED.toString())
                 .rateCouponId(rateCouponId)
                 .build();
 
         fixUserCoupon = UserCoupon.builder()
                 .id(1L)
                 .userId(fixUserCouponDto.getUserId())
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .fixCoupon(new FixCoupon())
                 .build();
 
         rateUserCoupon=UserCoupon.builder()
                 .id(1L)
                 .userId(fixUserCouponDto.getUserId())
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .rateCoupon(new RateCoupon())
                 .build();
 
         failUserCouponDto = UserCouponDto.builder()
                 .id(1L)
                 .userId(2L)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED.toString())
                 .build();
     }
 

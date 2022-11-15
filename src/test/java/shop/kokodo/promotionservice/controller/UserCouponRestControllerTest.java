@@ -15,6 +15,7 @@ import shop.kokodo.promotionservice.dto.UpdateUserCouponDto;
 import shop.kokodo.promotionservice.dto.UserCouponDto;
 import shop.kokodo.promotionservice.entity.FixCoupon;
 import shop.kokodo.promotionservice.entity.RateCoupon;
+import shop.kokodo.promotionservice.entity.UsageStatus;
 import shop.kokodo.promotionservice.entity.UserCoupon;
 import shop.kokodo.promotionservice.repository.FixCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
@@ -100,24 +101,26 @@ public class UserCouponRestControllerTest {
 
         userRateCouponDto = UserCouponDto.builder()
                 .userId(memberId)
+                .usageStatus(UsageStatus.NOT_USED.toString())
                 .rateCouponId(rateCoupon.getId())
                 .build();
 
         userFixCouponDto = UserCouponDto.builder()
                 .userId(memberId)
+                .usageStatus(UsageStatus.NOT_USED.toString())
                 .fixCouponId(fixCoupon.getId())
                 .build();
 
         UserCoupon userRateCoupon = UserCoupon.builder()
                 .userId(memberId)
                 .rateCoupon(rateCoupon)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
 
         UserCoupon userFixCoupon = UserCoupon.builder()
                 .userId(memberId)
                 .fixCoupon(fixCoupon)
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
 
         userCouponRepository.save(userRateCoupon);
@@ -142,7 +145,7 @@ public class UserCouponRestControllerTest {
                                 requestFields(
                                         fieldWithPath("id").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 아이디"),
                                         fieldWithPath("userId").type(JsonFieldType.NUMBER).description("유저 ID"),
-                                        fieldWithPath("usageStatus").type(JsonFieldType.NUMBER).description("쿠폰 사용 여부"),
+                                        fieldWithPath("usageStatus").type(JsonFieldType.STRING).description("쿠폰 사용 여부"),
                                         fieldWithPath("rateCouponId").type(JsonFieldType.NUMBER).description("고정 할인 쿠폰 ID").optional(),
                                         fieldWithPath("fixCouponId").type(JsonFieldType.NUMBER).description("비율 할인 쿠폰 ID").optional()
                                 ),
@@ -151,7 +154,7 @@ public class UserCouponRestControllerTest {
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
                                         fieldWithPath("result.data.id").type(JsonFieldType.NUMBER).description("저장된 쿠폰 아이디"),
                                         fieldWithPath("result.data.userId").type(JsonFieldType.NUMBER).description("저장된 쿠폰 유저 아이디"),
-                                        fieldWithPath("result.data.usageStatus").type(JsonFieldType.NUMBER).description("저장된 쿠폰 사용 여부"),
+                                        fieldWithPath("result.data.usageStatus").type(JsonFieldType.STRING).description("저장된 쿠폰 사용 여부"),
                                         fieldWithPath("result.data.fixCoupon.id").type(JsonFieldType.NUMBER).description("저장된 쿠폰 아이디"),
                                         fieldWithPath("result.data.fixCoupon.name").type(JsonFieldType.STRING).description("저장된 쿠폰 아이디"),
                                         fieldWithPath("result.data.fixCoupon.regdate").type(JsonFieldType.STRING).description("저장된 쿠폰 아이디"),
@@ -276,7 +279,7 @@ public class UserCouponRestControllerTest {
                                         fieldWithPath("result.data[].createdDate").type(JsonFieldType.STRING).description("유저 쿠폰 생성 날짜"),
                                         fieldWithPath("result.data[].lastModifiedDate").type(JsonFieldType.STRING).description("유저 쿠폰 마지막 수정 날짜"),
                                         fieldWithPath("result.data[].userId").type(JsonFieldType.NUMBER).description("유저 id"),
-                                        fieldWithPath("result.data[].usageStatus").type(JsonFieldType.NUMBER).description("쿠폰 사용 여부"),
+                                        fieldWithPath("result.data[].usageStatus").type(JsonFieldType.STRING).description("쿠폰 사용 여부"),
                                         fieldWithPath("result.data[].rateCoupon").type(JsonFieldType.OBJECT).description("비율 할인쿠폰 데이터").optional(),
                                         fieldWithPath("result.data[].rateCoupon.id").type(JsonFieldType.NUMBER).description("비율 할인쿠폰 id"),
                                         fieldWithPath("result.data[].rateCoupon.name").type(JsonFieldType.STRING).description("비율 할인쿠폰 이름"),
@@ -343,7 +346,7 @@ public class UserCouponRestControllerTest {
                                         fieldWithPath("result.data.createdDate").type(JsonFieldType.STRING).description("유저 쿠폰 생성 날짜"),
                                         fieldWithPath("result.data.lastModifiedDate").type(JsonFieldType.STRING).description("유저 쿠폰 마지막 수정 날짜"),
                                         fieldWithPath("result.data.userId").type(JsonFieldType.NUMBER).description("유저 id"),
-                                        fieldWithPath("result.data.usageStatus").type(JsonFieldType.NUMBER).description("쿠폰 사용 여부"),
+                                        fieldWithPath("result.data.usageStatus").type(JsonFieldType.STRING).description("쿠폰 사용 여부"),
                                         fieldWithPath("result.data.rateCoupon").type(JsonFieldType.OBJECT).description("비율 할인쿠폰 데이터").optional(),
                                         fieldWithPath("result.data.rateCoupon.id").type(JsonFieldType.NUMBER).description("비율 할인쿠폰 id"),
                                         fieldWithPath("result.data.rateCoupon.name").type(JsonFieldType.STRING).description("비율 할인쿠폰 이름"),
