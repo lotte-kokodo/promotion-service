@@ -4,8 +4,11 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
+import shop.kokodo.promotionservice.dto.PagingRateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicySaveDto;
@@ -90,23 +93,13 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
     @Override
     @Transactional(readOnly = true)
-    public List<RateDiscountPolicy> findBySellerId(Long sellerId) {
-        List<RateDiscountPolicy> list = rateDiscountPolicyRepository.findAllBySellerId(sellerId);
+    public PagingRateDiscountPolicyDto findBySellerId(Long sellerId, int page) {
+        Page<RateDiscountPolicy> rateDiscountPolicyPage = rateDiscountPolicyRepository.findAllBySellerId(sellerId, PageRequest.of(page,5));
 
-        System.out.println(list.toString());
-
-        List<RateDiscountPolicy> result = new ArrayList<>();
-        for(RateDiscountPolicy rateDiscountPolicy : list) {
-            if(!result.isEmpty()) {
-                if(!rateDiscountPolicy.getName().equals(result.get(result.size() - 1).getName())) {
-                    result.add(rateDiscountPolicy);
-                }
-            }else {
-                result.add(rateDiscountPolicy);
-            }
-        }
-        System.out.println(result.toString());
-        return result;
+        return PagingRateDiscountPolicyDto.builder()
+                .rateDiscountPolicyList(rateDiscountPolicyPage.toList())
+                .totalCount(rateDiscountPolicyPage.getTotalElements())
+                .build();
     }
 
     @Override

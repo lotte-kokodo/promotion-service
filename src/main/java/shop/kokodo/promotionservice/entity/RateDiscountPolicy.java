@@ -34,4 +34,7 @@ public class RateDiscountPolicy extends BaseEntity{
     private Long productId;
 
     private Long sellerId;
+
+    @Transient
+    private final int couponFlag=1;
 }
