@@ -318,8 +318,11 @@ public class FixDiscountPolicyRestControllerTest {
         fixDiscountPolicyRepository.save(fixDiscountPolicy3);
 
         Long sellerId = 1L;
+        int page = 1;
         this.mockMvc.perform(
-                        get("/fix-discount/seller/{sellerId}", sellerId)
+                        get("/fix-discount/seller/")
+                                .header("sellerId", sellerId)
+                                .param("page", String.valueOf(page))
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -328,17 +331,19 @@ public class FixDiscountPolicyRestControllerTest {
                                 responseFields(
                                         fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공여부"),
                                         fieldWithPath("code").type(JsonFieldType.NUMBER).description("상태코드"),
-                                        fieldWithPath("result.data.[].fixDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
-                                        fieldWithPath("result.data.[].name").type(JsonFieldType.STRING).description("비율 할인 정책 이름"),
-                                        fieldWithPath("result.data.[].minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액"),
-                                        fieldWithPath("result.data.[].price").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율"),
-                                        fieldWithPath("result.data.[].startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작 날짜"),
-                                        fieldWithPath("result.data.[].endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료 날짜"),
-                                        fieldWithPath("result.data.[].regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록 날짜"),
-                                        fieldWithPath("result.data.[].productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품 아이디"),
-                                        fieldWithPath("result.data.[].sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러 아이디"),
-                                        fieldWithPath("result.data.[].createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜"),
-                                        fieldWithPath("result.data.[].lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 최근 수정 날짜")
+                                        fieldWithPath("result.data.totalCount").type(JsonFieldType.NUMBER).description("총 갯수"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList").type(JsonFieldType.ARRAY).description("비율 할인 정책 리스트"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].fixDiscountPolicyId").type(JsonFieldType.NUMBER).description("비율 할인 정책 아이디"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].name").type(JsonFieldType.STRING).description("비율 할인 정책 이름"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].minPrice").type(JsonFieldType.NUMBER).description("비율 할인 정책 최소 금액"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].price").type(JsonFieldType.NUMBER).description("비율 할인 정책 비율"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].startDate").type(JsonFieldType.STRING).description("비율 할인 정책 시작 날짜"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].endDate").type(JsonFieldType.STRING).description("비율 할인 정책 종료 날짜"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].regDate").type(JsonFieldType.STRING).description("비율 할인 정책 등록 날짜"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].productId").type(JsonFieldType.NUMBER).description("비율 할인 정책 상품 아이디"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].sellerId").type(JsonFieldType.NUMBER).description("비율 할인 정책 셀러 아이디"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].createdDate").type(JsonFieldType.STRING).description("비율 할인 정책 생성 날짜"),
+                                        fieldWithPath("result.data.fixDiscountPolicyList.[].lastModifiedDate").type(JsonFieldType.STRING).description("비율 할인 정책 최근 수정 날짜")
                                 ))
                 );
     }
