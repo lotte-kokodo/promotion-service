@@ -34,6 +34,6 @@ public class FixDiscountPolicy extends BaseEntity{
 
     private Long sellerId;
 
-    @Transient
-    private final int couponFlag=1;
+//    @Transient
+//    private final int couponFlag=1;
 }
