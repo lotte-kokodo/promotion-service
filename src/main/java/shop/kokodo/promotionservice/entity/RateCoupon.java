@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class RateCoupon extends BaseEntity{
@@ -30,6 +30,18 @@ public class RateCoupon extends BaseEntity{
 
     @OneToOne(mappedBy = "rateCoupon", fetch = FetchType.LAZY)
     private ArRateCoupon arRateCoupon;
+
+    public RateCoupon(String name, LocalDateTime regdate, int rate, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId, long sellerId) {
+        this.name = name;
+        this.regdate = regdate;
+        this.rate = rate;
+        this.minPrice = minPrice;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.productId = productId;
+        this.sellerId = sellerId;
+        this.arRateCoupon = arRateCoupon;
+    }
 
     @Builder
     public RateCoupon(long id, String name, LocalDateTime regdate, int rate, int minPrice, LocalDateTime startDate, LocalDateTime endDate, long productId, long sellerId) {

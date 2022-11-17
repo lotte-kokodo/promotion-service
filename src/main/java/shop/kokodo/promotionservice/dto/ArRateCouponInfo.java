@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * packageName    : shop.kokodo.calculateservice.dto.ardto
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ArRateCouponInfo {
     private long sellerId;
-    private long productId;
+    private List<Long> productId;
     private String couponName;
     private int rate;
     private Long x;

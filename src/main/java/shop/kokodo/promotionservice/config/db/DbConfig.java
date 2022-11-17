@@ -38,9 +38,15 @@ public class DbConfig {
         Map<Object, Object> dataSourceMap = new LinkedHashMap<>();
         DataSource masterDataSource = createDataSource(dbProperty.getUrl());
         dataSourceMap.put("master", masterDataSource);
-        dbProperty.getSlaveList().forEach(slave -> {
-            dataSourceMap.put(slave.getName(), createDataSource(slave.getUrl()));
-        });
+
+
+        String slave1Url = dbProperty.getSlaveList().getSlave1();
+        dataSourceMap.put("slave1", createDataSource(slave1Url));
+        System.out.println("slave1 - "+slave1Url);
+
+        String slave2Url = dbProperty.getSlaveList().getSlave2();
+        dataSourceMap.put("slave2", createDataSource(slave2Url));
+        System.out.println("slave2 - "+slave2Url);
 
         replicationRoutingDataSource.setTargetDataSources(dataSourceMap);
 
