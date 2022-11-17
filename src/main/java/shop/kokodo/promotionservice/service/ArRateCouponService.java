@@ -6,15 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.promotionservice.dto.ArRateCouponFindDto;
 import shop.kokodo.promotionservice.dto.ArRateCouponInfo;
-import shop.kokodo.promotionservice.entity.ArClientRateCouponDto;
-import shop.kokodo.promotionservice.entity.ArRateCoupon;
-import shop.kokodo.promotionservice.entity.RateCoupon;
-import shop.kokodo.promotionservice.entity.UserCoupon;
+import shop.kokodo.promotionservice.entity.*;
 import shop.kokodo.promotionservice.repository.ArRateCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 import shop.kokodo.promotionservice.repository.UserCouponRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static shop.kokodo.promotionservice.entity.ArRateCoupon.createArCoupon;
 
@@ -43,16 +41,33 @@ public class ArRateCouponService {
 
     @Transactional
     public void createCoupon(ArRateCouponInfo arRateCouponInfo){
-        RateCoupon rateCoupon = RateCoupon.builder()
-                .name(arRateCouponInfo.getCouponName())
-                .regdate(arRateCouponInfo.getRegDate())
-                .rate(arRateCouponInfo.getRate())
-                .minPrice(arRateCouponInfo.getMinPrice())
-                .startDate(arRateCouponInfo.getStartDate())
-                .endDate(arRateCouponInfo.getEndDate())
-                .productId(arRateCouponInfo.getProductId())
-                .sellerId(arRateCouponInfo.getSellerId()).build();
-        arRateCouponRepository.save(createArCoupon(rateCoupon, arRateCouponInfo));
+//        RateCoupon rateCoupon = RateCoupon.builder()
+//                .name(arRateCouponInfo.getCouponName())
+//                .regdate(arRateCouponInfo.getRegDate())
+//                .rate(arRateCouponInfo.getRate())
+//                .minPrice(arRateCouponInfo.getMinPrice())
+//                .startDate(arRateCouponInfo.getStartDate())
+//                .endDate(arRateCouponInfo.getEndDate())
+//                .productId(arRateCouponInfo.getProductId())
+//                .sellerId(arRateCouponInfo.getSellerId()).build();
+//        for(int i = 0; i < arRateCouponInfo.getProductId().size(); i++){
+//
+//        }
+        List<Long> productIdList = arRateCouponInfo.getProductId();
+        log.info("productIdList = {}", productIdList);
+        List<RateCoupon> rateCoupons = productIdList.stream().map((productId) -> new RateCoupon(
+                arRateCouponInfo.getCouponName(),
+                arRateCouponInfo.getRegDate(),
+                arRateCouponInfo.getRate(),
+                arRateCouponInfo.getMinPrice(),
+                arRateCouponInfo.getStartDate(),
+                arRateCouponInfo.getEndDate(),
+                productId,
+                arRateCouponInfo.getSellerId())).collect(Collectors.toList());
+        log.info("rateCoupons = {}", rateCoupons);
+        List<ArRateCoupon> arRateCouponList = rateCoupons.stream().map((rCoupon) -> createArCoupon(rCoupon, arRateCouponInfo)).collect(Collectors.toList());
+        log.info("arRateCouponList = {}", arRateCouponList);
+        arRateCouponRepository.saveAll(arRateCouponList);
     }
 
     public List<ArClientRateCouponDto> findAllArCoupon(){
@@ -65,7 +80,7 @@ public class ArRateCouponService {
         UserCoupon userCoupon = UserCoupon.builder()
                 .rateCoupon(arRateCoupon)
                 .userId(arRateCouponFindDto.getClientId())
-                .usageStatus(0)
+                .usageStatus(UsageStatus.NOT_USED)
                 .build();
         userCouponRepository.save(userCoupon);
     }
