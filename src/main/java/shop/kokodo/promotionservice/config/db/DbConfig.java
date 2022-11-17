@@ -23,10 +23,10 @@ import javax.sql.DataSource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//@Configuration
+@Configuration
 @RequiredArgsConstructor
 // DataSource를 직접 설정해야하기 때문에 자동으로 DataSource를 연결하는 DataSourceAutoConfiguration 클래스를 제외
-//@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class DbConfig {
 
     private final DbProperty dbProperty;
