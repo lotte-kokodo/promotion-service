@@ -71,9 +71,9 @@ public class RateDiscountPolicyController {
         return rateDiscountPolicyService.getRateDiscountPolicyByDate();
     }
 
-    @GetMapping(value="/seller/{sellerId}")
-    public Response getRateDiscountPolicyBySellerId(@PathVariable("sellerId")Long sellerId) {
-        return Response.success(rateDiscountPolicyService.findBySellerId(sellerId));
+    @GetMapping(value="/seller")
+    public Response getRateDiscountPolicyBySellerId(@RequestHeader long sellerId, @RequestParam int page) {
+        return Response.success(rateDiscountPolicyService.findBySellerId(sellerId, page - 1));
     }
 
     @GetMapping(value="/{name}/product")

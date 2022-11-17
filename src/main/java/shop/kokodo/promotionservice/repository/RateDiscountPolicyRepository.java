@@ -1,5 +1,7 @@
 package shop.kokodo.promotionservice.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
@@ -25,8 +27,8 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
     Optional<RateDiscountPolicy> findByName(String name);
 
     @Query(value = "SELECT r FROM RateDiscountPolicy r " +
-            "WHERE r.sellerId = :sellerId ORDER BY r.name")
-    List<RateDiscountPolicy> findAllBySellerId(Long sellerId);
+            "WHERE r.sellerId = :sellerId GROUP BY r.name")
+    Page<RateDiscountPolicy> findAllBySellerId(Long sellerId, Pageable pageable);
 
     @Query(value = "select r from RateDiscountPolicy r " +
             "where r.productId = :productId and " +
@@ -48,7 +50,11 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
             "WHERE r.name = :name")
     List<Long> findProductIdByName(String name);
 
+//    @Query(value = "SELECT r FROM RateDiscountPolicy r WHERE r.sellerId = :sellerId " +
+//            "AND current_timestamp  BETWEEN r.startDate AND r.endDate")
+//    List<RateDiscountPolicy> findBySellerId(Long sellerId);
+
     @Query(value = "SELECT r FROM RateDiscountPolicy r WHERE r.sellerId = :sellerId " +
-            "AND current_timestamp  BETWEEN r.startDate AND r.endDate")
+            "AND current_timestamp BETWEEN r.startDate AND r.endDate GROUP BY r.name ")
     List<RateDiscountPolicy> findBySellerId(Long sellerId);
 }

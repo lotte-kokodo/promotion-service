@@ -2,6 +2,7 @@ package shop.kokodo.promotionservice.service;
 
 import java.util.Map;
 
+import shop.kokodo.promotionservice.dto.PagingRateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.ProductDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicySaveDto;
@@ -31,7 +32,7 @@ public interface RateDiscountPolicyService {
 
     public Map<Long, RateDiscountPolicyDto> findAllByProductIdList(List<Long> productIdList);
 
-    public List<RateDiscountPolicy> findBySellerId(Long sellerId);
+    public PagingRateDiscountPolicyDto findBySellerId(Long sellerId, int page);
 
     public List<ProductDto> findByProductByName(String name);
 

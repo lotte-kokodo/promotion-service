@@ -5,6 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
@@ -122,23 +124,14 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
 
     @Override
     @Transactional(readOnly = false)
-    public List<FixDiscountPolicy> findBySellerId(Long sellerId) {
-        List<FixDiscountPolicy> list = fixDiscountPolicyRepository.findAllBySellerId(sellerId);
-
-        System.out.println(list.toString());
-
-        List<FixDiscountPolicy> result = new ArrayList<>();
-        for(FixDiscountPolicy fixDiscountPolicy : list) {
-            if(!result.isEmpty()) {
-                if(!fixDiscountPolicy.getName().equals(result.get(result.size() - 1).getName())) {
-                    result.add(fixDiscountPolicy);
-                }
-            }else {
-                result.add(fixDiscountPolicy);
-            }
-        }
-        System.out.println(result.toString());
-        return result;
+    public PagingFixDiscountPolicyDto findBySellerId(Long sellerId, int page) {
+        Page<FixDiscountPolicy> fixDiscountPolicyPage = fixDiscountPolicyRepository.findBySellerId(sellerId, PageRequest.of(page,5));
+        System.out.println("*********");
+        System.out.println(fixDiscountPolicyPage.toList());
+        return PagingFixDiscountPolicyDto.builder()
+                .fixDiscountPolicyList(fixDiscountPolicyPage.toList())
+                .totalCount(fixDiscountPolicyPage.getTotalElements())
+                .build();
     }
 
     public List<FixDiscountPolicy> saveDtoToDto(FixDiscountPolicySaveDto dto) {
