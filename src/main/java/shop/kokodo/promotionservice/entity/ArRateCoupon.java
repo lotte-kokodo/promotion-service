@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@ToString
 public class ArRateCoupon extends BaseEntity {
 
     @Id
@@ -40,7 +41,6 @@ public class ArRateCoupon extends BaseEntity {
     private Long yPos;
 
     private Long zPos;
-
     public static ArRateCoupon createArCoupon(RateCoupon rateCoupon, ArRateCouponInfo arRateCouponInfo) {
         ArRateCoupon arRateCoupon = ArRateCoupon.builder()
                 .rateCoupon(rateCoupon)
