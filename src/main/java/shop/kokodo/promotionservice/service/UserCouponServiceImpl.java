@@ -81,7 +81,8 @@ public class UserCouponServiceImpl implements UserCouponService{
     public List<UserCoupon> findValidCouponByMemberIdGroupByCouponName(long memberId) {
 
         Boolean memberFlag = circuitBreaker.run(()-> memberServiceClient.getMember(memberId)
-                ,throwable -> true);
+                ,throwable -> false);
+
         if(!memberFlag) throw new NoMemberException();
 
         final LocalDateTime now = LocalDateTime.now();

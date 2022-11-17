@@ -28,9 +28,8 @@ public interface RateCouponRepository extends JpaRepository<RateCoupon, Long> {
     @Query(value = "select r from RateCoupon r where sellerId = :sellerId group by r.name ")
     public Page<RateCoupon> findDistinctRateCouponBySellerId(long sellerId, Pageable pageable);
 
-    @Query(value = "select r from RateCoupon r " +
-            "where r.productId = :productId and " +
-            " startDate <= :now and :now <=endDate order by r.rate desc")
+    @Query(value = "select * from rate_coupon where product_id= :productId " +
+            "and start_date <= :now and  :now <= end_date",nativeQuery = true)
     public List<RateCoupon> findByProductId(long productId, LocalDateTime now);
 
     @Query(value = "select r.productId from RateCoupon r "+
