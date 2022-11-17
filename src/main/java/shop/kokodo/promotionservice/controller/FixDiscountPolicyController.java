@@ -66,8 +66,7 @@ public class FixDiscountPolicyController {
 
     @GetMapping(value="/fix-discount/seller")
     public Response getFixDiscountPolicyBySellerId(@RequestHeader long sellerId, @RequestParam int page) {
-        System.out.println("********");
-        System.out.println(sellerId);
+
         return Response.success(fixDiscountPolicyService.findBySellerId(sellerId, page - 1));
     }
 

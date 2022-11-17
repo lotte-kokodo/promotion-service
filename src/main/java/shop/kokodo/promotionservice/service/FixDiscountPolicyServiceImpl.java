@@ -126,8 +126,7 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     @Transactional(readOnly = false)
     public PagingFixDiscountPolicyDto findBySellerId(Long sellerId, int page) {
         Page<FixDiscountPolicy> fixDiscountPolicyPage = fixDiscountPolicyRepository.findBySellerId(sellerId, PageRequest.of(page,5));
-        System.out.println("*********");
-        System.out.println(fixDiscountPolicyPage.toList());
+
         return PagingFixDiscountPolicyDto.builder()
                 .fixDiscountPolicyList(fixDiscountPolicyPage.toList())
                 .totalCount(fixDiscountPolicyPage.getTotalElements())
