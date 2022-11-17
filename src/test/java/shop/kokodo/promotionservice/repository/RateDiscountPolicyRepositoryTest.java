@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
 
 import javax.transaction.Transactional;
@@ -137,11 +139,12 @@ class RateDiscountPolicyRepositoryTest{
     @DisplayName("sellerId로 할인정책 findAll 성공")
     void findAllBySellerId_성공() {
         sellerId = 1L;
+        int page = 0;
         rateDiscountPolicyRepository.save(rateDiscountPolicy1);
         rateDiscountPolicyRepository.save(rateDiscountPolicy2);
 
-        List<RateDiscountPolicy> rateDiscountPolicyList= rateDiscountPolicyRepository.findAllBySellerId(sellerId);
-        Assertions.assertEquals(rateDiscountPolicyList.size(), 2);
+        Page<RateDiscountPolicy> rateDiscountPolicyList= rateDiscountPolicyRepository.findAllBySellerId(sellerId, PageRequest.of(page,5));
+        Assertions.assertEquals(rateDiscountPolicyList.getTotalElements(), 2);
     }
 
 //    @Test
