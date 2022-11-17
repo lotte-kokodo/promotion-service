@@ -41,7 +41,10 @@ public class RateCouponController {
 
     @GetMapping("/{productId}")
     public Response findByProductId(@PathVariable long productId){
+        System.out.println("RateCouponController.findByProductId");
         List<RateCoupon> coupons =rateCouponService.findByProductId(productId);
+
+        System.out.println(coupons.size());
 
         return Response.success(coupons);
     }
