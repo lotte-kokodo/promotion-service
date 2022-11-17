@@ -84,9 +84,9 @@ asciidoctor {
 
 task createDocument(type: Copy) {
 	dependsOn asciidoctor
-	asciidoctor
-	from file("build/docs/asciidoc")
-	into file("src/main/resources/static/docs")
+//	asciidoctor
+//	from file("build/docs/asciidoc")
+//	into file("src/main/resources/static/docs")
 }
 
 //==================Spring Rest docs==================
