@@ -64,9 +64,11 @@ public class FixDiscountPolicyController {
         return ResponseEntity.ok(fixDiscountPolicyService.getFixDiscountPolicyStatus(productIdList, sellerIdList));
     }
 
-    @GetMapping(value="/fix-discount/seller/{sellerId}")
-    public Response getFixDiscountPolicyBySellerId(@PathVariable("sellerId")String sellerId) {
-        return Response.success(fixDiscountPolicyService.findBySellerId(Long.parseLong(sellerId)));
+    @GetMapping(value="/fix-discount/seller")
+    public Response getFixDiscountPolicyBySellerId(@RequestHeader long sellerId, @RequestParam int page) {
+        System.out.println("********");
+        System.out.println(sellerId);
+        return Response.success(fixDiscountPolicyService.findBySellerId(sellerId, page - 1));
     }
 
     @GetMapping(value="/fix-discount/{name}/product")
