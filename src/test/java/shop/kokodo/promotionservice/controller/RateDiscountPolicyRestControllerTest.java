@@ -176,7 +176,7 @@ public class RateDiscountPolicyRestControllerTest {
 //    }
 
     @Test
-    @DisplayName("비율 할인 정책 생성 API 테스트")
+    @DisplayName("비율 할인 정책 전체 조회 API 테스트")
     public void getRateDiscountPolicyList() throws Exception {
         rateDiscountPolicyRepository.save(rateDiscountPolicy1);
         rateDiscountPolicyRepository.save(rateDiscountPolicy2);
@@ -283,7 +283,7 @@ public class RateDiscountPolicyRestControllerTest {
     }
 
     @Test
-    @DisplayName("비율 할인 정책 생성 api 테스트 성공")
+    @DisplayName("비율 할인 정책 생성 날짜로 조회 테스트 성공")
     public void getRateDiscountPolicyByDate() throws Exception {
         rateDiscountPolicyRepository.save(rateDiscountPolicy1);
         rateDiscountPolicyRepository.save(rateDiscountPolicy2);
@@ -312,7 +312,7 @@ public class RateDiscountPolicyRestControllerTest {
     }
 
     @Test
-    @DisplayName("비율 할인 정책 생성 api 테스트 성공")
+    @DisplayName("비율 할인 정책 sellerId로 조회 api 테스트 성공")
     public void getRateDiscountPolicyBySellerId() throws Exception {
         Long sellerId = 1L;
         rateDiscountPolicyRepository.save(rateDiscountPolicy1);
