@@ -1,7 +1,3 @@
-#spring:
-#  profiles:
-#    active: test
-
 server:
   port: 0 # Eureka 로부터 자동 포트 부여
 
@@ -16,31 +12,45 @@ eureka:
 
 spring:
   application:
-    name: promotion-service
+    name: product-service
   zipkin:
     base-url: http://zipkin:9411
     enabled: true
   sleuth:
     sampler:
       probability: 1.0
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url:
+    slave-list:
+      slave1:
+      slave2:
+    username:
+    password:
+
+  redis:
+    host:
+    port: 6379
+    timeout: 3
+
   jpa:
     hibernate:
       ddl-auto: create
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url:
-    slave-list:
-      - name: slave-1
-        url:
-      - name: slave-2
-        url:
-    username:
-    password:
+    properties:
+      hibernate:
+        physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+
 
 logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busresfresh, beans
 
 kafka:
   address:
