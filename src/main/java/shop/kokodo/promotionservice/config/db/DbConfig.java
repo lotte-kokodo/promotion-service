@@ -2,12 +2,9 @@ package shop.kokodo.promotionservice.config.db;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -15,8 +12,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
-import shop.kokodo.promotionservice.config.db.DbProperty;
-import shop.kokodo.promotionservice.config.db.ReplicationRoutingDataSource;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -32,7 +27,6 @@ public class DbConfig {
     private final DbProperty dbProperty;
     private final JpaProperties jpaProperties;
 
-    @Bean
     public DataSource routingDataSource() {
         // 앞서 AbstractRoutingDataSource 를 상속받아 재정의한 ReplicationRoutingDataSource 생성
         ReplicationRoutingDataSource replicationRoutingDataSource = new ReplicationRoutingDataSource();
@@ -62,7 +56,6 @@ public class DbConfig {
         return hikariDataSource;
     }
 
-    @Bean
     public DataSource dataSource() {
         // 아래서 설명
         return new LazyConnectionDataSourceProxy(routingDataSource());

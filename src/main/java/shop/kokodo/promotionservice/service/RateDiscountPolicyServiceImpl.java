@@ -206,4 +206,5 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         }
         return rateDiscountPolicyList;
     }
+
 }
