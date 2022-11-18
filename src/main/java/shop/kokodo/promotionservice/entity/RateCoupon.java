@@ -53,7 +53,6 @@ public class RateCoupon extends BaseEntity{
         this.endDate = endDate;
         this.productId = productId;
         this.sellerId = sellerId;
-
     }
 
     public void setRegDate(LocalDateTime regDate) {
