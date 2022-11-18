@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ import java.util.stream.Collectors;
  * ======================================================
  * 2022-11-03           SSOsh              최초 생성
  */
+
+@Slf4j
 @Service
 public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService {
     private RateDiscountPolicyRepository rateDiscountPolicyRepository;
@@ -115,20 +118,20 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     @Override
     public Integer findProductBySellerId(Long sellerId) {
         List<RateDiscountPolicy> rateDiscountPolicyList = rateDiscountPolicyRepository.findBySellerId(sellerId);
-
+        log.info("sellerId : " + sellerId);
         List<Long> productIdList = rateDiscountPolicyList.stream()
                         .map(RateDiscountPolicy::getProductId)
                         .collect(Collectors.toList());
-
+        log.info("productIdList : " + productIdList);
         Map<Long, List<Integer>> discountPrice = circuitBreaker.run(() -> orderServiceClient.findByProductId(productIdList)
                 , throwable -> new HashMap<Long, List<Integer>>());
-
+        log.info("discountPrice : " + discountPrice);
         Map<Long, Integer> discountRate = rateDiscountPolicyList.stream()
                 .collect(Collectors.toMap(
                         RateDiscountPolicy::getProductId,
                         RateDiscountPolicy::getRate
                 ));
-
+        log.info("discountRate : " + discountRate);
         Integer result = 0;
         List<Integer> list = new ArrayList<>();
         list.add(0);
@@ -136,7 +139,7 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         for(Long productId : productIdList) {
             result += calculateDiscountPrice(discountRate.getOrDefault(productId, 0), discountPrice.getOrDefault(productId, list));
         }
-
+        log.info("result : " + result);
         return result;
     }
 
