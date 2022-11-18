@@ -28,9 +28,9 @@ public class ArRateCouponInfo {
     private List<Long> productId;
     private String couponName;
     private int rate;
-    private Long x;
-    private Long y;
-    private Long z;
+    private Double x;
+    private Double y;
+    private Double z;
     private int minPrice;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
