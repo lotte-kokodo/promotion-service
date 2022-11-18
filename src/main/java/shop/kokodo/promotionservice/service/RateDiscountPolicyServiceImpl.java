@@ -14,16 +14,14 @@ import shop.kokodo.promotionservice.dto.RateDiscountPolicyDto;
 import shop.kokodo.promotionservice.dto.RateDiscountPolicySaveDto;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.RateDiscountPolicy;
+import shop.kokodo.promotionservice.exception.DuplicateDiscountPolicyNameException;
 import shop.kokodo.promotionservice.feign.OrderServiceClient;
 import shop.kokodo.promotionservice.feign.ProductServiceClient;
 import shop.kokodo.promotionservice.repository.RateDiscountPolicyRepository;
 
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -62,7 +60,11 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
 
     @Transactional(readOnly = false)
     public List<RateDiscountPolicy> createRateDiscountPolicy(RateDiscountPolicySaveDto rateDiscountPolicySaveDto) {
-        System.out.println(rateDiscountPolicySaveDto.toString());
+
+        boolean flag = rateDiscountPolicyRepository.existsByName(rateDiscountPolicySaveDto.getName());
+        if(flag) {
+            throw new DuplicateDiscountPolicyNameException("같은 이름의 정책이 존재합니다!");
+        }
         List<RateDiscountPolicy> rateDiscountPolicyList = saveDtoToDto(rateDiscountPolicySaveDto);
 
         return rateDiscountPolicyRepository.saveAll(rateDiscountPolicyList);

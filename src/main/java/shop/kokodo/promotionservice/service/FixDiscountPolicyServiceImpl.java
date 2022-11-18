@@ -13,6 +13,7 @@ import shop.kokodo.promotionservice.circuitbreaker.AllCircuitBreaker;
 import shop.kokodo.promotionservice.dto.*;
 import shop.kokodo.promotionservice.dto.response.Response;
 import shop.kokodo.promotionservice.entity.FixDiscountPolicy;
+import shop.kokodo.promotionservice.exception.DuplicateDiscountPolicyNameException;
 import shop.kokodo.promotionservice.feign.ProductServiceClient;
 import shop.kokodo.promotionservice.repository.FixDiscountPolicyRepository;
 
@@ -47,8 +48,11 @@ public class FixDiscountPolicyServiceImpl implements FixDiscountPolicyService {
     @Override
     @Transactional(readOnly = false)
     public List<FixDiscountPolicy> save(FixDiscountPolicySaveDto fixDiscountPolicySaveDto) {
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        boolean flag = fixDiscountPolicyRepository.existsByName(fixDiscountPolicySaveDto.getName());
+        if(flag) {
+            throw new DuplicateDiscountPolicyNameException("같은 이름의 정책이 존재합니다!");
+        }
+
         List<FixDiscountPolicy> fixDiscountPolicyList = saveDtoToDto(fixDiscountPolicySaveDto);
         return fixDiscountPolicyRepository.saveAll(fixDiscountPolicyList);
     }
