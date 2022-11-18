@@ -40,7 +40,6 @@ public class RateCoupon extends BaseEntity{
         this.endDate = endDate;
         this.productId = productId;
         this.sellerId = sellerId;
-        this.arRateCoupon = arRateCoupon;
     }
 
     @Builder
