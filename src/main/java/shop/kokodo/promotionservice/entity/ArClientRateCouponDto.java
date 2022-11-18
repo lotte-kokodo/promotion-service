@@ -16,12 +16,12 @@ import shop.kokodo.promotionservice.dto.RateCouponDtoV2;
  * -----------------------------------------------------------
  * 2022/11/14        namhyeop       최초 생성
  */
-//@Getter
-//@NoArgsConstructor
-//@AllArgsConstructor
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ArClientRateCouponDto {
-//    private RateCouponDtoV2 rateCoupon;
-//    private Double xPos;
-//    private Double yPos;
-//    private Double zPos;
+    private RateCouponDtoV2 rateCoupon;
+    private Double xPos;
+    private Double yPos;
+    private Double zPos;
 }

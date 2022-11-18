@@ -20,9 +20,9 @@ import java.util.List;
  * 2022/11/02        namhyeop       최초 생성
  */
 public interface ArRateCouponRepository extends JpaRepository<ArRateCoupon, Long> {
-//    @Query("select ar from ArRateCoupon ar")
-//    List<ArRateCouponInfo> findCouponBySellerId();
-//
-//    @Query("select ar from ArRateCoupon ar join fetch ar.rateCoupon")
-//    List<ArRateCoupon> findArCoupon();
+    @Query("select ar from ArRateCoupon ar")
+    List<ArRateCouponInfo> findCouponBySellerId();
+
+    @Query("select ar from ArRateCoupon ar join fetch ar.rateCoupon")
+    List<ArRateCoupon> findArCoupon();
 }
