@@ -12,7 +12,7 @@ eureka:
 
 spring:
   application:
-    name: product-service
+    name: promotion-service
   zipkin:
     base-url: http://zipkin:9411
     enabled: true
@@ -28,14 +28,9 @@ spring:
     username:
     password:
 
-  redis:
-    host:
-    port: 6379
-    timeout: 3
-
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
@@ -46,11 +41,6 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, busresfresh, beans
 
 kafka:
   address:
