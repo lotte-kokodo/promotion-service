@@ -21,7 +21,7 @@ import shop.kokodo.promotionservice.dto.RateCouponDtoV2;
 @AllArgsConstructor
 public class ArClientRateCouponDto {
     private RateCouponDtoV2 rateCoupon;
-    private Long xPos;
-    private Long yPos;
-    private Long zPos;
+    private Double xPos;
+    private Double yPos;
+    private Double zPos;
 }

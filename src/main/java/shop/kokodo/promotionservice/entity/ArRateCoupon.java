@@ -36,11 +36,11 @@ public class ArRateCoupon extends BaseEntity {
     @JoinColumn(name = "rate_coupon_id")
     private RateCoupon rateCoupon;
 
-    private Long xPos;
+    private Double xPos;
 
-    private Long yPos;
+    private Double yPos;
 
-    private Long zPos;
+    private Double zPos;
     public static ArRateCoupon createArCoupon(RateCoupon rateCoupon, ArRateCouponInfo arRateCouponInfo) {
         ArRateCoupon arRateCoupon = ArRateCoupon.builder()
                 .rateCoupon(rateCoupon)
