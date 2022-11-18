@@ -8,13 +8,13 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://eureka-service:9001/eureka
+      defaultZone: http://eureka-service/eureka
 
 spring:
   application:
     name: product-service
   zipkin:
-    base-url: http://zipkin:9411
+    base-url: http://zipkin
     enabled: true
   sleuth:
     sampler:
@@ -27,11 +27,6 @@ spring:
       slave2:
     username:
     password:
-
-  redis:
-    host:
-    port: 6379
-    timeout: 3
 
   jpa:
     hibernate:
@@ -46,11 +41,6 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, busresfresh, beans
 
 kafka:
   address:
