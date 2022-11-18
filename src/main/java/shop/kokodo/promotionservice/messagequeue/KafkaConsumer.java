@@ -32,15 +32,15 @@ public class KafkaConsumer {
             List<UserCoupon> rateUserCoupon = userCouponRepository.findByRateCouponNameList(couponNameDto.getRateCouponNames(),memberId);
             List<UserCoupon> fixUserCoupon = userCouponRepository.findByFixCouponIdList(couponNameDto.getFixCouponIdList(),memberId);
 
-//            for (UserCoupon userCoupon : fixUserCoupon) {
-//                userCoupon.useCoupon();
-//                userCouponRepository.save(userCoupon);
-//            }
-//
-//            for (UserCoupon userCoupon : rateUserCoupon) {
-//                userCoupon.useCoupon();
-//                userCouponRepository.save(userCoupon);
-//            }
+            for (UserCoupon userCoupon : fixUserCoupon) {
+                userCoupon.useCoupon();
+                userCouponRepository.save(userCoupon);
+            }
+
+            for (UserCoupon userCoupon : rateUserCoupon) {
+                userCoupon.useCoupon();
+                userCouponRepository.save(userCoupon);
+            }
         }
         catch (Exception exception) {
             kafkaProducer.send("product-decrease-stock-rollback", kafkaMessage);
