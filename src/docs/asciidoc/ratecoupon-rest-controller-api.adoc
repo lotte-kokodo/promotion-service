@@ -57,13 +57,3 @@ include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/reque
 include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/response-body.adoc[]
 include::{snippets}/rate-coupon-rest-controller/find-product-by-couponName/response-fields.adoc[]
 
-== findRateCouponByCouponIdList
-쿠폰 id 리스트로 비율 할인 쿠폰 조회
-include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/curl-request.adoc[]
-include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/http-request.adoc[]
-include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/http-response.adoc[]
-include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/httpie-request.adoc[]
-include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/request-body.adoc[]
-include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/request-parameters.adoc[]
-include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/response-body.adoc[]
-include::{snippets}/rate-coupon-rest-controller/find-rateCoupon-by-couponIdList/response-fields.adoc[]
