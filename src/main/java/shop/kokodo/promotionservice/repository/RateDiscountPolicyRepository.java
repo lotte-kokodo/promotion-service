@@ -55,7 +55,7 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
 //    List<RateDiscountPolicy> findBySellerId(Long sellerId);
 
     @Query(value = "SELECT r FROM RateDiscountPolicy r WHERE r.sellerId = :sellerId " +
-            "AND current_timestamp BETWEEN r.startDate AND r.endDate GROUP BY r.name ")
+            "AND current_timestamp BETWEEN r.startDate AND r.endDate")
     List<RateDiscountPolicy> findBySellerId(Long sellerId);
 
     boolean existsByName(String name);
