@@ -92,6 +92,29 @@ public class UserCouponController {
 
         return Response.success();
     }
+
+    @PostMapping("/list/fixCoupon")
+    public Response saveFixCouponList(@RequestParam List<Long> fixCouponList, @RequestHeader long memberId){
+        System.out.println("UserCouponController.saveFixCouponList");
+        System.out.println("fixCouponList = " + fixCouponList + ", memberId = " + memberId);
+
+        for (Long fix : fixCouponList) {
+            UserCouponDto userCouponDto = UserCouponDto.builder()
+                    .userId(memberId)
+                    .usageStatus(UsageStatus.NOT_USED.toString())
+                    .fixCouponId(fix)
+                    .build();
+            try {
+                userCouponService.save(userCouponDto);
+            }
+            catch (IllegalArgumentException e){
+                if(e.getMessage().equals("이미 다운받은 쿠폰")) continue;
+                else throw e;
+            }
+        }
+
+        return Response.success();
+    }
     // productId - List<RateCoupon> 리턴
     @GetMapping("/rateCoupon/list")
     public Response rateCouponList(@RequestParam List<Long> productIdList, @RequestHeader long memberId){

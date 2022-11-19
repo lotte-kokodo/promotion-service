@@ -110,6 +110,11 @@ public class FixCouponServiceImpl implements FixCouponService{
         return sellerIdList;
     }
 
+    @Override
+    public List<FixCoupon> findByProductId(Long productId) {
+        return fixCouponRepository.findByProductId(productId);
+    }
+
 
     private FixCoupon convertToFixCoupon(FixCouponDto fixCouponDto,long productId){
         return FixCoupon.builder()
