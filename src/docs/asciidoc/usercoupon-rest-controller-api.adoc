@@ -13,27 +13,7 @@ endif::[]
 :toclevels: 2
 :sectlinks:
 
-== countUserCoupon
-사용자 쿠폰 개수 조회
-include::{snippets}/user-coupon-rest-controller/count-userCoupon/curl-request.adoc[]
-include::{snippets}/user-coupon-rest-controller/count-userCoupon/http-request.adoc[]
-include::{snippets}/user-coupon-rest-controller/count-userCoupon/http-response.adoc[]
-include::{snippets}/user-coupon-rest-controller/count-userCoupon/httpie-request.adoc[]
-include::{snippets}/user-coupon-rest-controller/count-userCoupon/request-body.adoc[]
-include::{snippets}/user-coupon-rest-controller/count-userCoupon/request-headers.adoc[]
-include::{snippets}/user-coupon-rest-controller/count-userCoupon/response-body.adoc[]
-include::{snippets}/user-coupon-rest-controller/count-userCoupon/response-fields.adoc[]
 
-== findByMemberId
-사용 가능한 사용자 쿠폰 조회
-include::{snippets}/user-coupon-rest-controller/find-by-memberId/curl-request.adoc[]
-include::{snippets}/user-coupon-rest-controller/find-by-memberId/http-request.adoc[]
-include::{snippets}/user-coupon-rest-controller/find-by-memberId/http-response.adoc[]
-include::{snippets}/user-coupon-rest-controller/find-by-memberId/httpie-request.adoc[]
-include::{snippets}/user-coupon-rest-controller/find-by-memberId/request-body.adoc[]
-include::{snippets}/user-coupon-rest-controller/find-by-memberId/request-headers.adoc[]
-include::{snippets}/user-coupon-rest-controller/find-by-memberId/response-body.adoc[]
-include::{snippets}/user-coupon-rest-controller/find-by-memberId/response-fields.adoc[]
 
 == findUserNotUsedFixCouponByproductId
 상품 id로 사용하지 않은 고정 할인 쿠폰 조회
@@ -43,7 +23,6 @@ include::{snippets}/user-coupon-rest-controller/find-user-notUsed-fixCoupon-by-p
 include::{snippets}/user-coupon-rest-controller/find-user-notUsed-fixCoupon-by-productId/httpie-request.adoc[]
 include::{snippets}/user-coupon-rest-controller/find-user-notUsed-fixCoupon-by-productId/path-parameters.adoc[]
 include::{snippets}/user-coupon-rest-controller/find-user-notUsed-fixCoupon-by-productId/request-body.adoc[]
-include::{snippets}/user-coupon-rest-controller/find-user-notUsed-fixCoupon-by-productId/request-fields.adoc[]
 include::{snippets}/user-coupon-rest-controller/find-user-notUsed-fixCoupon-by-productId/request-headers.adoc[]
 include::{snippets}/user-coupon-rest-controller/find-user-notUsed-fixCoupon-by-productId/response-body.adoc[]
 include::{snippets}/user-coupon-rest-controller/find-user-notUsed-fixCoupon-by-productId/response-fields.adoc[]

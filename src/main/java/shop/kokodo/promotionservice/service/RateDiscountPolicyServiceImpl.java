@@ -118,7 +118,6 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
     @Override
     public Integer findProductBySellerId(Long sellerId) {
         List<RateDiscountPolicy> rateDiscountPolicyList = rateDiscountPolicyRepository.findBySellerId(sellerId);
-        log.info("sellerId : " + sellerId);
         List<Long> productIdList = rateDiscountPolicyList.stream()
                         .map(RateDiscountPolicy::getProductId)
                         .collect(Collectors.toList());
@@ -129,7 +128,8 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         Map<Long, Integer> discountRate = rateDiscountPolicyList.stream()
                 .collect(Collectors.toMap(
                         RateDiscountPolicy::getProductId,
-                        RateDiscountPolicy::getRate
+                        RateDiscountPolicy::getRate,
+                        (oldRate, newRate) -> (oldRate > newRate) ? oldRate : newRate
                 ));
         log.info("discountRate : " + discountRate);
         Integer result = 0;
