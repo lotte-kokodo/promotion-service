@@ -1,4 +1,4 @@
-package shop.kokodo.productservice.config.db;
+package shop.kokodo.promotionservice.config.db;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
