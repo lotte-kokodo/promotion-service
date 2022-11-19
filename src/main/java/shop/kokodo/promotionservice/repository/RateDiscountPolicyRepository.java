@@ -42,7 +42,8 @@ public interface RateDiscountPolicyRepository extends JpaRepository<RateDiscount
     List<RateDiscountPolicy> findDateRangeRateDiscountPolicy(LocalDateTime localDateTime);
 
     @Query(value = "SELECT r FROM RateDiscountPolicy r " +
-            "WHERE r.productId IN (:productIdList)")
+            "WHERE r.productId IN (:productIdList) " +
+            "AND current_timestamp BETWEEN r.startDate AND r.endDate")
     List<RateDiscountPolicy> findAllByProductId(List<Long> productIdList);
 
 
