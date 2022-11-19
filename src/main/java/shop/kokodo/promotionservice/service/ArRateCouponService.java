@@ -11,8 +11,11 @@ import shop.kokodo.promotionservice.repository.ArRateCouponRepository;
 import shop.kokodo.promotionservice.repository.RateCouponRepository;
 import shop.kokodo.promotionservice.repository.UserCouponRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static shop.kokodo.promotionservice.entity.ArRateCoupon.createArCoupon;
 
@@ -53,7 +56,9 @@ public class ArRateCouponService {
 //        for(int i = 0; i < arRateCouponInfo.getProductId().size(); i++){
 //
 //        }
-        List<Long> productIdList = arRateCouponInfo.getProductId();
+
+        String[] sProductIds = arRateCouponInfo.getProductId().split(",");
+        List<Long> productIdList = Stream.of(sProductIds).map(Long::parseLong).collect(Collectors.toList());
         log.info("productIdList = {}", productIdList);
         List<RateCoupon> rateCoupons = productIdList.stream().map((productId) -> new RateCoupon(
                 arRateCouponInfo.getCouponName(),

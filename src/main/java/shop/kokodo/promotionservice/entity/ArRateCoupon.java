@@ -1,5 +1,6 @@
 package shop.kokodo.promotionservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import shop.kokodo.promotionservice.dto.ArRateCouponInfo;
 import shop.kokodo.promotionservice.dto.RateCouponDtoV2;
@@ -34,6 +35,7 @@ public class ArRateCoupon extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "rate_coupon_id")
+    @JsonIgnore
     private RateCoupon rateCoupon;
 
     private Double xPos;
