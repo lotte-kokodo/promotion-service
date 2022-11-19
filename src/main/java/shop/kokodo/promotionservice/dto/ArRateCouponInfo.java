@@ -25,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ArRateCouponInfo {
     private long sellerId;
-    private List<Long> productId;
+    private String productId;
     private String couponName;
     private int rate;
     private Double x;

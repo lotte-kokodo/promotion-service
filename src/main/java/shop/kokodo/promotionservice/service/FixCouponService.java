@@ -21,4 +21,5 @@ public interface FixCouponService {
 
     List<Long> findByCouponIdList(List<Long> couponIdList);
 
+    List<FixCoupon> findByProductId(Long productId);
 }

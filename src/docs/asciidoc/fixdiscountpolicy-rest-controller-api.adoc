@@ -12,15 +12,6 @@ endif::[]
 :toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
 :toclevels: 2
 :sectlinks:
-== save
-고정 할인 정책 저장
-include::{snippets}/fix-discount-policy-rest-controller/save/curl-request.adoc[]
-include::{snippets}/fix-discount-policy-rest-controller/save/http-request.adoc[]
-include::{snippets}/fix-discount-policy-rest-controller/save/http-response.adoc[]
-include::{snippets}/fix-discount-policy-rest-controller/save/httpie-request.adoc[]
-include::{snippets}/fix-discount-policy-rest-controller/save/request-body.adoc[]
-include::{snippets}/fix-discount-policy-rest-controller/save/response-body.adoc[]
-include::{snippets}/fix-discount-policy-rest-controller/save/response-fields.adoc[]
 
 == findAll
 

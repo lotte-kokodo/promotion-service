@@ -13,17 +13,6 @@ endif::[]
 :toclevels: 2
 :sectlinks:
 
-== save
-비율 할인 정책 생성
-include::{snippets}/rate-discount-policy-rest-controller/save/curl-request.adoc[]
-include::{snippets}/rate-discount-policy-rest-controller/save/http-request.adoc[]
-include::{snippets}/rate-discount-policy-rest-controller/save/http-response.adoc[]
-include::{snippets}/rate-discount-policy-rest-controller/save/httpie-request.adoc[]
-include::{snippets}/rate-discount-policy-rest-controller/save/request-body.adoc[]
-include::{snippets}/rate-discount-policy-rest-controller/save/request-fields.adoc[]
-include::{snippets}/rate-discount-policy-rest-controller/save/response-body.adoc[]
-include::{snippets}/rate-discount-policy-rest-controller/save/response-fields.adoc[]
-
 == date
 날짜를 기준으로 이용 가능한 비율 할인 정책 조회
 include::{snippets}/rate-discount-policy-rest-controller/date/curl-request.adoc[]
