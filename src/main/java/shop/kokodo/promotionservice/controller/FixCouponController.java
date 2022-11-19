@@ -49,4 +49,10 @@ public class FixCouponController {
         return ResponseEntity.ok(fixCouponService.findByCouponIdList(couponIdList));
     }
 
+    @GetMapping("/{productId}")
+    public Response findByProductId(@PathVariable long productId){
+        System.out.println(productId);
+        return Response.success(fixCouponService.findByProductId(productId));
+    }
+
 }

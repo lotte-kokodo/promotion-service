@@ -40,5 +40,8 @@ public interface FixCouponRepository extends JpaRepository<FixCoupon,Long> {
     @Query(value="select f from FixCoupon f where f.id in :couponIdList ")
     List<FixCoupon> findByCouponIdList(List<Long> couponIdList);
 
+    @Query(value = "select f from FixCoupon f where f.productId = :productId")
+    List<FixCoupon> findByProductId(Long productId);
+
 
 }
