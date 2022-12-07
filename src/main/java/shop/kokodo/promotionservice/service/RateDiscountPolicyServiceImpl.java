@@ -112,6 +112,11 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         , throwable -> new ArrayList<>());
     }
 
+    /**
+     * sellerId를 받아 일주일간 정책에 의해 할인된 가격을 조회
+     * @param sellerId
+     * @return 할인된 가격
+     */
     @Override
     public Integer findProductBySellerId(Long sellerId) {
         List<RateDiscountPolicy> rateDiscountPolicyList = rateDiscountPolicyRepository.findBySellerId(sellerId);
@@ -180,6 +185,13 @@ public class RateDiscountPolicyServiceImpl implements RateDiscountPolicyService 
         return rateDiscountPolicy;
     }
 
+    /**
+     * 할인금액을 계산하는 메소드
+     * @param rate
+     * @param priceAndQty
+     * [0] : 가격, [1] : 갯수
+     * @return 할인 금액
+     */
     public Integer calculateDiscountPrice(Integer rate, List<Integer> priceAndQty) {
         Integer price = priceAndQty.get(0);
         Integer qty = priceAndQty.get(1);
